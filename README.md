@@ -1,6 +1,6 @@
 # Facebook App
 
-A Java application that allows users to manage profiles, posts, groups and login/register. <br>Users can also log in and register for the service.
+A Java application that allows users to manage profiles, posts, groups and login/register.
 
 #### `I should mention that I've cleared the entry point of the application(Application.java) so the team members can work on the feature they prefer to.`
 

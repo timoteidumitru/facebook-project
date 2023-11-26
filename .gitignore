@@ -1,5 +1,7 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-facebook-project.iml
+facebook_app.iml
 .idea
+/out
+out
