@@ -1,3 +1,2 @@
 1;tim@eu.com;passw
-2;mike@eu.com;pass
-3;john@eu.com;parola
+2;mike@eu.com;passw
