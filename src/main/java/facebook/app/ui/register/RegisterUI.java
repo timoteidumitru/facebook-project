@@ -1,6 +1,6 @@
-package facebook.app.ui;
+package facebook.app.ui.register;
 import facebook.app.controller.UserCtr;
-import facebook.app.model.User;
+import facebook.app.model.user.User;
 
 import java.util.Scanner;
 

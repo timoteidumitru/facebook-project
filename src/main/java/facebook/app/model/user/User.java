@@ -1,4 +1,4 @@
-package facebook.app.model;
+package facebook.app.model.user;
 
 public class User {
     private int user_id;

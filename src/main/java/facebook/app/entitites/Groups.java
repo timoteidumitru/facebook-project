@@ -1,4 +1,4 @@
 package facebook.app.entitites;
 
-public class Group {
+public class Groups {
 }
