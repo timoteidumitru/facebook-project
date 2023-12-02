@@ -1,8 +1,8 @@
 package facebook.app;
 
 import facebook.app.controller.UserCtr;
-import facebook.app.ui.LoginUI;
-import facebook.app.ui.RegisterUI;
+import facebook.app.ui.login.LoginUI;
+import facebook.app.ui.register.RegisterUI;
 
 import java.util.Scanner;
 

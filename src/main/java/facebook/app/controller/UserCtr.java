@@ -1,6 +1,6 @@
 package facebook.app.controller;
-import facebook.app.model.User;
-import facebook.app.services.UserService;
+import facebook.app.model.user.User;
+import facebook.app.services.user.UserService;
 
 import java.util.List;
 
