@@ -1,14 +1,14 @@
 package facebook.app.ui.register;
-import facebook.app.controller.UserCtr;
+import facebook.app.controller.UserController;
 import facebook.app.model.user.User;
 
 import java.util.Scanner;
 
 public class RegisterUI {
-    private final UserCtr userController;
+    private final UserController userController;
     private final Scanner scanner;
 
-    public RegisterUI(UserCtr userController) {
+    public RegisterUI(UserController userController) {
         this.userController = userController;
         this.scanner = new Scanner(System.in);
     }

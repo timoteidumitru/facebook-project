@@ -1,13 +1,13 @@
 package facebook.app.controller;
 import facebook.app.model.user.User;
-import facebook.app.services.user.UserService;
+import facebook.app.services.UserService;
 
 import java.util.List;
 
-public class UserCtr {
+public class UserController {
     private final UserService userService;
 
-    public UserCtr() {
+    public UserController() {
         this.userService = new UserService();
     }
 
@@ -20,10 +20,6 @@ public class UserCtr {
         }
 
         userService.addUser(user);
-    }
-
-    public User getUserById(long user_id) {
-        return userService.getUserById(user_id);
     }
 
     public User getUserByEmail(String email) {

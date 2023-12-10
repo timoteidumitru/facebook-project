@@ -1,13 +1,13 @@
 package facebook.app.model.user;
 
 public class User {
-    private int user_id;
+    private long user_id;
     private String email;
     private String password;
 
     // Constructor
     public User(long user_id, String email, String password) {
-        this.user_id = (int) user_id;
+        this.user_id = user_id;
         this.email = email;
         this.password = password;
     }
