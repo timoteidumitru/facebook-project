@@ -1,4 +1,4 @@
-package facebook.app.services.user;
+package facebook.app.services;
 import facebook.app.dao.UserDAO;
 import facebook.app.model.user.User;
 

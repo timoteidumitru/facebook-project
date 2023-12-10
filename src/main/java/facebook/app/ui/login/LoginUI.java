@@ -1,12 +1,12 @@
 package facebook.app.ui.login;
-import facebook.app.controller.UserCtr;
+import facebook.app.controller.UserController;
 import java.util.Scanner;
 
 public class LoginUI {
-    private final UserCtr userController;
+    private final UserController userController;
     private final Scanner scanner;
 
-    public LoginUI(UserCtr userController) {
+    public LoginUI(UserController userController) {
         this.userController = userController;
         this.scanner = new Scanner(System.in);
     }
