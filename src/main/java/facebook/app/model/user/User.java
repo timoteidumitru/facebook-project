@@ -1,5 +1,7 @@
 package facebook.app.model.user;
 
+import facebook.app.entitites.AppPost;
+
 public class User {
     private long user_id;
     private String email;
@@ -37,6 +39,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addPost(AppPost post) {
+    }
+
+    public void sendMessage(User user, String message) {
+
     }
 }
 
