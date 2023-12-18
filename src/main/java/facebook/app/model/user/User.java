@@ -47,5 +47,14 @@ public class User {
     public void sendMessage(User user, String message) {
 
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", email='" + email + '\'' +
+                ", password=obfusated' " +
+                '}';
+    }
 }
 
