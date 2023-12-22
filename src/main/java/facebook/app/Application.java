@@ -2,12 +2,12 @@ package facebook.app;
 
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
-import facebook.app.model.user.User;
+import facebook.app.entitites.User;
 import facebook.app.services.MessageService;
 import facebook.app.dao.MessageDAO;
-import facebook.app.ui.login.LoginUI;
-import facebook.app.ui.message.MessageUI;
-import facebook.app.ui.register.RegisterUI;
+import facebook.app.ui.LoginUI;
+import facebook.app.ui.MessageUI;
+import facebook.app.ui.RegisterUI;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,13 +50,14 @@ public class Application {
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Posts             2. Friends");
                 System.out.println("      3. Messages          4. Groups");
+                System.out.println("      5. Profile");
             } else {
                 // Display the options for a user not logged in
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Register           2. Login");
             }
 
-            System.out.println("                  0. Exit");
+            System.out.println("                   0. Exit");
 
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
@@ -96,6 +97,12 @@ public class Application {
                     if (loggedInUserId != -1) {
                         // Handle Groups for a logged-in user
                         System.out.println("Option 4: View Groups");
+                    }
+                    break;
+                case 5:
+                    if (loggedInUserId != -1) {
+                        // Handle Profile for a logged-in user
+                        System.out.println("Option 5: View Profile");
                     }
                     break;
                 case 0:

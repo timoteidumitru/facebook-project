@@ -1,4 +1,4 @@
-package facebook.app.model.user;
+package facebook.app.entitites;
 
 public class User {
     private long user_id;

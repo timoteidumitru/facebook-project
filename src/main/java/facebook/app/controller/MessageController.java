@@ -1,9 +1,9 @@
 package facebook.app.controller;
 
-import facebook.app.model.messages.Message;
+import facebook.app.entitites.Message;
 import facebook.app.services.MessageService;
 import facebook.app.dao.MessageDAO;
-import facebook.app.ui.message.MessageUI;
+import facebook.app.ui.MessageUI;
 
 import java.util.List;
 

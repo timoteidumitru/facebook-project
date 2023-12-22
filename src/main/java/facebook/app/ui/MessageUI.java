@@ -1,8 +1,8 @@
-package facebook.app.ui.message;
+package facebook.app.ui;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
-import facebook.app.model.messages.Message;
-import facebook.app.model.user.User;
+import facebook.app.entitites.Message;
+import facebook.app.entitites.User;
 import facebook.app.services.UserService;
 
 import java.text.SimpleDateFormat;
@@ -79,7 +79,12 @@ public class MessageUI {
         System.out.println("Select a recipient you wanna send a message by User ID:");
 
         for (User user : users) {
-            System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+            if (user.getUserId() == fromUserId){
+                //skip current logged user!
+                //System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+            }else {
+                System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+            }
         }
 
         int recipientChoice = scanner.nextInt();

@@ -1,6 +1,6 @@
-package facebook.app.ui.register;
+package facebook.app.ui;
 import facebook.app.controller.UserController;
-import facebook.app.model.user.User;
+import facebook.app.entitites.User;
 
 import java.util.Scanner;
 
@@ -31,15 +31,10 @@ public class RegisterUI {
 
         User newUser = new User(userId, email, password);
 
-        // Validate email format
-//        if (!userController.isValidEmailFormat(email)) {
-//            System.out.println("Invalid email format. Registration failed.");
-//            return;
-//        }
 
         if (userController.getUserByEmail(email) == null) {
             userController.addUser(newUser);
-            System.out.println("Registration successful! Welcome, " + newUser.getEmail() + "!");
+            System.out.println("Registration successful! Welcome aboard, " + newUser.getEmail().split("@")[0].toUpperCase() + "!");
         } else {
             System.out.println("User with email " + email + " already exists. Registration failed.");
         }

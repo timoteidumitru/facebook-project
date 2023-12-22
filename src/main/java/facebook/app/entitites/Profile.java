@@ -1,4 +1,4 @@
 package facebook.app.entitites;
 
-public class Messages {
+public class Profile {
 }

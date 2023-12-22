@@ -1,4 +1,4 @@
-package facebook.app.ui.login;
+package facebook.app.ui;
 
 import facebook.app.controller.UserController;
 import java.util.Scanner;

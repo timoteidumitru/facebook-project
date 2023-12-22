@@ -1,6 +1,6 @@
 package facebook.app.controller;
 
-import facebook.app.model.user.User;
+import facebook.app.entitites.User;
 import facebook.app.services.UserService;
 
 import java.util.List;
@@ -13,7 +13,6 @@ public class UserController {
     }
 
     public void addUser(User user) {
-        System.out.println(user);
         // Basic validation: Check if the email is in a valid format
         if (isValidEmailFormat(user.getEmail())) {
             System.out.println("Invalid email format. Please try again.");
@@ -37,7 +36,7 @@ public class UserController {
 
     public boolean login(String email, String password) {
         if (userService.login(email, password)) {
-            System.out.println("Login successful! Welcome, " + email + "!");
+            System.out.println("Login successful! Welcome, " + email.split("@")[0].toUpperCase() + "!");
             return true;
         } else {
             System.out.println("Login failed. Incorrect email or password.");
@@ -54,6 +53,5 @@ public class UserController {
 
     public void logoutAllUsers() {
         userService.logoutAllUsers();
-        System.out.println("All users have been logged out.");
     }
 }

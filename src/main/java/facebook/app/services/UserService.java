@@ -1,8 +1,7 @@
 package facebook.app.services;
 import facebook.app.dao.UserDAO;
-import facebook.app.model.user.User;
+import facebook.app.entitites.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
