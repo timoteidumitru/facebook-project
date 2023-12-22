@@ -2,13 +2,64 @@ package facebook.app.services;
 import facebook.app.dao.UserDAO;
 import facebook.app.model.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
     private final UserDAO userDAO;
 
     public UserService() {
         this.userDAO = new UserDAO();
+    }
+
+    public boolean login(String email, String password) {
+        List<User> userList = userDAO.readUsers(); // Change here
+        Optional<User> userToLoginOptional = userList.stream()
+                .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
+                .findFirst();
+
+        if (userToLoginOptional.isPresent()) {
+            User userToLogin = userToLoginOptional.get();
+
+            // Update the isLoggedIn field for all users
+            userList.forEach(user -> user.setLoggedIn(user.equals(userToLogin)));
+
+            // Save the changes to the file
+            userDAO.writeUsers(userList); // Change here
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void logoutAllUsers() {
+        List<User> userList = userDAO.readUsers();
+        userList.forEach(user -> user.setLoggedIn(false));
+        userDAO.writeUsers(userList);
+    }
+
+    public boolean logout(long userId) {
+        List<User> userList = userDAO.readUsers();
+        for (User user : userList) {
+            if (user.getUserId() == userId) {
+                user.setLoggedIn(false);
+                userDAO.writeUsers(userList);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<User> getLoggedInUsers() {
+        List<User> userList = userDAO.readUsers();
+        List<User> loggedInUsers = new ArrayList<>();
+        for (User user : userList) {
+            if (user.isLoggedIn()) {
+                loggedInUsers.add(user);
+            }
+        }
+        return loggedInUsers;
     }
 
     public void addUser(User user) {

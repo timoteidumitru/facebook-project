@@ -1,4 +1,5 @@
 package facebook.app.controller;
+
 import facebook.app.model.user.User;
 import facebook.app.services.UserService;
 
@@ -30,9 +31,38 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    public boolean login(String email, String password) {
+        if (userService.login(email, password)) {
+            System.out.println("Login successful! Welcome, " + email + "!");
+            return true;
+        } else {
+            System.out.println("Login failed. Incorrect email or password.");
+            return false;
+        }
+    }
+
+    public boolean logout(long userId) {
+        if (userService.logout(userId)) {
+            System.out.println("Logout successful!");
+            return true;
+        } else {
+            System.out.println("Logout failed. User not found or not logged in.");
+            return false;
+        }
+    }
+
+    public List<User> getLoggedInUsers() {
+        return userService.getLoggedInUsers();
+    }
+
     // Validation method for email format
     public boolean isValidEmailFormat(String email) {
         // This is a simple check; you might want to use a regular expression for a more thorough check
         return email == null || !email.contains("@");
+    }
+
+    public void logoutAllUsers() {
+        userService.logoutAllUsers();
+        System.out.println("All users have been logged out.");
     }
 }

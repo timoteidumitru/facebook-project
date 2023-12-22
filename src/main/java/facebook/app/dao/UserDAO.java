@@ -22,13 +22,22 @@ public class UserDAO {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] userData = line.split(";");
-                    int userId = (int) Long.parseLong(userData[0].trim());
+                    long userId = Long.parseLong(userData[0].trim());
                     String email = userData[1].trim();
                     String password = userData[2].trim();
+                    boolean isLoggedIn = Boolean.parseBoolean(userData[3].trim()); // New field
                     User user = new User(userId, email, password);
+
+                    // Set the isLoggedIn field to false for all users initially
+                    user.setLoggedIn(false);
+
+                    // If the user just logged in, set the isLoggedIn field to true
+                    if (isLoggedIn) {
+                        user.setLoggedIn(true);
+                    }
+
                     userList.add(user);
                 }
-
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
@@ -41,7 +50,7 @@ public class UserDAO {
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
 
             for (User user : userList) {
-                writer.write(user.getUserId() + ";" + user.getEmail() + ";" + user.getPassword());
+                writer.write(user.getUserId() + ";" + user.getEmail() + ";" + user.getPassword() + ";" + user.isLoggedIn());
                 writer.newLine();
             }
 

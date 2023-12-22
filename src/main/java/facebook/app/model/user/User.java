@@ -4,12 +4,21 @@ public class User {
     private long user_id;
     private String email;
     private String password;
+    private boolean isLoggedIn;
 
     // Constructor
     public User(long user_id, String email, String password) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 
     // Getter and Setter for user_id
