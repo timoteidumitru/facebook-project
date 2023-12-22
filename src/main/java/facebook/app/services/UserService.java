@@ -39,27 +39,16 @@ public class UserService {
         userDAO.writeUsers(userList);
     }
 
-    public boolean logout(long userId) {
-        List<User> userList = userDAO.readUsers();
-        for (User user : userList) {
-            if (user.getUserId() == userId) {
-                user.setLoggedIn(false);
-                userDAO.writeUsers(userList);
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public List<User> getLoggedInUsers() {
+    public long getCurrentUserId() {
         List<User> userList = userDAO.readUsers();
-        List<User> loggedInUsers = new ArrayList<>();
         for (User user : userList) {
             if (user.isLoggedIn()) {
-                loggedInUsers.add(user);
+                return user.getUserId();
+
             }
         }
-        return loggedInUsers;
+        return -1; // Return -1 if no user is currently logged in
     }
 
     public void addUser(User user) {
@@ -87,16 +76,6 @@ public class UserService {
         userDAO.writeUsers(userList);
     }
 
-    public User getUserById(long user_id) {
-        // Basic business logic: Check if the user_id is valid
-        if (user_id <= 0) {
-            System.out.println("Invalid user_id. Please provide a valid user_id.");
-            return null;
-        }
-
-        // Perform additional business logic/validation before retrieving from the DAO
-        return userDAO.getUserById(user_id);
-    }
 
     public User getUserByEmail(String email) {
         // Basic business logic: Check if the email is not empty
@@ -107,6 +86,16 @@ public class UserService {
 
         // Perform additional business logic/validation before retrieving from the DAO
         return userDAO.getUserByEmail(email);
+    }
+    public User getUserByID(int userID) {
+        // Basic business logic: Check if the userID is valid
+        if (userID <= 0) {
+            System.out.println("Invalid user ID. Please provide a valid user ID.");
+            return null;
+        }
+
+        // Perform additional business logic/validation before retrieving from the DAO
+        return userDAO.getUserByID(userID);
     }
 
     public List<User> getAllUsers() {

@@ -68,7 +68,7 @@ public class UserDAO {
         }
     }
 
-    public User getUserById(long userId) {
+    public User getUserByID(int userId) {
         List<User> userList = readUsers();
         return userList.stream()
                 .filter(user -> user.getUserId() == userId)
@@ -83,4 +83,5 @@ public class UserDAO {
                 .findFirst()
                 .orElse(null);
     }
+
 }

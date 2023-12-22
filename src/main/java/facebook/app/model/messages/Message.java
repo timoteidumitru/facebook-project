@@ -12,6 +12,7 @@ public class Message {
         this.date = date;
         this.message = message;
     }
+    
 
     public int getFrom_user_id() {
         return from_user_id;

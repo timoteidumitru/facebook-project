@@ -27,6 +27,10 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
+    public User getUserByID(int id){
+        return userService.getUserByID(id);
+    }
+
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -41,19 +45,6 @@ public class UserController {
         }
     }
 
-    public boolean logout(long userId) {
-        if (userService.logout(userId)) {
-            System.out.println("Logout successful!");
-            return true;
-        } else {
-            System.out.println("Logout failed. User not found or not logged in.");
-            return false;
-        }
-    }
-
-    public List<User> getLoggedInUsers() {
-        return userService.getLoggedInUsers();
-    }
 
     // Validation method for email format
     public boolean isValidEmailFormat(String email) {

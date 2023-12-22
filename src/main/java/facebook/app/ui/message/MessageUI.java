@@ -1,12 +1,19 @@
 package facebook.app.ui.message;
 import facebook.app.controller.MessageController;
+import facebook.app.controller.UserController;
 import facebook.app.model.messages.Message;
+import facebook.app.model.user.User;
+import facebook.app.services.UserService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class MessageUI {
     private final MessageController messageController;
+    private final UserController userController = new UserController();
     private final Scanner scanner;
 
     public MessageUI(MessageController messageController, Scanner scanner) {
@@ -45,14 +52,15 @@ public class MessageUI {
 
     private void viewMessages() {
         List<Message> messages = messageController.getMessages();
+        UserController users = userController;
 
         if (messages.isEmpty()) {
             System.out.println("No messages to display.");
         } else {
             System.out.println("Messages:");
             for (Message message : messages) {
-                System.out.println("From: " + message.getFrom_user_id());
-                System.out.println("To: " + message.getTo_user_id());
+                System.out.println("From: " + users.getUserByID(message.getFrom_user_id()).getEmail().split("@")[0]);
+                System.out.println("To: " + users.getUserByID(message.getTo_user_id()).getEmail().split("@")[0]);
                 System.out.println("Date: " + message.getDate());
                 System.out.println("Message: " + message.getMessage());
                 System.out.println("------------------------------");
@@ -60,24 +68,53 @@ public class MessageUI {
         }
     }
 
+    // Inside the MessageUI class
     private void sendMessage() {
-        System.out.println("Enter sender's user ID:");
-        int fromUserId = scanner.nextInt();
+        UserController userController = new UserController();
+        UserService userService = new UserService();
+        int fromUserId = (int) userService.getCurrentUserId();
 
-        System.out.println("Enter recipient's user ID:");
-        int toUserId = scanner.nextInt();
+        // Display a list of users for the recipient selection
+        List<User> users = userController.getAllUsers();
+        System.out.println("Select a recipient you wanna send a message by User ID:");
 
-        System.out.println("Enter message date:");
-        String date = scanner.next();
+        for (User user : users) {
+            System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+        }
+
+        int recipientChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        boolean recipientFound = false;
+        int toUserId = -1;
+
+        for (User user : users) {
+            if (user.getUserId() == recipientChoice) {
+                toUserId = (int) user.getUserId();
+                recipientFound = true;
+                break;
+            }
+        }
+
+        if (!recipientFound) {
+            System.out.println("Invalid choice. Message not sent.");
+            return;
+        }
+
+        // Automatically set the current date
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm", Locale.ENGLISH);
+        String date = dateFormat.format(currentDate);
 
         System.out.println("Enter your message:");
-        scanner.nextLine(); // Consume the newline character
         String messageText = scanner.nextLine();
 
         // Call the controller to send the message
+        
         messageController.sendMessage(fromUserId, toUserId, date, messageText);
 
         System.out.println("Message sent successfully!");
     }
+
 
 }
