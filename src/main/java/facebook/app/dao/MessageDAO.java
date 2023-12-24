@@ -1,6 +1,6 @@
 package facebook.app.dao;
 
-import facebook.app.entitites.Message;
+import facebook.app.entites.Message;
 
 import java.io.*;
 import java.net.URISyntaxException;

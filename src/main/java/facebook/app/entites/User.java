@@ -1,4 +1,4 @@
-package facebook.app.entitites;
+package facebook.app.entites;
 
 public class User {
     private long user_id;
@@ -51,6 +51,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return email.split("@")[0];
     }
 }
 

@@ -1,6 +1,6 @@
 package facebook.app.controller;
 
-import facebook.app.entitites.Message;
+import facebook.app.entites.Message;
 import facebook.app.services.MessageService;
 import facebook.app.dao.MessageDAO;
 import facebook.app.ui.MessageUI;

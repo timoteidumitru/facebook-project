@@ -1,6 +1,6 @@
 package facebook.app.ui;
 import facebook.app.controller.UserController;
-import facebook.app.entitites.User;
+import facebook.app.entites.User;
 
 import java.util.Scanner;
 

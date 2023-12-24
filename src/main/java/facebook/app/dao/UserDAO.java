@@ -1,5 +1,5 @@
 package facebook.app.dao;
-import facebook.app.entitites.User;
+import facebook.app.entites.User;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

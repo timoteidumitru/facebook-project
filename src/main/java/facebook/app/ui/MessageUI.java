@@ -1,8 +1,8 @@
 package facebook.app.ui;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
-import facebook.app.entitites.Message;
-import facebook.app.entitites.User;
+import facebook.app.entites.Message;
+import facebook.app.entites.User;
 import facebook.app.services.UserService;
 
 import java.text.SimpleDateFormat;

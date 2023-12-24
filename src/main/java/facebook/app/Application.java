@@ -1,16 +1,16 @@
 package facebook.app;
 
+import facebook.app.controller.FriendsController;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
-import facebook.app.entitites.User;
+import facebook.app.services.FriendsService;
 import facebook.app.services.MessageService;
 import facebook.app.dao.MessageDAO;
+import facebook.app.ui.FriendsUI;
 import facebook.app.ui.LoginUI;
 import facebook.app.ui.MessageUI;
 import facebook.app.ui.RegisterUI;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Application {
@@ -18,9 +18,9 @@ public class Application {
         UserController userController = new UserController();
         MessageController messageCtr = new MessageController(new MessageService(), new MessageDAO());
         MessageUI messageUI = new MessageUI(messageCtr, new Scanner(System.in));
-
-        // Set the MessageUI instance in MessageController
         messageCtr.setMessageUI(messageUI);
+        FriendsController friendsController = new FriendsController(new FriendsService());
+        FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
 
         Scanner scanner = new Scanner(System.in);
 
@@ -31,28 +31,13 @@ public class Application {
             System.out.println("        Welcome to the Facebook App");
 
             if (loggedInUserId != -1) {
-                List<User> users = userController.getAllUsers();
-                long finalLoggedInUserId = loggedInUserId;
-                Optional<User> loggedInUserOptional = users.stream()
-                        .filter(user -> user.getUserId() == finalLoggedInUserId)
-                        .findFirst();
-
-                if (loggedInUserOptional.isPresent()) {
-                    String loggedInUserEmail = loggedInUserOptional.get().getEmail();
-                    String username = loggedInUserEmail.split("@")[0];
-                    String capitalizedUsername = username.substring(0, 1).toUpperCase() + username.substring(1);
-                    System.out.println("User " + capitalizedUsername + " is currently logged in.");
-                } else {
-                    System.out.println("Logged-in user not found.");
-                }
-
-                // Display the options for a logged-in user
+                // Display options for a logged-in user
                 System.out.println("Please choose one of the following options: ");
-                System.out.println("      1. Posts             2. Friends");
-                System.out.println("      3. Messages          4. Groups");
+                System.out.println("      1. Messages           2. Friends");
+                System.out.println("      3. Posts              4. Groups");
                 System.out.println("      5. Profile");
             } else {
-                // Display the options for a user not logged in
+                // Display options for a user not logged in
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Register           2. Login");
             }
@@ -62,60 +47,55 @@ public class Application {
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 
-            switch (choice) {
-                case 1:
-                    if (loggedInUserId != -1) {
-                        // Handle Posts for a logged-in user
-                        System.out.println("Option 1: View Posts");
-                    } else {
-                        // Register
+            if (loggedInUserId != -1) {
+                // User is logged in
+                switch (choice) {
+                    case 1:
+                        messageCtr.startMessaging();
+                        break;
+                    case 2:
+                        friendsUI.startFriendsManagement();
+                        break;
+                    case 3:
+                        System.out.println("Option 3: Welcome to Posts section!");
+                        break;
+                    case 4:
+                        System.out.println("Option 4: Welcome to Groups section!");
+                        break;
+                    case 5:
+                        System.out.println("Option 5: View Profile");
+                        break;
+                    case 0:
+                        userController.logoutAllUsers();
+                        System.out.println("Exiting Facebook App. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } else {
+                // User is not logged in
+                switch (choice) {
+                    case 1:
+                        // Register new user
                         RegisterUI registerUI = new RegisterUI(userController);
                         registerUI.startRegistration();
-                    }
-                    break;
-                case 2:
-                    if (loggedInUserId != -1) {
-                        // Handle Friends for a logged-in user
-                        System.out.println("Option 2: View Friends");
-                    } else {
+                        break;
+                    case 2:
                         // Login
                         LoginUI loginUI = new LoginUI(userController);
                         if (loginUI.startLogin()) {
                             loggedInUserId = userController.getUserByEmail(loginUI.getEmail()).getUserId();
                         }
-                    }
-                    break;
-                case 3:
-                    // Messages option, only available when logged in
-                    if (loggedInUserId != -1) {
-                        messageCtr.startMessaging();
-                    } else {
-                        System.out.println("You need to log in first to access messages.");
-                    }
-                    break;
-                case 4:
-                    if (loggedInUserId != -1) {
-                        // Handle Groups for a logged-in user
-                        System.out.println("Option 4: View Groups");
-                    }
-                    break;
-                case 5:
-                    if (loggedInUserId != -1) {
-                        // Handle Profile for a logged-in user
-                        System.out.println("Option 5: View Profile");
-                    }
-                    break;
-                case 0:
-                    // Logout all users before exiting
-                    userController.logoutAllUsers();
-                    System.out.println("Exiting Facebook App. Goodbye!");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+                        break;
+                    case 0:
+                        System.out.println("Exiting Facebook App. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
             }
         } while (choice != 0);
 
-        // Close the scanner to avoid resource leak
         scanner.close();
     }
 }

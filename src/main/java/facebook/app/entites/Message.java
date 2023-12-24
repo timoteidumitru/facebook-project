@@ -1,4 +1,4 @@
-package facebook.app.entitites;
+package facebook.app.entites;
 
 public class Message {
     private int from_user_id;
