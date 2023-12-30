@@ -1,4 +1,4 @@
-1, 15,  "Hello there"
-2, 14, "assdasdas"
-2, 15, "asdadasdassd"
-3, 1, "asdrf3fsfsfsdfre"
+1,15,"Hello there",
+2,14,"assdasdas"
+1,15,"asdadasdassd"
+3,1,"asdrf3fsfsfsdfre"

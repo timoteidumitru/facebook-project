@@ -1,4 +1,4 @@
-package facebook.app.model.user;
+package facebook.app.entites;
 
 import facebook.app.entitites.AppPost;
 
@@ -6,12 +6,26 @@ public class User {
     private long user_id;
     private String email;
     private String password;
+    private boolean isLoggedIn;
 
     // Constructor
     public User(long user_id, String email, String password) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
+    }
+
+    public User() {
+
+    }
+
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 
     // Getter and Setter for user_id
@@ -41,6 +55,7 @@ public class User {
         this.password = password;
     }
 
+<<<<<<< HEAD:src/main/java/facebook/app/model/user/User.java
     public void addPost(AppPost post) {
     }
 
@@ -55,6 +70,10 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password=obfusated' " +
                 '}';
+=======
+    public String getName() {
+        return email.split("@")[0];
+>>>>>>> 953765c0446800c37beda7162f0278265121c33a:src/main/java/facebook/app/entites/User.java
     }
 }
 

@@ -7,6 +7,8 @@ import facebook.app.model.user.User;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PostServiceImpl implements PostService {
@@ -21,39 +23,54 @@ public class PostServiceImpl implements PostService {
             List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
             for (String line : allLines) {
                 String[] postData = line.split(",");
-                        if(String.valueOf(user.getUserId()).equals(postData[0]))
-                        {
-                            int postDate = Integer.parseInt(postData[1].trim());
-                            if(postDate > latest)
-                            {
-                                latest = postDate;
-                                latestMessage = postData[2];
+                if (String.valueOf(user.getUserId()).equals(postData[0])) {
+                    int postDate = Integer.parseInt(postData[1].trim());
+                    if (postDate > latest) {
+                        latest = postDate;
+                        latestMessage = postData[2];
 
-                            }
-                        }
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if(latestMessage == null)
-        {
+        if (latestMessage == null) {
             return null;
-        }
-        else
-        {
-            AppPost latestPost = new AppPost(user,latestMessage,latest);
+        } else {
+            AppPost latestPost = new AppPost(user, latestMessage, latest);
             return latestPost;
         }
     }
 
+    /**
+     * Returns a list of AppPost
+     * @param user
+     * @return a list of all AppPost associated to user
+     */
     @Override
     public List<AppPost> getAllPostsFromUser(User user) {
-        return null;
+        List<AppPost> postsFromUser = new ArrayList<>();
+        try {
+            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
+            for (String line : allLines) {
+                String[] postData = line.split(",");
+                if (String.valueOf(user.getUserId()).equals(postData[0])) {
+                   AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
+                   postsFromUser.add(appPost);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return postsFromUser;
     }
 
-    @Override
-    public List<AppPost> getLatestPostsFromUser(User user, int posts) {
-        return null;
+
+        @Override
+        public List<AppPost> getLatestPostsFromUser (User user,int posts){
+            return null;
+        }
     }
-}
+

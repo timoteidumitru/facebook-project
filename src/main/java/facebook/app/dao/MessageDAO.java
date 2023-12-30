@@ -1,6 +1,6 @@
 package facebook.app.dao;
 
-import facebook.app.model.messages.Message;
+import facebook.app.entites.Message;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -13,7 +13,7 @@ public class MessageDAO {
     private static final String FILE_NAME = "messages.txt";
 
     public void saveMessage(Message message) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(FILE_NAME).getAbsolutePath(), true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile().getAbsolutePath(), true))) {
             // Append the message details to the file with a semicolon separator
             writer.write(String.format("%d`%d`%s`%s;%n",
                     message.getFrom_user_id(), message.getTo_user_id(),
@@ -26,8 +26,7 @@ public class MessageDAO {
     public List<Message> readMessages() {
         List<Message> messageList = new ArrayList<>();
 
-        try (InputStream inputStream = getResourceAsStream(FILE_NAME)) {
-            assert inputStream != null;
+        try (InputStream inputStream = getResourceAsStream()) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
                 String line;
@@ -52,16 +51,16 @@ public class MessageDAO {
         return messageList;
     }
 
-    private InputStream getResourceAsStream(String fileName) {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
+    private InputStream getResourceAsStream() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(MessageDAO.FILE_NAME);
         if (inputStream == null) {
-            throw new IllegalArgumentException("File not found: " + fileName);
+            throw new IllegalArgumentException("File not found: " + MessageDAO.FILE_NAME);
         }
         return inputStream;
     }
 
-    private File getResourceFile(String fileName) throws URISyntaxException {
+    private File getResourceFile() throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
-        return new File(Objects.requireNonNull(classLoader.getResource(fileName)).toURI());
+        return new File(Objects.requireNonNull(classLoader.getResource(MessageDAO.FILE_NAME)).toURI());
     }
 }
