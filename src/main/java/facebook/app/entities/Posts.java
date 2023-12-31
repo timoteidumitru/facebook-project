@@ -1,4 +1,4 @@
 package facebook.app.entities;
 
-public class Groups {
+public class Posts {
 }
