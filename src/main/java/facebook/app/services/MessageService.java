@@ -1,5 +1,5 @@
 package facebook.app.services;
-import facebook.app.entites.Message;
+import facebook.app.entities.Message;
 
 public class MessageService {
 

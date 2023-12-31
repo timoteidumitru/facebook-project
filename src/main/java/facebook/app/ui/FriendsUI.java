@@ -2,16 +2,17 @@ package facebook.app.ui;
 
 import facebook.app.controller.FriendsController;
 import facebook.app.controller.UserController;
-import facebook.app.entites.Friends;
-import facebook.app.entites.User;
+import facebook.app.entities.Friends;
+import facebook.app.entities.User;
 import facebook.app.services.UserService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class FriendsUI {
     private final FriendsController friendsController;
-    private final UserController userController = new UserController();
+    UserController userController = new UserController();
     private final UserService userService = new UserService();
     private final Scanner scanner;
 
@@ -34,15 +35,12 @@ public class FriendsUI {
 
             switch (choice) {
                 case 1:
-                    // View friends
                     viewFriends();
                     break;
                 case 2:
-                    // Add a friend
                     addFriend();
                     break;
                 case 3:
-                    // Remove a friend
                     removeFriend();
                     break;
                 case 0:
@@ -63,37 +61,59 @@ public class FriendsUI {
         } else {
             System.out.println("Friends List:");
             for (Friends friend : friendsList) {
-                User friendDetails = userController.getUserByID(friend.getFriendId());
-                System.out.println("Name: " + friendDetails.getName());
-                System.out.println("------------------------------");
+                System.out.println("Friend ID: " + friend.getFriendId() + " | Name: " + friend.getFriendNameID());
             }
+            System.out.println("------------------------------");
         }
     }
 
     private void addFriend() {
-        System.out.println("Enter the User ID of the user you want to add as a friend:");
+        int userId = (int) userService.getCurrentUserId();
+        List<Friends> friendsList = friendsController.getFriendsOfUser(userId);
+
+
+        // Fetch all users
         List<User> users = userController.getAllUsers();
-        int fromUserId = (int) userService.getCurrentUserId();
+
+        boolean availableUsersToAdd = false;
+
+        // Display users who are not already friends
+        System.out.println("Enter the User ID of the user you want to add as a friend:");
         for (User user : users) {
-            if (user.getUserId() == fromUserId) {
+            if (user.getUserId() == userId) {
                 continue; // Skip current logged-in user
             }
-            System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+
+            boolean isAlreadyFriend = friendsList.stream()
+                    .anyMatch(friend -> friend.getFriendId() == user.getUserId() || friend.getUserId() == user.getUserId());
+
+            if (!isAlreadyFriend) {
+                System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+                availableUsersToAdd = true;
+            }
+        }
+
+        if (!availableUsersToAdd) {
+            System.out.println("There are no new users to add as friends.");
+            return; // Return to the previous menu
         }
 
         int friendId = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
 
-        friendsController.sendFriendRequest(fromUserId, friendId);
+        friendsController.addFriend(userId, friendId);
         System.out.println("Friend request sent successfully!");
     }
 
+
+
     private void removeFriend() {
         System.out.println("Enter the User ID of the friend you want to remove:");
+        viewFriends();
+        int userId = (int) userService.getCurrentUserId();
         int friendId = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
 
-        int userId = (int) userService.getCurrentUserId();
         friendsController.removeFriend(userId, friendId);
         System.out.println("Friend removed successfully!");
     }

@@ -1,26 +1,36 @@
 package facebook.app.controller;
 
-import facebook.app.entites.Friends;
+import facebook.app.entities.Friends;
+import facebook.app.entities.User;
 import facebook.app.services.FriendsService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FriendsController {
-    private final FriendsService friendsService = new FriendsService();
+    private final FriendsService friendService;
+    private final UserController userController = new UserController();
 
-    public FriendsController(FriendsService friendsService) {
-    }
-
-    public void sendFriendRequest(int userId, int friendId) {
-        friendsService.sendFriendRequest(userId, friendId);
+    public FriendsController(FriendsService friendService) {
+        this.friendService = friendService;
     }
 
     public List<Friends> getFriendsOfUser(int userId) {
-        return friendsService.getFriendsOfUser(userId);
+        List<Friends> allFriends = friendService.getAllFriends();
+        return allFriends.stream()
+                .filter(friend -> friend.getUserId() == userId || friend.getFriendId() == userId)
+                .collect(Collectors.toList());
+    }
+
+    public void addFriend(int fromUserId, int toUserId) {
+        User userToAdd = userController.getUserByID(toUserId);
+        String friendNameID = userToAdd.getEmail().split("@")[0];
+        Friends newFriend = new Friends(fromUserId, toUserId, friendNameID);
+        friendService.addFriend(newFriend);
     }
 
     public void removeFriend(int userId, int friendId) {
-        friendsService.removeFriend(userId, friendId);
+        friendService.removeFriend(userId, friendId);
     }
 
 }
