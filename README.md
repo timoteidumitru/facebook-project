@@ -6,11 +6,11 @@ A Java application that allows users to manage profiles, posts, groups and login
 
 ## Features need to develop
 
-- User profile creation and management
-- Post creation and management
-- Group creation and management
-- Profile creation and management
-- Login and registration functionality(partially done).
+- Login and registration functionality(done).
+- Friends add/remove(done).
+- Messages module(done).
+- Post creation and management.
+- Profile creation and management.
 
 ## Structure
 
@@ -22,9 +22,7 @@ A Java application that allows users to manage profiles, posts, groups and login
 - `entities`: Contains entity classes representing the application's data model
     - `User`: User entity
 - `ui`: Contains classes for user interface components
-    - `AppPage`: Application main page(to be added)++
-    - `AppPost`: Application post component(to be added)++
-    - `Group`: Application group component(to be added)++
+    - `Posts`: Application post component(to be added)++
     - `Profile`: Application profile component(to be added)++
 - `exceptions`: Contains custom exception classes(to be added)++
 - `model`: Contains model classes representing the application's data model
