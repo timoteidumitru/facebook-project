@@ -1,4 +1,4 @@
-package facebook.app.entites;
+package facebook.app.entities;
 
 import facebook.app.entitites.AppPost;
 

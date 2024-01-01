@@ -2,7 +2,11 @@
 /shelf/
 /workspace.xml
 facebook_app.iml
+<<<<<<< HEAD
 .idea
 /out
 out
 Application2*
+=======
+.idea
+>>>>>>> 1fd89bcd51060651f6d45bffd6f76b4dce386728

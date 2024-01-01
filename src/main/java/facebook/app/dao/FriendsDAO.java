@@ -1,5 +1,6 @@
 package facebook.app.dao;
-import facebook.app.entites.Friends;
+
+import facebook.app.entities.Friends;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -21,11 +22,11 @@ public class FriendsDAO {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(",");
+                    String[] parts = line.split(";");
                     Friends friend = new Friends(
                             Integer.parseInt(parts[0].trim()),
                             Integer.parseInt(parts[1].trim()),
-                            Integer.parseInt(parts[2].trim()));
+                            parts[2].trim()); // Assuming this is a String now
                     friendsList.add(friend);
                 }
             }
@@ -37,7 +38,7 @@ public class FriendsDAO {
 
     public void addFriend(Friends friend) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), true))) {
-            writer.write(friend.getId() + "," + friend.getUserId() + "," + friend.getFriendId());
+            writer.write(friend.getUserId() + ";" + friend.getFriendId() + ";" + friend.getFriendNameID()); // Change to ';' and include friendNameID
             writer.newLine();
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
@@ -53,7 +54,7 @@ public class FriendsDAO {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), false))) {
             for (Friends friend : updatedFriendsList) {
-                writer.write(friend.getId() + "," + friend.getUserId() + "," + friend.getFriendId());
+                writer.write(friend.getUserId() + ";" + friend.getFriendId() + ";" + friend.getFriendNameID()); // Change to ';' and include friendNameID
                 writer.newLine();
             }
         } catch (IOException | URISyntaxException e) {
