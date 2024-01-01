@@ -1,8 +1,8 @@
 package facebook.app.homefeedservices;
 
 import facebook.app.entitites.AppPost;
-import facebook.app.model.user.User;
 
+import facebook.app.entites.User;
 import java.util.List;
 
 public interface PostService {

@@ -2,14 +2,12 @@ package facebook.app.services;
 
 import facebook.app.entitites.AppPost;
 import facebook.app.homefeedservices.PostService;
-import facebook.app.model.user.User;
+import facebook.app.entites.User;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class PostServiceImpl implements PostService {
 
@@ -70,7 +68,25 @@ public class PostServiceImpl implements PostService {
 
         @Override
         public List<AppPost> getLatestPostsFromUser (User user,int posts){
-            return null;
+             Calendar rightNow = Calendar.getInstance();
+            int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+            List<AppPost> latestPostsFromUser = new ArrayList<>();
+            try {
+                List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
+                for (String line : allLines) {
+                    String[] postData = line.split(",");
+                    if (String.valueOf(user.getUserId()).equals(postData[0])) {
+                        int hourValue = Integer.parseInt(postData[1]);
+                        if(hourValue <= hour && hourValue >= hour-2)
+                        {
+                        AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
+                        latestPostsFromUser.add(appPost);
+                    }}
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return latestPostsFromUser;
         }
     }
 

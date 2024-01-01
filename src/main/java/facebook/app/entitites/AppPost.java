@@ -1,7 +1,6 @@
 package facebook.app.entitites;
 
-import facebook.app.model.user.User;
-
+import facebook.app.entites.User;
 public class AppPost {
     private Long id;
 

@@ -1,7 +1,7 @@
 package facebook.app.homefeedservices;
 
 import facebook.app.entitites.AppPost;
-import facebook.app.model.user.User;
+import facebook.app.entites.User;
 
 public interface FeedService {
      void addPost(User user, AppPost post) ;

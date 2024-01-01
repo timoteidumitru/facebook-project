@@ -55,7 +55,6 @@ public class User {
         this.password = password;
     }
 
-<<<<<<< HEAD:src/main/java/facebook/app/model/user/User.java
     public void addPost(AppPost post) {
     }
 
@@ -70,10 +69,11 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password=obfusated' " +
                 '}';
-=======
-    public String getName() {
-        return email.split("@")[0];
->>>>>>> 953765c0446800c37beda7162f0278265121c33a:src/main/java/facebook/app/entites/User.java
     }
+
+        public String getName () {
+            return email.split("@")[0];
+        }
+
 }
 

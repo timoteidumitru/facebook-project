@@ -1,7 +1,7 @@
 package facebook.app.services;
 import facebook.app.entitites.AppPost;
 import facebook.app.homefeedservices.FeedService;
-import facebook.app.model.user.User;
+import facebook.app.entites.User;
 
 import java.util.ArrayList;
 import java.util.List;
