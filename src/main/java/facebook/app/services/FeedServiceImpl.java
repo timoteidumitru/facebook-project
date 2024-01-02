@@ -1,11 +1,11 @@
 package facebook.app.services;
-import facebook.app.entitites.AppPost;
-import facebook.app.homefeedservices.FeedService;
-import facebook.app.entites.User;
+import facebook.app.entities.AppPost;
+import facebook.app.homefeedservicesinterfaces.FeedServiceDAO;
+import facebook.app.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
-public class FeedServiceImpl implements FeedService {
+public class FeedServiceImpl implements FeedServiceDAO {
 
     private List<User> users;
     private List<AppPost> allPosts;

@@ -1,15 +1,15 @@
-package facebook.app.services;
+package facebook.app.dao;
 
-import facebook.app.entitites.AppPost;
-import facebook.app.homefeedservices.PostService;
-import facebook.app.entites.User;
+import facebook.app.entities.AppPost;
+import facebook.app.homefeedservicesinterfaces.PostServiceDAO;
+import facebook.app.entities.User;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class PostServiceImpl implements PostService {
+public class UserPostsDAO implements PostServiceDAO {
 
     @Override
     public AppPost getLatestPost(User user) {

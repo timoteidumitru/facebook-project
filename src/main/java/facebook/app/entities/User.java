@@ -1,7 +1,5 @@
 package facebook.app.entities;
 
-import facebook.app.entitites.AppPost;
-
 public class User {
     private long user_id;
     private String email;

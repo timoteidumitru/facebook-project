@@ -10,6 +10,8 @@ import facebook.app.ui.FriendsUI;
 import facebook.app.ui.LoginUI;
 import facebook.app.ui.MessageUI;
 import facebook.app.ui.RegisterUI;
+import facebook.app.ui.homefeedUI.HomeFeedUI;
+import facebook.app.controller.UserPostsController;
 
 import java.util.Scanner;
 
@@ -21,7 +23,7 @@ public class Application {
         messageCtr.setMessageUI(messageUI);
         FriendsController friendsController = new FriendsController(new FriendsService());
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
-
+        //HomeFeedUI homeFeedUI = new HomeFeedUI(();
         Scanner scanner = new Scanner(System.in);
 
         int choice;
@@ -57,6 +59,7 @@ public class Application {
                         friendsUI.startFriendsManagement();
                         break;
                     case 3:
+//                        homeFeedUI.postsSection();
                         System.out.println("Option 3: Welcome to Posts section!");
                         break;
                     case 4:
