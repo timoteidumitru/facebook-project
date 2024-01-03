@@ -9,6 +9,7 @@ This Java application simulates a social networking service, allowing users to m
 - **Messages**: (Complete) Users can manage messages.
 - **Profile**: (In Progress) Allows users to create and manage their profiles.
 - **Posts**: (In Progress) Allows users to create posts.
+- **Groups**: (In Progress) Allows users to manage groups.
 
 ## Project Structure
 
@@ -19,18 +20,14 @@ This Java application simulates a social networking service, allowing users to m
   - `MessagesController`: Handles message-related operations. (Complete)
   - `ProfileController`: Handles profile-related operations. (To be added)
   - `PostsController`: Handles posts-related operations. (To be added)
+  - `GroupsController`: Handles groups-related operations. (To be added)
 - **dao**: Contains Data Access Objects for database interactions.
   - `UserDAO`: Manages user data transactions. (Complete)
   - `FriendsDAO`: Handles friend data transactions. (Complete)
   - `MessagesDAO`: Manages message data transactions. (Complete)
   - `ProfileDAO`: Manages profile data transactions. (To be added)
   - `PostsDAO`: Manages posts data transactions. (To be added)
-- **entities**: Holds entity classes representing the data model.
-  - `User`: Represents a user entity. (Complete)
-  - `Friends`: Represents friend relationships. (Complete)
-  - `Message`: Represents message entities. (Complete)
-  - `Profile`: Represents profile entities. (To be added)
-  - `Posts`: Represents posts entities. (To be added)
+  - `GroupsDAO`: Manages groups data transactions. (To be added)
 - **ui**: For user interface components.
   - `FriendsUI`: Main application page. (Complete)
   - `MessagesUI`: Handles messages UI components. (Complete)
@@ -38,6 +35,7 @@ This Java application simulates a social networking service, allowing users to m
   - `RegisterUI`: Handles register UI components. (Complete)
   - `ProfileUI`: Handles profile UI components. (To be added)
   - `PostsUI`: Handles posts UI components. (To be added)
+  - `GroupsUI`: Handles groups UI components. (To be added)
 - **exceptions**: Custom exception classes. (To be added)
 - **model**: Model classes representing the data structure.
   - `User`: User model. (Complete)
@@ -45,18 +43,21 @@ This Java application simulates a social networking service, allowing users to m
   - `Messages`: Messages model. (Complete)
   - `Profile`: Profile model. (To be added)
   - `Posts`: Posts model. (To be added)
+  - `Groups`: Groups model. (To be added)
 - **services**: Service classes for business logic.
   - `UserService`: Business logic for user operations(Complete).
   - `FriendService`: Manages friend-related business logic(Complete).
   - `MessageService`: Handles message-related business logic(Complete).
   - `Profile`: Handles profile-related business logic. (To be added)
   - `Posts`: Handles posts-related business logic. (To be added)
+  - `Groups`: Handles groups-related business logic. (To be added)
 - **resources**: Resources like message and user data files.
   - `friends.txt`: Contains application friends. (Complete)
   - `messages.txt`: Contains application messages. (Complete)
   - `users.txt`: Stores user data. (Complete)
   - `profile.txt`: Stores user data. (To be added)
-  - `posts.txt`: Stores user data. (To be added)
+  - `posts.txt`: Stores posts data. (To be added)
+  - `groups.txt`: Stores groups data. (To be added)
 
 ## Prerequisites
 
