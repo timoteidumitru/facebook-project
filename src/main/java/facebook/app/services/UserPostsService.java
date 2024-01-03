@@ -12,12 +12,21 @@ public class UserPostsService {
 
     private UserPostsDAO userPostsDAO;
     private UserDAO userDAO;
-
+    private User user;
     public UserPostsService(UserPostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
         this.userDAO = userDAO;
     }
 
+//    public boolean isValidUserId(int userId) {
+//        // Check if the provided userId is a valid integer and exists in the database
+//        return userDAO.getUserByID(userId);
+//    }
+//
+//    public boolean hasPostsForUser(int userId) {
+//        // Check if the user has any posts in the database
+//        return userDAO.getNumPostsForUser(userId) > 0;
+//    }
 
     public List<AppPost> getAllPostsFromUser(User user) throws UserNotFoundException {
         user = userDAO.getUserByID((int) user.getUserId());
@@ -28,8 +37,11 @@ public class UserPostsService {
         }
     }
 
-    public List<AppPost> getLatestPostsFromUser(User user, int limit) {
-        return userPostsDAO.getLatestPostsFromUser(user, limit);
+
+
+    public List<AppPost> getLatestPostsFromUser(int limit) {
+         user = userDAO.getUserByID((int) user.getUserId());
+         return userPostsDAO.getLatestPostsFromUser(user, limit);
     }
 
     public AppPost getLatestPost(User user) {

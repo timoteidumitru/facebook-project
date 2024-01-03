@@ -10,8 +10,7 @@ import facebook.app.ui.FriendsUI;
 import facebook.app.ui.LoginUI;
 import facebook.app.ui.MessageUI;
 import facebook.app.ui.RegisterUI;
-import facebook.app.ui.homefeedUI.HomeFeedUI;
-import facebook.app.controller.UserPostsController;
+import facebook.app.ui.HomeFeedUI;
 
 import java.util.Scanner;
 

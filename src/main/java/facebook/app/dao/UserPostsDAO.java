@@ -13,10 +13,8 @@ public class UserPostsDAO implements PostServiceDAO {
 
     @Override
     public AppPost getLatestPost(User user) {
-
         long latest = 0L;
         String latestMessage = null;
-
         try {
             List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
             for (String line : allLines) {
@@ -26,7 +24,6 @@ public class UserPostsDAO implements PostServiceDAO {
                     if (postDate > latest) {
                         latest = postDate;
                         latestMessage = postData[2];
-
                     }
                 }
             }
@@ -44,6 +41,7 @@ public class UserPostsDAO implements PostServiceDAO {
 
     /**
      * Returns a list of AppPost
+     *
      * @param user
      * @return a list of all AppPost associated to user
      */
@@ -55,8 +53,8 @@ public class UserPostsDAO implements PostServiceDAO {
             for (String line : allLines) {
                 String[] postData = line.split(",");
                 if (String.valueOf(user.getUserId()).equals(postData[0])) {
-                   AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
-                   postsFromUser.add(appPost);
+                    AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
+                    postsFromUser.add(appPost);
                 }
             }
         } catch (IOException e) {
@@ -66,27 +64,27 @@ public class UserPostsDAO implements PostServiceDAO {
     }
 
 
-        @Override
-        public List<AppPost> getLatestPostsFromUser (User user,int posts){
-             Calendar rightNow = Calendar.getInstance();
-            int hour = rightNow.get(Calendar.HOUR_OF_DAY);
-            List<AppPost> latestPostsFromUser = new ArrayList<>();
-            try {
-                List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
-                for (String line : allLines) {
-                    String[] postData = line.split(",");
-                    if (String.valueOf(user.getUserId()).equals(postData[0])) {
-                        int hourValue = Integer.parseInt(postData[1]);
-                        if(hourValue <= hour && hourValue >= hour-2)
-                        {
+    @Override
+    public List<AppPost> getLatestPostsFromUser(User user, int posts) {
+        Calendar rightNow = Calendar.getInstance();
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        List<AppPost> latestPostsFromUser = new ArrayList<>();
+        try {
+            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
+            for (String line : allLines) {
+                String[] postData = line.split(",");
+                if (String.valueOf(user.getUserId()).equals(postData[0])) {
+                    int hourValue = Integer.parseInt(postData[1]);
+                    if (hourValue <= hour && hourValue >= hour - 2) {
                         AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
                         latestPostsFromUser.add(appPost);
-                    }}
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        return latestPostsFromUser;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return latestPostsFromUser;
     }
+}
 

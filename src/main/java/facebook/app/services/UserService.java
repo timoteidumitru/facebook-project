@@ -44,7 +44,6 @@ public class UserService {
         for (User user : userList) {
             if (user.isLoggedIn()) {
                 return user.getUserId();
-
             }
         }
         return -1; // Return -1 if no user is currently logged in
