@@ -49,4 +49,12 @@ public class AppPost {
                 ", content='" + content + '\'' +
                 '}';
     }
+
+    public Object getTimePosted() {
+        return timePosted;
+    }
+
+    public void setTimePosted(Object timePosted) {
+        this.timePosted = (Long) timePosted;
+    }
 }

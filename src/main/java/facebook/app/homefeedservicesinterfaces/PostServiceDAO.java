@@ -12,5 +12,7 @@ public interface PostServiceDAO {
 
     List<AppPost> getLatestPostsFromUser(User user, int posts);
 
+    void createPost(AppPost appPost);
+
 
 }

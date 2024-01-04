@@ -18,16 +18,6 @@ public class UserPostsService {
         this.userDAO = userDAO;
     }
 
-//    public boolean isValidUserId(int userId) {
-//        // Check if the provided userId is a valid integer and exists in the database
-//        return userDAO.getUserByID(userId);
-//    }
-//
-//    public boolean hasPostsForUser(int userId) {
-//        // Check if the user has any posts in the database
-//        return userDAO.getNumPostsForUser(userId) > 0;
-//    }
-
     public List<AppPost> getAllPostsFromUser(User user) throws UserNotFoundException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user == null) {
@@ -37,16 +27,25 @@ public class UserPostsService {
         }
     }
 
-
-
     public List<AppPost> getLatestPostsFromUser(int limit) {
          user = userDAO.getUserByID((int) user.getUserId());
          return userPostsDAO.getLatestPostsFromUser(user, limit);
     }
 
     public AppPost getLatestPost(User user) {
+        user = userDAO.getUserByID((int) user.getUserId());
         return userPostsDAO.getLatestPost(user);
     }
+    public void createPost(User user, String content) {
+        if (user == null || content == null || content.isEmpty()) {
+            System.out.println("Invalid input for creating a post. User and content are required.");
+            return;
+        }
+        Long timePosted = System.currentTimeMillis(); // Assuming you want to use the current time
+        AppPost appPost = new AppPost(user, content, timePosted);
+        // Call DAO to write the post to the database
+        userPostsDAO.createPost(appPost);
+        System.out.println("Post created successfully.");
+    }
 
-    // Add more methods as needed for your application
 }

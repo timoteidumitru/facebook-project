@@ -4,9 +4,12 @@ import facebook.app.entities.AppPost;
 import facebook.app.homefeedservicesinterfaces.PostServiceDAO;
 import facebook.app.entities.User;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class UserPostsDAO implements PostServiceDAO {
@@ -85,6 +88,23 @@ public class UserPostsDAO implements PostServiceDAO {
             e.printStackTrace();
         }
         return latestPostsFromUser;
+    }
+
+    private static final String DATABASE_FILE_PATH = "posts.txt";
+    @Override
+    public void createPost(AppPost appPost) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATABASE_FILE_PATH, true))) {
+            String postData = String.format("%d,%s,%s",
+                    appPost.getUser().getUserId(),
+                    appPost.getTimePosted(),
+                    appPost.getContent());
+
+            writer.write(postData);
+            writer.newLine(); // Add a newline to separate posts
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception according to your needs
+        }
     }
 }
 
