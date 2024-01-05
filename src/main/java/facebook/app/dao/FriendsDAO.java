@@ -26,7 +26,7 @@ public class FriendsDAO {
                     Friends friend = new Friends(
                             Integer.parseInt(parts[0].trim()),
                             Integer.parseInt(parts[1].trim()),
-                            parts[2].trim()); // Assuming this is a String now
+                            parts[2].trim());
                     friendsList.add(friend);
                 }
             }
@@ -38,7 +38,7 @@ public class FriendsDAO {
 
     public void addFriend(Friends friend) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), true))) {
-            writer.write(friend.getUserId() + ";" + friend.getFriendId() + ";" + friend.getFriendNameID()); // Change to ';' and include friendNameID
+            writer.write(friend.getUserId() + ";" + friend.getFriendId() + ";" + friend.getFriendNameID());
             writer.newLine();
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class FriendsDAO {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), false))) {
             for (Friends friend : updatedFriendsList) {
-                writer.write(friend.getUserId() + ";" + friend.getFriendId() + ";" + friend.getFriendNameID()); // Change to ';' and include friendNameID
+                writer.write(friend.getUserId() + ";" + friend.getFriendId() + ";" + friend.getFriendNameID());
                 writer.newLine();
             }
         } catch (IOException | URISyntaxException e) {

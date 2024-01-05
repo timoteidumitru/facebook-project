@@ -3,13 +3,11 @@ package facebook.app;
 import facebook.app.controller.FriendsController;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
+import facebook.app.entities.Profile;
 import facebook.app.services.FriendsService;
 import facebook.app.services.MessageService;
 import facebook.app.dao.MessageDAO;
-import facebook.app.ui.FriendsUI;
-import facebook.app.ui.LoginUI;
-import facebook.app.ui.MessageUI;
-import facebook.app.ui.RegisterUI;
+import facebook.app.ui.*;
 
 import java.util.Scanner;
 
@@ -21,7 +19,7 @@ public class Application {
         messageCtr.setMessageUI(messageUI);
         FriendsController friendsController = new FriendsController(new FriendsService());
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
-
+        ProfileUI profileUI = new ProfileUI();
         Scanner scanner = new Scanner(System.in);
 
         int choice;
@@ -48,7 +46,7 @@ public class Application {
             scanner.nextLine(); // Consume the newline character
 
             if (loggedInUserId != -1) {
-                // User is logged in
+                // When User is logged in
                 switch (choice) {
                     case 1:
                         messageCtr.startMessaging();
@@ -63,7 +61,7 @@ public class Application {
                         System.out.println("Option 4: Welcome to Groups section!");
                         break;
                     case 5:
-                        System.out.println("Option 5: View Profile");
+                        profileUI.createProfile();
                         break;
                     case 0:
                         userController.logoutAllUsers();
@@ -73,7 +71,7 @@ public class Application {
                         System.out.println("Invalid choice. Please try again.");
                 }
             } else {
-                // User is not logged in
+                // When User is not logged in
                 switch (choice) {
                     case 1:
                         // Register new user

@@ -1,9 +1,9 @@
 package facebook.app.entities;
 
 public class Friends {
-    private int userId;
+    private final int userId;
     private int friendId;
-    private String friendNameID;
+    private final String friendNameID;
 
     public Friends(int userId, int friendId, String friendNameID) {
         this.userId = userId;
@@ -14,10 +14,6 @@ public class Friends {
     // Getters and Setters
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getFriendId() {
@@ -31,10 +27,4 @@ public class Friends {
     public String getFriendNameID() {
         return friendNameID;
     }
-
-    public void setFriendNameID(String friendNameID) {
-        this.friendNameID = friendNameID;
-    }
-
-    // Optionally override toString(), equals() and hashCode() methods
 }

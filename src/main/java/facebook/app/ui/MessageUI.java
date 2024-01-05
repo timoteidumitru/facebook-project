@@ -24,22 +24,22 @@ public class MessageUI {
     public void startMessaging() {
         int choice;
         do {
-            System.out.println("    Messaging Options:");
-            System.out.println("1. Send a Message");
-            System.out.println("2. View Messages");
+            System.out.println("    Messaging management, please chose one of the following options:");
+            System.out.println("1. View Messages");
+            System.out.println("2. Send a Message");
             System.out.println("0. Back to Main Menu");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    // Send a message
-                    sendMessage();
-                    break;
-                case 2:
                     // View messages (implement as needed)
                     viewMessages();
+                    break;
+                case 2:
+                    // Send a message
+                    sendMessage();
                     break;
                 case 0:
                     System.out.println("Returning to Main Menu.");
@@ -68,7 +68,6 @@ public class MessageUI {
         }
     }
 
-    // Inside the MessageUI class
     private void sendMessage() {
         UserController userController = new UserController();
         UserService userService = new UserService();
@@ -88,7 +87,7 @@ public class MessageUI {
         }
 
         int recipientChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
         boolean recipientFound = false;
         int toUserId = -1;
@@ -115,11 +114,7 @@ public class MessageUI {
         String messageText = scanner.nextLine();
 
         // Call the controller to send the message
-        
         messageController.sendMessage(fromUserId, toUserId, date, messageText);
-
         System.out.println("Message sent successfully!");
     }
-
-
 }

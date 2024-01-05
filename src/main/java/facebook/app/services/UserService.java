@@ -51,7 +51,7 @@ public class UserService {
     }
 
     public void addUser(User user) {
-        // Basic business logic: Ensure password meets minimum length requirement
+        // Ensure password meets minimum length requirement
         if (user.getPassword().length() < 3) {
             System.out.println("Password must be at least 4 characters long. Please try again!");
             return;
@@ -77,7 +77,7 @@ public class UserService {
 
 
     public User getUserByEmail(String email) {
-        // Basic business logic: Check if the email is not empty
+        // Check if the email is not empty
         if (email == null || email.trim().isEmpty()) {
             System.out.println("Email cannot be empty. Please provide a valid email.");
             return null;
@@ -87,7 +87,7 @@ public class UserService {
         return userDAO.getUserByEmail(email);
     }
     public User getUserByID(int userID) {
-        // Basic business logic: Check if the userID is valid
+        // Check if the userID is valid
         if (userID <= 0) {
             System.out.println("Invalid user ID. Please provide a valid user ID.");
             return null;
@@ -102,7 +102,7 @@ public class UserService {
         return userDAO.readUsers();
     }
 
-    // Basic business logic: Check if the email has a valid format
+    // Check if the email has a valid format
     private boolean isValidEmailFormat(String email) {
         // This is a simple check; you might want to use a regular expression for a more thorough check
         return email != null && email.contains("@");

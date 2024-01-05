@@ -18,7 +18,7 @@ public class FriendsController {
     public List<Friends> getFriendsOfUser(int userId) {
         List<Friends> allFriends = friendService.getAllFriends();
         return allFriends.stream()
-                .filter(friend -> friend.getUserId() == userId || friend.getFriendId() == userId)
+                .filter(friend -> friend.getUserId() == userId)
                 .collect(Collectors.toList());
     }
 

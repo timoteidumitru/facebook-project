@@ -4,5 +4,7 @@
 4;john@eu.com;1234;false
 5;cristina@eu.com;criss;false
 6;flavy@eu.com;flavy;false
-7;simida@eu.com;simida;false
+7;simi@ya.com;parola;false
 8;florin@eu.com;florin;false
+9;joseph@eu.com;joseph;false
+10;iov@eu.com;iovb;false

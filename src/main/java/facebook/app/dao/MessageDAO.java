@@ -19,7 +19,7 @@ public class MessageDAO {
                     message.getFrom_user_id(), message.getTo_user_id(),
                     message.getDate(), message.getMessage()));
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
         }
     }
 

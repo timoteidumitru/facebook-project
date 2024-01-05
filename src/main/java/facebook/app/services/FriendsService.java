@@ -18,5 +18,4 @@ public class FriendsService {
         friendsDAO.removeFriend(userId, friendId);
     }
 
-    // Additional business logic methods can be added here
 }
