@@ -46,7 +46,7 @@ public class UserDAO {
     }
 
     public void writeUsers(List<User> userList) {
-        try (OutputStream outputStream = new FileOutputStream(getFilePath());
+        try (OutputStream outputStream = new FileOutputStream(Objects.requireNonNull(getFilePath()));
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
 
             for (User user : userList) {
