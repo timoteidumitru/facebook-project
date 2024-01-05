@@ -7,7 +7,7 @@
 # Build directories
 /target/
 /build/
-/out/
+#/out/
 
 # OS generated files
 .DS_Store
