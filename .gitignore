@@ -14,7 +14,7 @@
 Thumbs.db
 
 # Other files and directories
-*.class
+#*.class
 *.jar
 *.war
 *.ear
