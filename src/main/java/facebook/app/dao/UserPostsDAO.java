@@ -14,6 +14,10 @@ import java.util.*;
 
 public class UserPostsDAO implements PostServiceDAO {
 
+
+    public UserPostsDAO() {
+    }
+
     @Override
     public AppPost getLatestPost(User user) {
         long latest = 0L;
@@ -90,7 +94,7 @@ public class UserPostsDAO implements PostServiceDAO {
         return latestPostsFromUser;
     }
 
-    private static final String DATABASE_FILE_PATH = "posts.txt";
+    private static final String DATABASE_FILE_PATH = "C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt";
     @Override
     public void createPost(AppPost appPost) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATABASE_FILE_PATH, true))) {
@@ -101,6 +105,7 @@ public class UserPostsDAO implements PostServiceDAO {
 
             writer.write(postData);
             writer.newLine(); // Add a newline to separate posts
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
 

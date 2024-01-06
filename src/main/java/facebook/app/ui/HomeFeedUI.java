@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class HomeFeedUI {
 
-   private  UserPostsController postsController;
+   private  UserPostsController postsController = new UserPostsController();
     User user;
 
 

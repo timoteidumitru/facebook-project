@@ -10,13 +10,16 @@ import java.util.List;
 
 public class UserPostsService {
 
-    private UserPostsDAO userPostsDAO;
+    private UserPostsDAO userPostsDAO = new UserPostsDAO();
     private UserDAO userDAO;
     private User user;
     public UserPostsService(UserPostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
         this.userDAO = userDAO;
     }
+    public UserPostsService() {}
+
+
 
     public List<AppPost> getAllPostsFromUser(User user) throws UserNotFoundException {
         user = userDAO.getUserByID((int) user.getUserId());

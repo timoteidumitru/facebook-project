@@ -9,16 +9,20 @@ import facebook.app.services.UserService;
 import java.util.List;
 
 public class UserPostsController {
-    private UserPostsService userPostsService;
+    private UserPostsService userPostsService = new UserPostsService();
 
-    private UserService userservice;
+    private UserService userservice = new UserService();
 
     private final long userId = userservice.getCurrentUserId();
     User user = userservice.getUserByID((int) userId);
 
     public UserPostsController(UserPostsService userPostsService) {
-        this.userPostsService = userPostsService;
+        this.userPostsService =  userPostsService;
     }
+    public UserPostsController() {
+
+    }
+
 
     public List<AppPost> getAllPostsFromUser() throws UserNotFoundException {
         return userPostsService.getAllPostsFromUser(user);
