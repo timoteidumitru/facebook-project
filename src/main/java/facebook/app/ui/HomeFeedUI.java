@@ -3,16 +3,16 @@ package facebook.app.ui;
 import facebook.app.controller.UserPostsController;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserNotFoundException;
+import facebook.app.services.UserPostsService;
 import facebook.app.services.UserService;
 
 import java.util.Scanner;
 
 public class HomeFeedUI {
 
-    UserPostsController postsController;
+   private  UserPostsController postsController;
     User user;
 
-    private UserService userservice;
 
     public void postsSection() {
         Scanner keyboard = new Scanner(System.in);
@@ -35,6 +35,10 @@ public class HomeFeedUI {
             case 3:
                 System.out.println("Recent posts from user:");
                 postsController.getLatestPostsFromUser( 3);
+            case 4:
+                System.out.println("Create a new post:");
+                System.out.println("ENter the content of the post:");
+                postsController.createPost(keyboard.next());
 
         }
 

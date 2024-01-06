@@ -103,7 +103,7 @@ public class UserPostsDAO implements PostServiceDAO {
             writer.newLine(); // Add a newline to separate posts
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception according to your needs
+
         }
     }
 }

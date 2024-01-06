@@ -34,4 +34,8 @@ public class UserPostsController {
     }
 
 
+    public void createPost(String content)
+    {
+        userPostsService.createPost(user, content);
+    }
 }
