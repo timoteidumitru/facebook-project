@@ -6,13 +6,14 @@ import facebook.app.entities.AppPost;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserNotFoundException;
 
+import java.util.Collections;
 import java.util.List;
 
 public class UserPostsService {
 
     private UserPostsDAO userPostsDAO = new UserPostsDAO();
-    private UserDAO userDAO;
-    private User user;
+    private UserDAO userDAO = new UserDAO();
+    private User user = new User();
     public UserPostsService(UserPostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
         this.userDAO = userDAO;
@@ -21,18 +22,30 @@ public class UserPostsService {
 
 
 
-    public List<AppPost> getAllPostsFromUser(User user) throws UserNotFoundException {
+    public List<AppPost> getAllPostsFromCurrentUser(User user) throws UserNotFoundException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user == null) {
             throw new UserNotFoundException("User with ID " + (int) user.getUserId() + " not found");
         } else {
-            return userPostsDAO.getAllPostsFromUser(user);
+            return userPostsDAO.getAllPostsFromCurrentUser(user);
         }
     }
 
-    public List<AppPost> getLatestPostsFromUser(int limit) {
-         user = userDAO.getUserByID((int) user.getUserId());
-         return userPostsDAO.getLatestPostsFromUser(user, limit);
+    public List<AppPost> getRecentPostsFromUser(User user, int limit) {
+        user = userDAO.getUserByID((int) user.getUserId());
+        if (user != null) {
+            // Assuming userDAO.getUserByID returns a non-null User or null if not found
+            user = userDAO.getUserByID((int) user.getUserId());
+
+            if (user != null) {
+                return userPostsDAO.getRecentPostsFromUser(user, limit);
+            } else {
+                System.out.println("User not found.");
+            }
+        } else {
+            System.out.println("User is null.");
+        }
+        return Collections.emptyList(); // or handle the situation appropriately based on your requirements
     }
 
     public AppPost getLatestPost(User user) {

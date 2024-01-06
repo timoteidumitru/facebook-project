@@ -24,16 +24,16 @@ public class UserPostsController {
     }
 
 
-    public List<AppPost> getAllPostsFromUser() throws UserNotFoundException {
-        return userPostsService.getAllPostsFromUser(user);
+    public List<AppPost> getAllPostsFromCurrentUser() throws UserNotFoundException {
+        return userPostsService.getAllPostsFromCurrentUser(user);
     }
 
-    public List<AppPost> getLatestPostsFromUser(int limit) {
-        return userPostsService.getLatestPostsFromUser(limit);
+    public List<AppPost> getRecentPostsFromUser(int limit) {
+        return userPostsService.getRecentPostsFromUser(user, limit);
     }
 
 
-    public AppPost getLatestPost(User user) {
+    public AppPost getLatestPost() {
         return userPostsService.getLatestPost(user);
     }
 

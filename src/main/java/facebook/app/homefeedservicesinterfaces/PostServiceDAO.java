@@ -8,9 +8,9 @@ import java.util.List;
 public interface PostServiceDAO {
     AppPost getLatestPost(User user);
 
-     List<AppPost> getAllPostsFromUser(User user);
+     List<AppPost> getAllPostsFromCurrentUser(User user);
 
-    List<AppPost> getLatestPostsFromUser(User user, int posts);
+    List<AppPost> getRecentPostsFromUser(User user, int posts);
 
     void createPost(AppPost appPost);
 

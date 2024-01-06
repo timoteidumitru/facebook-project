@@ -53,13 +53,34 @@ public class UserPostsDAO implements PostServiceDAO {
      * @return a list of all AppPost associated to user
      */
     @Override
-    public List<AppPost> getAllPostsFromUser(User user) {
+//    public List<AppPost> getAllPostsFromUser(User user) {
+//        List<AppPost> postsFromUser = new ArrayList<>();
+//        try {
+//            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
+//            for (String line : allLines) {
+//                String[] postData = line.split(",");
+//                if (String.valueOf(user.getUserId()).equals(postData[0])) {
+//                    AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
+//                    postsFromUser.add(appPost);
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return postsFromUser;
+//    }
+    public List<AppPost> getAllPostsFromCurrentUser(User user) {
         List<AppPost> postsFromUser = new ArrayList<>();
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt"));
             for (String line : allLines) {
                 String[] postData = line.split(",");
-                if (String.valueOf(user.getUserId()).equals(postData[0])) {
+                String userIdString = postData[0].trim();
+
+                System.out.println("User ID from file: " + userIdString);
+                System.out.println("User ID from object: " + user.getUserId());
+
+                if (userIdString.equals(String.valueOf(user.getUserId()))) {
                     AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
                     postsFromUser.add(appPost);
                 }
@@ -72,12 +93,12 @@ public class UserPostsDAO implements PostServiceDAO {
 
 
     @Override
-    public List<AppPost> getLatestPostsFromUser(User user, int posts) {
+    public List<AppPost> getRecentPostsFromUser(User user, int posts) {
         Calendar rightNow = Calendar.getInstance();
         int hour = rightNow.get(Calendar.HOUR_OF_DAY);
         List<AppPost> latestPostsFromUser = new ArrayList<>();
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt"));
             for (String line : allLines) {
                 String[] postData = line.split(",");
                 if (String.valueOf(user.getUserId()).equals(postData[0])) {
