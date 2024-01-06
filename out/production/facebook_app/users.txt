@@ -1,4 +1,0 @@
-1;tim@eu.com;passw;false
-2;mike@eu.com;pass;false
-3;jane@eu.com;1234;false
-4;john@eu.com;1234;false

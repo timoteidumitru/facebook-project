@@ -21,7 +21,6 @@ public class MessageController {
         this.messageUI = messageUI;
     }
 
-    // Example method to handle message creation and persistence
     public void sendMessage(int fromUserId, int toUserId, String date, String messageText) {
         // Create a Message object
         Message message = new Message(fromUserId, toUserId, date, messageText);
@@ -33,7 +32,6 @@ public class MessageController {
         messageDAO.saveMessage(message);
     }
 
-    // Example method to start messaging UI
     public void startMessaging() {
         messageUI.startMessaging();
     }

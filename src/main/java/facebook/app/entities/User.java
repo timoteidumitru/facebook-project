@@ -6,7 +6,7 @@ public class User {
     private String password;
     private boolean isLoggedIn;
 
-    // Constructor
+    // Constructors
     public User(long user_id, String email, String password) {
         this.user_id = user_id;
         this.email = email;
@@ -17,7 +17,6 @@ public class User {
 
     }
 
-
     public boolean isLoggedIn() {
         return isLoggedIn;
     }
@@ -26,7 +25,6 @@ public class User {
         isLoggedIn = loggedIn;
     }
 
-    // Getter and Setter for user_id
     public long getUserId() {
         return user_id;
     }
@@ -35,7 +33,6 @@ public class User {
         this.user_id = (int) user_id;
     }
 
-    // Getter and Setter for email
     public String getEmail() {
         return email;
     }
@@ -44,7 +41,6 @@ public class User {
         this.email = email;
     }
 
-    // Getter and Setter for password
     public String getPassword() {
         return password;
     }

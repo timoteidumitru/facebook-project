@@ -6,14 +6,12 @@ import facebook.app.entities.User;
 import facebook.app.services.UserService;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class MessageUI {
     private final MessageController messageController;
     private final UserController userController = new UserController();
+    private final UserService userService = new UserService();
     private final Scanner scanner;
 
     public MessageUI(MessageController messageController, Scanner scanner) {
@@ -24,22 +22,22 @@ public class MessageUI {
     public void startMessaging() {
         int choice;
         do {
-            System.out.println("    Messaging Options:");
-            System.out.println("1. Send a Message");
-            System.out.println("2. View Messages");
+            System.out.println("    Messaging management, please chose one of the following options:");
+            System.out.println("1. View Messages");
+            System.out.println("2. Send a Message");
             System.out.println("0. Back to Main Menu");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    // Send a message
-                    sendMessage();
-                    break;
-                case 2:
                     // View messages (implement as needed)
                     viewMessages();
+                    break;
+                case 2:
+                    // Send a message
+                    sendMessage();
                     break;
                 case 0:
                     System.out.println("Returning to Main Menu.");
@@ -52,26 +50,55 @@ public class MessageUI {
 
     private void viewMessages() {
         List<Message> messages = messageController.getMessages();
-        UserController users = userController;
-
         if (messages.isEmpty()) {
             System.out.println("No messages to display.");
         } else {
             System.out.println("Messages:");
             for (Message message : messages) {
-                System.out.println("From: " + users.getUserByID(message.getFrom_user_id()).getEmail().split("@")[0]);
-                System.out.println("To: " + users.getUserByID(message.getTo_user_id()).getEmail().split("@")[0]);
-                System.out.println("Date: " + message.getDate());
-                System.out.println("Message: " + message.getMessage());
-                System.out.println("------------------------------");
+                if (message.getFrom_user_id() == userService.getCurrentUserId() || message.getTo_user_id() == userService.getCurrentUserId()){
+                    String formattedDate = "Date: " + message.getDate();
+                    List<String> splitMessage = splitIntoLines(message.getMessage());
+                    if (message.getFrom_user_id() == (int) userService.getCurrentUserId()){
+                        System.out.println("#                                                                           #");
+                        // Message from the current user - align right
+                        System.out.printf("%74s\n", "(Me -> "+ userController.getUserByID(message.getTo_user_id()).getEmail().split("@")[0] + ") " + formattedDate);
+                        for (String line : splitMessage) {
+
+                            System.out.printf("%74s\n", line);
+                        }
+                        System.out.println("#                                                                           #");
+                    } else {
+                        System.out.println("#                                                                           #");
+                        // Message from other users - align left
+                        System.out.printf("   %-20s\n", formattedDate + " (" + userController.getUserByID(message.getFrom_user_id()).getEmail().split("@")[0] + ")");
+                        for (String line : splitMessage) {
+
+                            System.out.printf("   %-20s\n", line);
+                        }
+                        System.out.println("#                                                                           #");
+                    }
+                }
+
+
             }
         }
     }
 
-    // Inside the MessageUI class
+    private List<String> splitIntoLines(String text) {
+        List<String> lines = new ArrayList<>();
+        while (text.length() > 22) {
+            int breakPoint = text.lastIndexOf(' ', 22);
+            if (breakPoint == -1) breakPoint = 22;
+            lines.add(text.substring(0, breakPoint));
+            text = text.substring(breakPoint).trim();
+        }
+        lines.add(text);
+        return lines;
+    }
+
     private void sendMessage() {
         UserController userController = new UserController();
-        UserService userService = new UserService();
+
         int fromUserId = (int) userService.getCurrentUserId();
 
         // Display a list of users for the recipient selection
@@ -88,7 +115,7 @@ public class MessageUI {
         }
 
         int recipientChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
         boolean recipientFound = false;
         int toUserId = -1;
@@ -115,11 +142,7 @@ public class MessageUI {
         String messageText = scanner.nextLine();
 
         // Call the controller to send the message
-        
         messageController.sendMessage(fromUserId, toUserId, date, messageText);
-
         System.out.println("Message sent successfully!");
     }
-
-
 }

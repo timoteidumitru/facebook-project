@@ -1,12 +1,20 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-facebook_app.iml
-<<<<<<< HEAD
-.idea
-/out
-out
-Application2*
-=======
-.idea
->>>>>>> 1fd89bcd51060651f6d45bffd6f76b4dce386728
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build directories
+/target/
+/build/
+/out/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Other files and directories
+*.class
+*.jar
+*.war
+*.ear

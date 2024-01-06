@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class LoginUI {
     private final UserController userController;
     private final Scanner scanner;
-    private String userEmail;  // Variable to store the logged-in user's email
+    private String userEmail;
 
     public LoginUI(UserController userController) {
         this.userController = userController;
@@ -29,7 +29,6 @@ public class LoginUI {
             // Set the userEmail for reference in the main Application class
             userEmail = email;
 
-            // Additional logic or UI changes after successful login can be added here
             return true;
         } else {
             System.out.println("Login failed.");

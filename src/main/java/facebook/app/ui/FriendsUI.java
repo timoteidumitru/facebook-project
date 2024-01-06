@@ -7,7 +7,6 @@ import facebook.app.entities.User;
 import facebook.app.services.UserService;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class FriendsUI {
@@ -24,14 +23,14 @@ public class FriendsUI {
     public void startFriendsManagement() {
         int choice;
         do {
-            System.out.println("    Friends Management:");
+            System.out.println("    Friends management, please use one of the following options:");
             System.out.println("1. View Friends");
             System.out.println("2. Add a Friend");
             System.out.println("3. Remove a Friend");
             System.out.println("0. Back to Main Menu");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -71,7 +70,6 @@ public class FriendsUI {
         int userId = (int) userService.getCurrentUserId();
         List<Friends> friendsList = friendsController.getFriendsOfUser(userId);
 
-
         // Fetch all users
         List<User> users = userController.getAllUsers();
 
@@ -102,7 +100,7 @@ public class FriendsUI {
         scanner.nextLine(); // Consume the newline character
 
         friendsController.addFriend(userId, friendId);
-        System.out.println("Friend request sent successfully!");
+        System.out.println(userController.getUserByID(friendId).getName().toUpperCase() + " successfully added to your friends list!");
     }
 
 
@@ -115,6 +113,6 @@ public class FriendsUI {
         scanner.nextLine(); // Consume the newline character
 
         friendsController.removeFriend(userId, friendId);
-        System.out.println("Friend removed successfully!");
+        System.out.println(userController.getUserByID(friendId).getName().toUpperCase() + " successfully removed from your friends list!");
     }
 }
