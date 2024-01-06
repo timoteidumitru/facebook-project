@@ -1,4 +1,1 @@
-1;Tim;tim@eu.com;10;napoca
-2;Cristina;cristina@eu.com;20;Cluj
-3;Flavy;flavy@eu.com;30;false
-4;Simida;simi@ya.com;40;Negresti
+2;Name;email@y.com;12;locatie

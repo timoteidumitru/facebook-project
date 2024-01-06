@@ -4,19 +4,18 @@ import facebook.app.entities.Profile;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ProfileDAO {
+
+    private List<Profile> profileList = new ArrayList<>();
+    private File file = new File(FILE_NAME);
 
     private static final String FILE_NAME = "src/main/resources/profile.txt";
 
     public List<Profile> readProfile() {
-        List<Profile> profileList = new ArrayList<>();
         // Use a File object to handle file path
-        File file = new File(FILE_NAME);
         if (!file.exists()) {
             System.err.println("File not found: " + FILE_NAME);
             return profileList;
@@ -39,39 +38,14 @@ public class ProfileDAO {
         }
         return profileList;
     }
-
-    public void writeProfile(List<Profile> profileList) {
-        // Use a File object for writing
-        File file = new File(FILE_NAME);
+  public void writeProfile(int id, String name, String email, int age, String location) {
+        // writes but removes previous data
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
-            for (Profile profile : profileList) {
-                writer.write(profile.getId() + ";" + profile.getName() + ";" + profile.getEmail() + ";" + profile.getAge() + ";" + profile.getLocation());
-                writer.newLine();
-            }
+            writer.write(id + ";" + name + ";" + email + ";" + age + ";" + location);
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String getFilePath() {
-        try {
-            return Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(FILE_NAME)).toURI()).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
-    public Profile getUserByEmail(String email) {
-        List<Profile> profileList = readProfile();
-        return profileList.stream()
-                .filter(profile -> profile.getEmail().equals(email))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public void writeProfile(int id, String name, String email, int age, String location) {
     }
 }
 

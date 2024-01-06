@@ -2,45 +2,87 @@ package facebook.app.ui;
 
 import facebook.app.controller.ProfileController;
 import facebook.app.entities.Profile;
+import facebook.app.entities.User;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ProfileUI {
     private static ProfileController profileController = new ProfileController();
+    private Profile profile = new Profile();
 
-    public void createProfile() {
+    public void startProfile() {
+        System.out.println("        Welcome to the Profile page");
+        System.out.println("Please choose one of the following options: ");
+        System.out.println("      1. Create Profile           2. Display Profile ");
+        System.out.println("                   0. Back");
+        int choice;
+        choice = Integer.parseInt(getUserInput());
+        switch (choice) {
+            case 1:
+                editProfile();
+                break;
+            case 2:
+                displayProfile();
+                break;
+            case 0:
+                System.out.println("Returning to Main Menu.");
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+    }
 
-        int id = generateUniqueProfileId();
-        Scanner scanner = new Scanner(System.in);
+
+    //create profile = edit profile
+    public void editProfile() {
         System.out.println("Welcome to the Profile Creator!");
+
+        Scanner scanner = new Scanner(System.in);
         // Get user input for profile details
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter your age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character left by nextInt()
-        System.out.print("Enter your location: ");
-        String location = scanner.nextLine();
         System.out.print("Enter your email address: ");
         String email = scanner.nextLine();
-        // Create a Profile object with the collected information
-        Profile userProfile = new Profile(name, age, location, email);
-        // Display the created profile
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter your location: ");
+        String location = scanner.nextLine();
+
+        int id = generateUniqueProfileId();
+
+        Profile userProfile = new Profile(id, name, email, age, location);
+
         System.out.println("\nProfile Created Successfully!");
         System.out.println("Profile Details:");
-        System.out.println(userProfile);
-        // Close the scanner
+        System.out.println("ProfileID: " + userProfile.getId() +
+                "\nName: " + name +
+                "\nAge: " + age +
+                "\nLocation: " + location);
+
         scanner.close();
+
         profileController.editProfile(id, name, email, age, location);
+        //profileController.editProfile(userProfile);
     }
 
     public void displayProfile() {
-        //  Profile userProfile = new Profile();
         // Display the created profile
         System.out.println("\nProfile Displayed UNSuccessfully!");
         System.out.println("Profile Details:");
         //   System.out.println(userProfile);
+        if (profile.getName() == null) {
+            System.out.println("Profile not created yet. Please create a profile first.");
+        } else {
+            System.out.println("\n===== Your Profile =====");
+            System.out.println("Name: " + profile.getName());
+            System.out.println("Email: " + profile.getEmail());
+            System.out.println("Age: " + profile.getAge());
+            System.out.println("Location: " + profile.getLocation());
+        }
+
     }
 
     private int generateUniqueProfileId() {
@@ -48,17 +90,30 @@ public class ProfileUI {
         return profileController.getAllProfile().size() + 1;
     }
 
-    public String getUserInput() throws IOException {
+    public String getUserInput() {
         Scanner keyboardScanner = new Scanner(System.in);
         String userInput = keyboardScanner.next();
         return userInput;
     }
 
-    public void startProfile() {
-        System.out.println("        Welcome to the Profile page");
-        System.out.println("Please choose one of the following options: ");
-        System.out.println("      1. Create Profile           2. Edit Profile ");
-        System.out.println("      3. Display Profile");
-        System.out.println("                   0. Back");
-    }
+ /*   private void editProfile(Scanner scanner) {
+        if (profile.getName() == null) {
+            System.out.println("Profile not created yet. Please create a profile first.");
+        } else {
+            System.out.print("Enter your new name: ");
+            profile.getName() = scanner.nextLine();
+
+            System.out.print("Enter your new age: ");
+            profile.getEmail() = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            System.out.print("Enter your new email: ");
+            profile.getAge() = scanner.nextLine();
+
+            System.out.println("Profile updated successfully!");
+        }
+
+  */
+
 }
+

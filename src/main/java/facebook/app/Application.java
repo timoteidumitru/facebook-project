@@ -28,7 +28,7 @@ public class Application {
         do {
             System.out.println("        Welcome to the Facebook App");
 
-            if (loggedInUserId != -1) {
+            if (loggedInUserId == -1) {
                 // Display options for a logged-in user
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Messages           2. Friends");
@@ -45,7 +45,7 @@ public class Application {
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 
-            if (loggedInUserId != -1) {
+            if (loggedInUserId == -1) {
                 // When User is logged in
                 switch (choice) {
                     case 1:
@@ -61,7 +61,7 @@ public class Application {
                         System.out.println("Option 4: Welcome to Groups section!");
                         break;
                     case 5:
-                        profileUI.createProfile();
+                        profileUI.startProfile();
                         break;
                     case 0:
                         userController.logoutAllUsers();
