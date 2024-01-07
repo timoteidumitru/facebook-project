@@ -1,19 +1,24 @@
 package facebook.app.entities;
 
 import facebook.app.entities.User;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AppPost {
     private Long id;
-
     private User user;
-
     private Long timePosted;
     private String content;
 
+    private String formattedDate;
 
     public AppPost(User user, String content, Long timePosted) {
         this.user = user;
         this.content = content;
         this.timePosted = timePosted;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.formattedDate = sdf.format(new Date(timePosted));
     }
 
     public Long getId() {

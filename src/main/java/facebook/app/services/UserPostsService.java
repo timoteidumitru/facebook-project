@@ -6,7 +6,9 @@ import facebook.app.entities.AppPost;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserNotFoundException;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class UserPostsService {

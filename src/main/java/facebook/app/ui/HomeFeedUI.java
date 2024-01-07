@@ -35,12 +35,13 @@ public class HomeFeedUI {
 
             case 2:
                 System.out.println("Latest post from user");
-                postsController.getLatestPost();
+                System.out.println( postsController.getLatestPost());
+
                 break;
 
             case 3:
                 System.out.println("Recent posts from user:");
-                postsController.getRecentPostsFromUser(3);
+                postsController.getRecentPostsFromUser(keyboard.nextInt());
                 break;
             case 4:
                 System.out.println("Create a new post:");
