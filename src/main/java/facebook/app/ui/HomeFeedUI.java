@@ -39,13 +39,11 @@ public class HomeFeedUI {
             case 2:
                 System.out.println("Latest post from user");
                 System.out.println( postsController.getLatestPost());
-
                 break;
 
             case 3:
                 System.out.println("Recent posts from user");
                 System.out.println("Type the number of recent posts you want to see: ");
-   
                 List<AppPost> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
                 recentPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 break;

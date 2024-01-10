@@ -56,7 +56,6 @@ public class UserPostsDAO implements PostServiceDAO {
 
     @Override
     public List<AppPost> getRecentPostsFromUser(User user, int posts) {
-        Calendar rightNow = Calendar.getInstance();
         List<AppPost> latestPostsFromUser = new ArrayList<>();
         try {
             List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt"));
