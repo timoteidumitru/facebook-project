@@ -3,6 +3,7 @@ package facebook.app.entities;
 import facebook.app.entities.User;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class AppPost {
@@ -55,7 +56,7 @@ public class AppPost {
                 '}';
     }
 
-    public Object getTimePosted() {
+    public  Long getTimePosted() {
         return timePosted;
     }
 

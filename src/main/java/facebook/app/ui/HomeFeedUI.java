@@ -40,8 +40,9 @@ public class HomeFeedUI {
                 break;
 
             case 3:
-                System.out.println("Recent posts from user:");
-                postsController.getRecentPostsFromUser(keyboard.nextInt());
+                System.out.println("Recent posts from user");
+                System.out.println("Type the number of recent posts you want to see: ");
+                System.out.println(postsController.getRecentPostsFromUser(keyboard.nextInt()));;
                 break;
             case 4:
                 System.out.println("Create a new post:");

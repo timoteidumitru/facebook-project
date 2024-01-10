@@ -12,7 +12,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserPostsDAO implements PostServiceDAO {
 
@@ -92,27 +96,34 @@ public class UserPostsDAO implements PostServiceDAO {
     @Override
     public List<AppPost> getRecentPostsFromUser(User user, int posts) {
         Calendar rightNow = Calendar.getInstance();
-        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
         List<AppPost> latestPostsFromUser = new ArrayList<>();
         try {
             List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt"));
             for (String line : allLines) {
                 String[] postData = line.split(",");
                 if (String.valueOf(user.getUserId()).equals(postData[0])) {
-                    int hourValue = Integer.parseInt(postData[1]);
-                    if (hourValue <= hour && hourValue >= hour - 2) {
-                        AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
-                        latestPostsFromUser.add(appPost);
-                    }
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("\"dd/MM/yyyy HH:mm:ss\"");
+                    LocalDateTime dateTime = LocalDateTime.parse(postData[1], formatter);
+
+                    AppPost appPost = new AppPost(user, postData[2], dateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
+                    latestPostsFromUser.add(appPost);
                 }
             }
+            Collections.sort(latestPostsFromUser, new Comparator<AppPost>() {
+                @Override
+                public int compare(AppPost o1, AppPost o2) {
+                    return o1.getTimePosted().compareTo(o2.getTimePosted());
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return latestPostsFromUser;
+        return latestPostsFromUser.stream().limit((long) posts).collect(Collectors.toList());
     }
 
     private static final String DATABASE_FILE_PATH = "C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt";
+
     @Override
     public void createPost(AppPost appPost) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATABASE_FILE_PATH, true))) {
@@ -120,10 +131,9 @@ public class UserPostsDAO implements PostServiceDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String formattedDate = sdf.format(new Date((Long) appPost.getTimePosted()));
 
-
             String postData = String.format("%d,\"%s\",\"%s\"",
                     appPost.getUser().getUserId(),
-                  formattedDate,
+                    formattedDate,
                     appPost.getContent());
 
             writer.write(postData);

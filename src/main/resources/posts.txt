@@ -1,13 +1,4 @@
-1,10,"Hello there"
-2,14,"assdasdas"
-1,9,"asdadasdassd"
-3,1,"asdrf3fsfsfsdfre"
-6,10,"Hello there"
-1,11,"Hi its Flavi"
 
-1,1704636465089,zalando
-1,07/01/2024 16:12:13,bananan
-1,07/01/2024 16:14:16,bananan
 1,"07/01/2024 16:16:57","bananananlala"
 6,"07/01/2024 16:27:21","Flawi"
 1,"07/01/2024 16:28:38","hi"
