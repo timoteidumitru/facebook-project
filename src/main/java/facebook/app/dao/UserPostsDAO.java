@@ -26,40 +26,7 @@ public class UserPostsDAO implements PostServiceDAO {
 
     @Override
     public AppPost getLatestPost(User user) {
-        long latestTime = 0L;
-        String latestMessage = null;
-
-        try {
-            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\facebook-project\\src\\main\\resources\\posts.txt"));
-            for (String line : allLines) {
-                String[] postData = line.split(",");
-                if (String.valueOf(user.getUserId()).equals(postData[0])) {
-                    try {
-                        // Parse the date from the string
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date postDate = sdf.parse(postData[1].trim());
-
-                        // Compare the dates
-                        if (postDate.getTime() > latestTime) {
-                            latestTime = postDate.getTime();
-                            latestMessage = postData[2];
-                        }
-                    } catch (ParseException e) {
-                        // Handle the case where the date format is incorrect
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (latestMessage == null) {
-            return null;
-        } else {
-            AppPost latestPost = new AppPost(user, latestMessage, latestTime);
-            return latestPost;
-        }
+        return null;
     }
 
 

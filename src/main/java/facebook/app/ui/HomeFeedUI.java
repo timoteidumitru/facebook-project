@@ -1,11 +1,14 @@
 package facebook.app.ui;
 
 import facebook.app.controller.UserPostsController;
+import facebook.app.entities.AppPost;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.UserPostsService;
 import facebook.app.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HomeFeedUI {
@@ -42,7 +45,9 @@ public class HomeFeedUI {
             case 3:
                 System.out.println("Recent posts from user");
                 System.out.println("Type the number of recent posts you want to see: ");
-                System.out.println(postsController.getRecentPostsFromUser(keyboard.nextInt()));;
+   
+                List<AppPost> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
+                recentPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 break;
             case 4:
                 System.out.println("Create a new post:");
