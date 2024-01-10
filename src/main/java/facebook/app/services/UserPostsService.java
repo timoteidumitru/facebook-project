@@ -55,7 +55,7 @@ public class UserPostsService {
         return userPostsDAO.getLatestPost(user);
     }
     public void createPost(User user, String content) {
-        if (user == null || content == null || content.isEmpty()) {
+        if (user == null || content == null || !content.matches("\\S{2,}.*")) {
             System.out.println("Invalid input for creating a post. User and content are required.");
             return;
         }

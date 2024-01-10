@@ -39,22 +39,23 @@ public class HomeFeedUI {
             case 2:
                 System.out.println("Latest post from user");
                 System.out.println( postsController.getLatestPost());
-
+                AppPost latestPost = postsController.getLatestPost();
+                System.out.println(latestPost.getContent());
                 break;
 
             case 3:
                 System.out.println("Recent posts from user");
                 System.out.println("Type the number of recent posts you want to see: ");
-   
-                List<AppPost> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
+               List<AppPost> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
                 recentPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 break;
             case 4:
-                System.out.println("Create a new post:");
-                System.out.println("ENter the content of the post:");
-                postsController.createPost(keyboard.next());
+                System.out.println("Create a new post");
+                keyboard.nextLine();
+                System.out.println("Enter the content of the post:");
+                String content = keyboard.nextLine();
+                postsController.createPost(content);
                 break;
-
         }
 
     }
