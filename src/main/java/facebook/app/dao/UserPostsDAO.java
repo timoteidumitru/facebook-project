@@ -26,7 +26,14 @@ public class UserPostsDAO implements PostServiceDAO {
 
     @Override
     public AppPost getLatestPost(User user) {
-        return null;
+
+       List <AppPost> latestPosts = getRecentPostsFromUser(user,1);
+       if(latestPosts.isEmpty())
+       {
+           return null;
+       }
+       else
+           return latestPosts.get(0);
     }
 
     /**
@@ -71,7 +78,7 @@ public class UserPostsDAO implements PostServiceDAO {
             Collections.sort(latestPostsFromUser, new Comparator<AppPost>() {
                 @Override
                 public int compare(AppPost o1, AppPost o2) {
-                    return o1.getTimePosted().compareTo(o2.getTimePosted());
+                    return o2.getTimePosted().compareTo(o1.getTimePosted());
                 }
             });
         } catch (IOException e) {
