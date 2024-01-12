@@ -49,8 +49,25 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return email.split("@")[0];
+    public void addPost(AppPost post) {
     }
+
+    public void sendMessage(User user, String message) {
+
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", email='" + email + '\'' +
+                ", password=obfusated' " +
+                '}';
+    }
+
+        public String getName () {
+            return email.split("@")[0];
+        }
+
 }
 
