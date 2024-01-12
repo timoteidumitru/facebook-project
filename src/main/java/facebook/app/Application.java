@@ -19,6 +19,7 @@ public class Application {
         messageCtr.setMessageUI(messageUI);
         FriendsController friendsController = new FriendsController(new FriendsService());
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
+        HomeFeedUI homeFeedUI = new HomeFeedUI();
         ProfileUI profileUI = new ProfileUI();
         Scanner scanner = new Scanner(System.in);
 
@@ -55,6 +56,7 @@ public class Application {
                         friendsUI.startFriendsManagement();
                         break;
                     case 3:
+                        homeFeedUI.postsSection();
                         System.out.println("Option 3: Welcome to Posts section!");
                         break;
                     case 4:
