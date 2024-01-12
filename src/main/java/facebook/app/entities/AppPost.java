@@ -11,7 +11,6 @@ public class AppPost {
     private User user;
     private Long timePosted;
     private String content;
-
     private String formattedDate;
 
     public AppPost(User user, String content, Long timePosted) {
@@ -42,10 +41,6 @@ public class AppPost {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     @Override
     public String toString() {
         return "AppPost{" +
@@ -60,7 +55,5 @@ public class AppPost {
         return timePosted;
     }
 
-    public void setTimePosted(Object timePosted) {
-        this.timePosted = (Long) timePosted;
-    }
+
 }

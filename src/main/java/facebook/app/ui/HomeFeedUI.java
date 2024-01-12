@@ -12,11 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HomeFeedUI {
-
     private UserPostsController postsController = new UserPostsController();
-    User user;
-
-
     public void postsSection() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println(" Feed management, please chose one of the following options:");
@@ -49,6 +45,7 @@ public class HomeFeedUI {
                List<AppPost> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
                 recentPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 break;
+
             case 4:
                 System.out.println("Create a new post");
                 keyboard.nextLine();
@@ -56,11 +53,7 @@ public class HomeFeedUI {
                 String content = keyboard.nextLine();
                 postsController.createPost(content);
                 break;
-
         }
-
     }
-
-
 }
 

@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 public class UserPostsService {
-
     private UserPostsDAO userPostsDAO = new UserPostsDAO();
     private UserDAO userDAO = new UserDAO();
     private User user = new User();
@@ -21,8 +20,6 @@ public class UserPostsService {
         this.userDAO = userDAO;
     }
     public UserPostsService() {}
-
-
 
     public List<AppPost> getAllPostsFromCurrentUser(User user) throws UserNotFoundException {
         user = userDAO.getUserByID((int) user.getUserId());
@@ -36,9 +33,7 @@ public class UserPostsService {
     public List<AppPost> getRecentPostsFromUser(User user, int limit) {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user != null) {
-            // Assuming userDAO.getUserByID returns a non-null User or null if not found
             user = userDAO.getUserByID((int) user.getUserId());
-
             if (user != null) {
                 return userPostsDAO.getRecentPostsFromUser(user, limit);
             } else {
@@ -47,9 +42,8 @@ public class UserPostsService {
         } else {
             System.out.println("User is null.");
         }
-        return Collections.emptyList(); // or handle the situation appropriately based on your requirements
+        return Collections.emptyList();
     }
-
     public AppPost getLatestPost(User user) {
         user = userDAO.getUserByID((int) user.getUserId());
         return userPostsDAO.getLatestPost(user);

@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -19,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserPostsDAO implements PostServiceDAO {
-    private static final String DATABASE_FILE_PATH = "C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt";
+    private static final String DATABASE_FILE_PATH = "posts.txt";
 
     public UserPostsDAO() {
     }
@@ -46,12 +45,21 @@ public class UserPostsDAO implements PostServiceDAO {
     public List<AppPost> getAllPostsFromCurrentUser(User user) {
         List<AppPost> postsFromUser = new ArrayList<>();
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get("posts.txt"));
             for (String line : allLines) {
                 String[] postData = line.split(",");
                 String userIdString = postData[0].trim();
                 if (userIdString.equals(String.valueOf(user.getUserId()))) {
-                    AppPost appPost = new AppPost(user, postData[2], Long.parseLong(postData[1].trim()));
+                    long timestamp = 0;
+                    try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date date = dateFormat.parse(postData[1].trim());
+                        timestamp = date.getTime();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    AppPost appPost = new AppPost(user, postData[2], timestamp);
                     postsFromUser.add(appPost);
                 }
             }
@@ -65,7 +73,7 @@ public class UserPostsDAO implements PostServiceDAO {
     public List<AppPost> getRecentPostsFromUser(User user, int posts) {
         List<AppPost> latestPostsFromUser = new ArrayList<>();
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("C:\\code\\project\\facebook-project\\src\\main\\resources\\posts.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get("posts.txt"));
             for (String line : allLines) {
                 String[] postData = line.split(",");
                 if (String.valueOf(user.getUserId()).equals(postData[0])) {
