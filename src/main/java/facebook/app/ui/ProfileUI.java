@@ -2,7 +2,6 @@ package facebook.app.ui;
 
 import facebook.app.controller.ProfileController;
 import facebook.app.entities.Profile;
-import facebook.app.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,8 @@ import java.util.Scanner;
 public class ProfileUI {
     private static ProfileController profileController = new ProfileController();
     private Profile profile = new Profile();
+    private ProfileController profileController = new ProfileController();
+
 
     public void startProfile() {
         System.out.println("        Welcome to the Profile page");
@@ -34,13 +35,11 @@ public class ProfileUI {
         }
     }
 
-
     //create profile = edit profile
     public void editProfile() {
         System.out.println("Welcome to the Profile Creator!");
 
         Scanner scanner = new Scanner(System.in);
-        // Get user input for profile details
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
         System.out.print("Enter your email address: ");
@@ -69,25 +68,41 @@ public class ProfileUI {
     }
 
     public void displayProfile() {
-        // Display the created profile
-        System.out.println("\nProfile Displayed UNSuccessfully!");
+        System.out.println("\nProfile to be Displayed!");
         System.out.println("Profile Details:");
-        //   System.out.println(userProfile);
-        if (profile.getName() == null) {
-            System.out.println("Profile not created yet. Please create a profile first.");
-        } else {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        List<String> list = new ArrayList<>();
+        for (Profile p : profileController.getAllProfile()) {
+            String pName = p.getName();
+            list.add(pName);
+        }
+      //  profileController.checkProfile(list.contains(name));
+        if (list.contains(name)) {
+          //  profile.setName(name);
+            profileController.checkProfile(name);
             System.out.println("\n===== Your Profile =====");
             System.out.println("Name: " + profile.getName());
             System.out.println("Email: " + profile.getEmail());
             System.out.println("Age: " + profile.getAge());
             System.out.println("Location: " + profile.getLocation());
+        } else {
+            System.out.println("Profile not created yet. Please create a profile first.");
         }
+        scanner.close();
 
     }
 
     private int generateUniqueProfileId() {
         // For simplicity, here's a basic implementation using the current time in milliseconds.
-        return profileController.getAllProfile().size() + 1;
+        return profileController.getAllProfile()
+                .stream()
+                // ops interm many
+                .mapToInt(p -> p.getId())
+                // op finala one)
+                .max()
+                .orElse(0) + 1;
     }
 
     public String getUserInput() {

@@ -2,13 +2,9 @@ package facebook.app.controller;
 
 import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
-import facebook.app.entities.User;
 
 import java.security.InvalidParameterException;
-import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 public class ProfileController {
 
@@ -25,19 +21,17 @@ public class ProfileController {
             throw new InvalidParameterException("The age can not be 0 or over 110");
         }
         profileDAO.writeProfile(id, name, email, age, location);
-    //    List<Profile> profileList = asList(id, name, email, age, location);
-    //    profileDAO.writeProfile(Profile.profileToString());
-
     }
-    public void checkProfile(Profile userProfile) {
-        List<Profile> profileList = profileDAO.readProfile();
-        if (!isUserUnique(profileList, userProfile.getEmail())) {
-            System.out.println("User with email " + userProfile.getEmail() + " already exists. Please try a different one!");
-            return;
+    public void checkProfile(String name) {
+        List<Profile> profileList = getAllProfile();
+
+        for (Profile profile : profileList) {
+            if (name.equals(profileList.contains(name))) {
+
+                System.out.println("profilul curent" + profileList);
+            }
         }
-        profileList.add(userProfile);
-        System.out.println(userProfile+"Profile Controler");
-     //   profileDAO.writeProfile(profileList);
+        System.out.println("toate profilele" + profileList);
     }
     public List<Profile> getAllProfile() {
         return profileDAO.readProfile();

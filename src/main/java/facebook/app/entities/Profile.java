@@ -8,6 +8,7 @@ public class Profile {
     private String email;
 
     public Profile(int id, String name, String email, int age, String location) {
+        // idUser
         this.id = id;
         this.name = name;
         this.age = age;
