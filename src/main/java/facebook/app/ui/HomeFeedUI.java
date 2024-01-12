@@ -26,7 +26,8 @@ public class HomeFeedUI {
             case 1:
                 System.out.println("All  posts from user");
                 try {
-                    System.out.println(postsController.getAllPostsFromCurrentUser());
+                    List<AppPost> allPosts = postsController.getAllPostsFromCurrentUser();
+                    allPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 } catch (UserNotFoundException e) {
                     System.out.println("there was an error while retrieving this user");
                 }
@@ -34,7 +35,6 @@ public class HomeFeedUI {
 
             case 2:
                 System.out.println("Latest post from user");
-                System.out.println( postsController.getLatestPost());
                 AppPost latestPost = postsController.getLatestPost();
                 System.out.println(latestPost.getContent());
                 break;
