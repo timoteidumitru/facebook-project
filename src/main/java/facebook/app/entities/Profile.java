@@ -7,19 +7,19 @@ public class Profile {
     private String location;
     private String email;
 
-    public Profile(String name, int age, String location, String email) {
+    public Profile(int id, String name, String email, int age, String location) {
+        // idUser
+        this.id = id;
         this.name = name;
         this.age = age;
         this.location = location;
         this.email = email;
     }
+    public Profile() {}
 
-    public Profile(int id, String name, String email, int age, String location) {
-    }
-
-    @Override
-    public String toString() {
-        return "ProfileID: " + id + "Name: " + name + "\nAge: " + age + "\nLocation: " + location + "\nEmail: " + email;
+    public String profileToString() {
+        return id + name + age + location + email;
+       // return "ProfileID: " + id + "\nName: " + name + "\nAge: " + age + "\nLocation: " + location + "\nEmail: " + email;
     }
 
     public void setId(int id) {
