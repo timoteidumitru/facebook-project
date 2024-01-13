@@ -13,3 +13,4 @@
 7;Simida;simi@ya.com;20;Negresti
 7;Casiana;simi@ya.com;11;Oas
 7;Rodila;simi@ya.com;33;NgOas
+6;ana;ad@re.ss;55;loc7;Timotei Dumitru;tim@eu.com;33;Cluj-Napoca

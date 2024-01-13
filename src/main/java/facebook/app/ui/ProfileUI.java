@@ -9,7 +9,6 @@ import facebook.app.services.UserService;
 import java.util.Scanner;
 
 public class ProfileUI {
-
     private ProfileController profileController = new ProfileController();
     private Profile profile = new Profile();
     private UserService userService = new UserService();
@@ -21,6 +20,7 @@ public class ProfileUI {
             throw new RuntimeException(e);
         }
     }
+  
     public void startProfile() {
         int choice;
         do {
@@ -51,7 +51,6 @@ public class ProfileUI {
             }
             scanner.close();
         } while (choice != 0);
-
     }
 
     public void createProfile() {
@@ -83,6 +82,7 @@ public class ProfileUI {
 
         startProfile();
     }
+  
     public void editProfile() {
         System.out.println("Edit your Profile!");
         for (Profile p : profileController.getAllProfile()) {
@@ -130,7 +130,4 @@ public class ProfileUI {
 
         startProfile();
     }
-
-
 }
-

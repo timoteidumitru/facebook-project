@@ -11,6 +11,7 @@ import java.util.List;
 public class ProfileDAO {
     private List<Profile> profileList = new ArrayList<>();
     private File file = new File(FILE_NAME);
+
     private static final String FILE_NAME = "src/main/resources/profile.txt";
 
     public List<Profile> readProfile() {
