@@ -2,4 +2,4 @@
 3;dnd;qw;7;fds
 4;qwer;asdf;5;adsf
 5;asd;asd;5;sdf
-6;ana;ad@re.ss;55;loc
+6;ana;ad@re.ss;55;loc7;Timotei Dumitru;tim@eu.com;33;Cluj-Napoca

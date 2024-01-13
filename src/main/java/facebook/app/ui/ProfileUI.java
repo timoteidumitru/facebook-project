@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class ProfileUI {
 
-    private ProfileController profileController = new ProfileController();
-    private Profile profile = new Profile();
+    private final ProfileController profileController = new ProfileController();
+    private final Profile profile = new Profile();
 
     public void startProfile() {
         System.out.println("        Welcome to the Profile page");
