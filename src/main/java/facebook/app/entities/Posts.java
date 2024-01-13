@@ -1,54 +1,38 @@
 package facebook.app.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Posts {
-    private Long id;
-    private User user;
-    private Long timePosted;
-    private String content;
-    private String formattedDate;
+    private int id;
+    private int userId;
+    private final String timePosted;
+    private final String content;
 
-    public Posts(User user, String content, Long timePosted) {
-        this.user = user;
-        this.content = content;
+    public Posts(int userId, String timePosted, String content) {
+        this.userId = userId;
         this.timePosted = timePosted;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        this.formattedDate = sdf.format(new Date(timePosted));
+        this.content = content;
     }
 
     public Long getId() {
-        return id;
+        return (long) id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public long getUser() {
+        return userId;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.userId = (int) user.getUserId();
     }
 
     public String getContent() {
         return content;
     }
 
-    @Override
-    public String toString() {
-        return "Posts{" +
-                "id=" + id +
-                ", user=" + user +
-                ", timePosted=" + timePosted +
-                ", content='" + content + '\'' +
-                '}';
-    }
-
-    public  Long getTimePosted() {
+    public String getTimePosted() {
         return timePosted;
     }
 

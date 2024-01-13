@@ -5,36 +5,34 @@ import facebook.app.dao.PostsDAO;
 import facebook.app.entities.Posts;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
-import facebook.app.exceptions.UserNotFoundException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
 public class PostsService {
     private PostsDAO userPostsDAO = new PostsDAO();
     private UserDAO userDAO = new UserDAO();
-    private final User user = new User();
+    private final UserService userService = new UserService();
     public PostsService(PostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
         this.userDAO = userDAO;
     }
     public PostsService() {}
 
-    public List<Posts> getAllPostsFromCurrentUser(User user) throws UserNotFoundException, UserIOException {
-        user = userDAO.getUserByID((int) user.getUserId());
-        if (user == null) {
-            throw new UserNotFoundException("User with ID " + (int) user.getUserId() + " not found");
-        } else {
-            return userPostsDAO.getAllPostsFromCurrentUser(user);
-        }
+    public List<Posts> getAllPosts() throws UserIOException {
+        int currentUserId = (int) userService.getCurrentUserId();
+        User currentUser = userService.getUserByID(currentUserId);
+        return userPostsDAO.getAllPosts(currentUser);
     }
 
-    public List<Posts> getRecentPostsFromUser(User user, int limit) throws UserIOException {
+    public List<Posts> getRecentPosts(User user, int limit) throws UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user != null) {
             user = userDAO.getUserByID((int) user.getUserId());
             if (user != null) {
-                return userPostsDAO.getRecentPostsFromUser(user, limit);
+                return userPostsDAO.getRecentPosts(user, limit);
             } else {
                 System.out.println("User not found.");
             }
@@ -47,16 +45,16 @@ public class PostsService {
         user = userDAO.getUserByID((int) user.getUserId());
         return userPostsDAO.getLatestPost(user);
     }
-    public void createPost(User user, String content) {
-        if (user == null || content == null || !content.matches("\\S{2,}.*")) {
+    public void createPost(String content) throws UserIOException {
+        if (content == null) {
             System.out.println("Invalid input for creating a post. User and content are required.");
             return;
         }
-        Long timePosted = System.currentTimeMillis(); // Assuming you want to use the current time
-        Posts appPost = new Posts(user, content, timePosted);
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String formattedDateTime = now.format(formatter);
+        Posts post = new Posts((int) userService.getCurrentUserId(), formattedDateTime, content);
         // Call DAO to write the post to the database
-        userPostsDAO.createPost(appPost);
-        System.out.println("Post created successfully.");
+        userPostsDAO.createPost(post);
     }
-
 }

@@ -87,7 +87,7 @@ public class UserService {
         // Perform additional business logic/validation before retrieving from the DAO
         return userDAO.getUserByEmail(email);
     }
-    public User getUserByID(int userID) throws UserNotFoundException, UserIOException {
+    public User getUserByID(int userID) throws  UserIOException {
         User user = userDAO.getUserByID(userID);
         if (user == null) {
 //            throw new UserNotFoundException("User with ID: " + userID + " not found");
