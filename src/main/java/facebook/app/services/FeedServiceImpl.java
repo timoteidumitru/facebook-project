@@ -1,13 +1,13 @@
 package facebook.app.services;
-import facebook.app.entities.AppPost;
+import facebook.app.entities.Posts;
 import facebook.app.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
 public class FeedServiceImpl implements FeedServiceInterface {
 
-    private List<User> users;
-    private List<AppPost> allPosts;
+    private final List<User> users;
+    private final List<Posts> allPosts;
 
     public FeedServiceImpl() {
         this.users = new ArrayList<>();
@@ -16,7 +16,7 @@ public class FeedServiceImpl implements FeedServiceInterface {
     public void addUser(User user) {
         users.add(user);
     }
-    public void addPost(User user, AppPost post) {
+    public void addPost(User user, Posts post) {
         user.addPost(post);
         allPosts.add(post);
     }

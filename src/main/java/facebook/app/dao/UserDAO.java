@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserDAO {
-
     private static final String FILE_NAME = "users.txt";
 
     public List<User> readUsers() throws UserIOException {

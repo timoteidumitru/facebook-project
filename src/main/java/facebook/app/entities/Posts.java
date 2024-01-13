@@ -1,19 +1,16 @@
 package facebook.app.entities;
 
-import facebook.app.entities.User;
-
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
-public class AppPost {
+public class Posts {
     private Long id;
     private User user;
     private Long timePosted;
     private String content;
     private String formattedDate;
 
-    public AppPost(User user, String content, Long timePosted) {
+    public Posts(User user, String content, Long timePosted) {
         this.user = user;
         this.content = content;
         this.timePosted = timePosted;
@@ -43,7 +40,7 @@ public class AppPost {
 
     @Override
     public String toString() {
-        return "AppPost{" +
+        return "Posts{" +
                 "id=" + id +
                 ", user=" + user +
                 ", timePosted=" + timePosted +

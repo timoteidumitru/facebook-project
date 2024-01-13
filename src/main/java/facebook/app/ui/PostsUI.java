@@ -1,7 +1,7 @@
 package facebook.app.ui;
 
-import facebook.app.controller.UserPostsController;
-import facebook.app.entities.AppPost;
+import facebook.app.controller.PostsController;
+import facebook.app.entities.Posts;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 
@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PostsUI {
-    private final UserPostsController postsController = new UserPostsController();
-
+    private final PostsController postsController = new PostsController();
     public PostsUI() throws UserNotFoundException, UserIOException {
     }
 
@@ -27,7 +26,7 @@ public class PostsUI {
             case 1:
                 System.out.println("All  posts from user");
                 try {
-                    List<AppPost> allPosts = postsController.getAllPostsFromCurrentUser();
+                    List<Posts> allPosts = postsController.getAllPostsFromCurrentUser();
                     allPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 } catch (UserNotFoundException e) {
                     System.out.println("there was an error while retrieving this user");
@@ -38,14 +37,14 @@ public class PostsUI {
 
             case 2:
                 System.out.println("Latest post from user");
-                AppPost latestPost = postsController.getLatestPost();
+                Posts latestPost = postsController.getLatestPost();
                 System.out.println(latestPost.getContent());
                 break;
 
             case 3:
                 System.out.println("Recent posts from user");
                 System.out.println("Type the number of recent posts you want to see: ");
-               List<AppPost> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
+               List<Posts> recentPosts = postsController.getRecentPostsFromUser(keyboard.nextInt());
                 recentPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 break;
 

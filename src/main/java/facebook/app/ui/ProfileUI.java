@@ -50,8 +50,7 @@ public class ProfileUI {
 
     public String getUserInput() throws IOException {
         Scanner keyboardScanner = new Scanner(System.in);
-        String userInput = keyboardScanner.next();
-        return userInput;
+        return keyboardScanner.next();
     }
 
     public void startProfile() {

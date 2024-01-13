@@ -30,9 +30,7 @@ public class RegisterUI {
 
         // Generate a unique ID
         long userId = generateUniqueUserId();
-
         User newUser = new User(userId, email, password);
-
 
         if (userController.getUserByEmail(email) == null) {
             userController.addUser(newUser);

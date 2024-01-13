@@ -1,28 +1,26 @@
 package facebook.app.services;
 
 import facebook.app.dao.UserDAO;
-import facebook.app.dao.UserPostsDAO;
-import facebook.app.entities.AppPost;
+import facebook.app.dao.PostsDAO;
+import facebook.app.entities.Posts;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-public class UserPostsService {
-    private UserPostsDAO userPostsDAO = new UserPostsDAO();
+public class PostsService {
+    private PostsDAO userPostsDAO = new PostsDAO();
     private UserDAO userDAO = new UserDAO();
-    private User user = new User();
-    public UserPostsService(UserPostsDAO userPostsDAO, UserDAO userDAO) {
+    private final User user = new User();
+    public PostsService(PostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
         this.userDAO = userDAO;
     }
-    public UserPostsService() {}
+    public PostsService() {}
 
-    public List<AppPost> getAllPostsFromCurrentUser(User user) throws UserNotFoundException, UserIOException {
+    public List<Posts> getAllPostsFromCurrentUser(User user) throws UserNotFoundException, UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user == null) {
             throw new UserNotFoundException("User with ID " + (int) user.getUserId() + " not found");
@@ -31,7 +29,7 @@ public class UserPostsService {
         }
     }
 
-    public List<AppPost> getRecentPostsFromUser(User user, int limit) throws UserIOException {
+    public List<Posts> getRecentPostsFromUser(User user, int limit) throws UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user != null) {
             user = userDAO.getUserByID((int) user.getUserId());
@@ -45,7 +43,7 @@ public class UserPostsService {
         }
         return Collections.emptyList();
     }
-    public AppPost getLatestPost(User user) throws UserIOException {
+    public Posts getLatestPost(User user) throws UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         return userPostsDAO.getLatestPost(user);
     }
@@ -55,7 +53,7 @@ public class UserPostsService {
             return;
         }
         Long timePosted = System.currentTimeMillis(); // Assuming you want to use the current time
-        AppPost appPost = new AppPost(user, content, timePosted);
+        Posts appPost = new Posts(user, content, timePosted);
         // Call DAO to write the post to the database
         userPostsDAO.createPost(appPost);
         System.out.println("Post created successfully.");

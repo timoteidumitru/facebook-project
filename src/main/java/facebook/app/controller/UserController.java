@@ -10,7 +10,6 @@ import java.util.List;
 
 public class UserController {
     private final UserService userService;
-
     public UserController() {
         this.userService = new UserService();
     }
@@ -21,7 +20,6 @@ public class UserController {
             throw new InvalidEmailFormatException("Invalid email format for: " + user.getEmail());
         }
     }
-
 
     public User getUserByEmail(String email) throws UserIOException {
         return userService.getUserByEmail(email);
@@ -45,8 +43,6 @@ public class UserController {
         }
     }
 
-
-    // Validation method for email format
     public boolean isValidEmailFormat(String email) {
         // This is a simple check; you might want to use a regular expression for a more thorough check
         return email == null || !email.contains("@");

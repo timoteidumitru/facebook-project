@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProfileDAO {
-
     private static final String FILE_NAME = "src/main/resources/profile.txt";
 
     public List<Profile> readProfile() {

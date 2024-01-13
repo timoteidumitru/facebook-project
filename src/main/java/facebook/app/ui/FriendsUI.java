@@ -105,8 +105,6 @@ public class FriendsUI {
         System.out.println(userController.getUserByID(friendId).getName().toUpperCase() + " successfully added to your friends list!");
     }
 
-
-
     private void removeFriend() throws UserNotFoundException, UserIOException {
         System.out.println("Enter the User ID of the friend you want to remove:");
         viewFriends();

@@ -1,6 +1,6 @@
 package facebook.app.dao;
 
-import facebook.app.entities.AppPost;
+import facebook.app.entities.Posts;
 import facebook.app.services.PostServiceInterface;
 import facebook.app.entities.User;
 
@@ -13,15 +13,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserPostsDAO implements PostServiceInterface {
+public class PostsDAO implements PostServiceInterface {
     private static final String DATABASE_FILE_PATH = "posts.txt";
-
-    public UserPostsDAO() {
+    public PostsDAO() {
     }
 
     @Override
-    public AppPost getLatestPost(User user) {
-        List<AppPost> latestPosts = getRecentPostsFromUser(user, 1);
+    public Posts getLatestPost(User user) {
+        List<Posts> latestPosts = getRecentPostsFromUser(user, 1);
         if (latestPosts.isEmpty()) {
             return null;
         } else {
@@ -30,8 +29,8 @@ public class UserPostsDAO implements PostServiceInterface {
     }
 
     @Override
-    public List<AppPost> getAllPostsFromCurrentUser(User user) {
-        List<AppPost> postsFromUser = new ArrayList<>();
+    public List<Posts> getAllPostsFromCurrentUser(User user) {
+        List<Posts> postsFromUser = new ArrayList<>();
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DATABASE_FILE_PATH);
              InputStreamReader streamReader = new InputStreamReader(inputStream);
              BufferedReader reader = new BufferedReader(streamReader)) {
@@ -50,7 +49,7 @@ public class UserPostsDAO implements PostServiceInterface {
                         e.printStackTrace();
                     }
 
-                    AppPost appPost = new AppPost(user, postData[2], timestamp);
+                    Posts appPost = new Posts(user, postData[2], timestamp);
                     postsFromUser.add(appPost);
                 }
             }
@@ -61,8 +60,8 @@ public class UserPostsDAO implements PostServiceInterface {
     }
 
     @Override
-    public List<AppPost> getRecentPostsFromUser(User user, int posts) {
-        List<AppPost> latestPostsFromUser = new ArrayList<>();
+    public List<Posts> getRecentPostsFromUser(User user, int posts) {
+        List<Posts> latestPostsFromUser = new ArrayList<>();
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DATABASE_FILE_PATH);
              InputStreamReader streamReader = new InputStreamReader(inputStream);
              BufferedReader reader = new BufferedReader(streamReader)) {
@@ -73,11 +72,11 @@ public class UserPostsDAO implements PostServiceInterface {
                 if (String.valueOf(user.getUserId()).equals(postData[0])) {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("\"dd/MM/yyyy HH:mm:ss\"");
                     LocalDateTime dateTime = LocalDateTime.parse(postData[1], formatter);
-                    AppPost appPost = new AppPost(user, postData[2], dateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
+                    Posts appPost = new Posts(user, postData[2], dateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
                     latestPostsFromUser.add(appPost);
                 }
             }
-            Collections.sort(latestPostsFromUser, Comparator.comparing(AppPost::getTimePosted).reversed());
+            Collections.sort(latestPostsFromUser, Comparator.comparing(Posts::getTimePosted).reversed());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,7 +84,7 @@ public class UserPostsDAO implements PostServiceInterface {
     }
 
     @Override
-    public void createPost(AppPost appPost) {
+    public void createPost(Posts appPost) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile().getAbsolutePath(), true))) {
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

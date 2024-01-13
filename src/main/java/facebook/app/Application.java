@@ -18,7 +18,7 @@ public class Application {
     public static void main(String[] args) throws MessageValidationException, UserNotFoundException, InvalidEmailFormatException, UserIOException {
         UserController userController = new UserController();
         MessageDAO messageDAO = new MessageDAO();
-        MessageController messageCtr = new MessageController(new MessageService(messageDAO), new MessageDAO());
+        MessageController messageCtr = new MessageController(new MessageService(), new MessageDAO());
         MessageUI messageUI = new MessageUI(messageCtr, new Scanner(System.in));
         messageCtr.setMessageUI(messageUI);
         FriendsController friendsController = new FriendsController(new FriendsService());
