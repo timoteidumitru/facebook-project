@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ProfileUI {
-    private static ProfileController profileController = new ProfileController();
+    private static final ProfileController profileController = new ProfileController();
 
     public void createProfile() {
 

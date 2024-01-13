@@ -1,7 +1,7 @@
 package facebook.app.dao;
 
 import facebook.app.entities.AppPost;
-import facebook.app.homefeedservicesinterfaces.PostServiceDAO;
+import facebook.app.services.PostServiceInterface;
 import facebook.app.entities.User;
 
 import java.io.*;
@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserPostsDAO implements PostServiceDAO {
+public class UserPostsDAO implements PostServiceInterface {
     private static final String DATABASE_FILE_PATH = "posts.txt";
 
     public UserPostsDAO() {

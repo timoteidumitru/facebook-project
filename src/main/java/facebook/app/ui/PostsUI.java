@@ -2,17 +2,13 @@ package facebook.app.ui;
 
 import facebook.app.controller.UserPostsController;
 import facebook.app.entities.AppPost;
-import facebook.app.entities.User;
 import facebook.app.exceptions.UserNotFoundException;
-import facebook.app.services.UserPostsService;
-import facebook.app.services.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class HomeFeedUI {
-    private UserPostsController postsController = new UserPostsController();
+public class PostsUI {
+    private final UserPostsController postsController = new UserPostsController();
     public void postsSection() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println(" Feed management, please chose one of the following options:");

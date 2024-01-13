@@ -1,9 +1,9 @@
-package facebook.app.homefeedservicesinterfaces;
+package facebook.app.services;
 
 import facebook.app.entities.AppPost;
 import facebook.app.entities.User;
 
-public interface FeedServiceDAO {
+public interface FeedServiceInterface {
      void addPost(User user, AppPost post) ;
      void showLatestPost() ;
     // void messageToUser(User user, String message) ;

@@ -1,11 +1,11 @@
-package facebook.app.homefeedservicesinterfaces;
+package facebook.app.services;
 
 import facebook.app.entities.AppPost;
 
 import facebook.app.entities.User;
 import java.util.List;
 
-public interface PostServiceDAO {
+public interface PostServiceInterface {
     AppPost getLatestPost(User user);
 
      List<AppPost> getAllPostsFromCurrentUser(User user);
