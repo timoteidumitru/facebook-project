@@ -70,7 +70,7 @@ public class ProfileUI {
         System.out.println("\nProfile to be Displayed!");
         System.out.println("Profile Details:");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your name: ");
+        System.out.print("Enter your profile ID: "); //!!!!!
         String name = scanner.nextLine();
         List<String> list = new ArrayList<>();
         for (Profile p : profileController.getAllProfile()) {
