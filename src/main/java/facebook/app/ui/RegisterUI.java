@@ -1,6 +1,8 @@
 package facebook.app.ui;
 import facebook.app.controller.UserController;
 import facebook.app.entities.User;
+import facebook.app.exceptions.InvalidEmailFormatException;
+import facebook.app.exceptions.UserIOException;
 
 import java.util.Scanner;
 
@@ -13,7 +15,7 @@ public class RegisterUI {
         this.scanner = new Scanner(System.in);
     }
 
-    public void startRegistration() {
+    public void startRegistration() throws InvalidEmailFormatException, UserIOException {
         System.out.println("Register");
         System.out.print("Enter email: ");
         String email = scanner.nextLine();
@@ -41,7 +43,7 @@ public class RegisterUI {
     }
 
     // Method to generate a unique user ID
-    private long generateUniqueUserId() {
+    private long generateUniqueUserId() throws UserIOException {
         // For simplicity, here's a basic implementation using the current time in milliseconds.
         return userController.getAllUsers().size() + 1;
     }

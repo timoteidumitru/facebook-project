@@ -4,6 +4,7 @@ import facebook.app.dao.UserDAO;
 import facebook.app.dao.UserPostsDAO;
 import facebook.app.entities.AppPost;
 import facebook.app.entities.User;
+import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ public class UserPostsService {
     }
     public UserPostsService() {}
 
-    public List<AppPost> getAllPostsFromCurrentUser(User user) throws UserNotFoundException {
+    public List<AppPost> getAllPostsFromCurrentUser(User user) throws UserNotFoundException, UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user == null) {
             throw new UserNotFoundException("User with ID " + (int) user.getUserId() + " not found");
@@ -30,7 +31,7 @@ public class UserPostsService {
         }
     }
 
-    public List<AppPost> getRecentPostsFromUser(User user, int limit) {
+    public List<AppPost> getRecentPostsFromUser(User user, int limit) throws UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         if (user != null) {
             user = userDAO.getUserByID((int) user.getUserId());
@@ -44,7 +45,7 @@ public class UserPostsService {
         }
         return Collections.emptyList();
     }
-    public AppPost getLatestPost(User user) {
+    public AppPost getLatestPost(User user) throws UserIOException {
         user = userDAO.getUserByID((int) user.getUserId());
         return userPostsDAO.getLatestPost(user);
     }

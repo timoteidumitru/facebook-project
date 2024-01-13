@@ -2,6 +2,7 @@ package facebook.app.ui;
 
 import facebook.app.controller.UserPostsController;
 import facebook.app.entities.AppPost;
+import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -9,7 +10,11 @@ import java.util.Scanner;
 
 public class PostsUI {
     private final UserPostsController postsController = new UserPostsController();
-    public void postsSection() {
+
+    public PostsUI() throws UserNotFoundException, UserIOException {
+    }
+
+    public void postsSection() throws UserIOException {
         Scanner keyboard = new Scanner(System.in);
         System.out.println(" Feed management, please chose one of the following options:");
         System.out.println("1. See all posts from current user");
@@ -26,6 +31,8 @@ public class PostsUI {
                     allPosts.forEach(postCurrent -> System.out.println(postCurrent.getContent()));
                 } catch (UserNotFoundException e) {
                     System.out.println("there was an error while retrieving this user");
+                } catch (UserIOException e) {
+                    throw new RuntimeException(e);
                 }
                 break;
 

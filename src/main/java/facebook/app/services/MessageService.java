@@ -1,11 +1,25 @@
 package facebook.app.services;
+import facebook.app.dao.MessageDAO;
 import facebook.app.entities.Message;
+import java.util.List;
+import java.util.stream.Collectors;
+import facebook.app.exceptions.MessageValidationException;
 
 public class MessageService {
+    private final MessageDAO messageDAO = new MessageDAO();
 
-    public void processMessage(Message message) {
+    public MessageService(MessageDAO messageDAO) {
+    }
+
+    public void processMessage(Message message) throws MessageValidationException {
         validateSenderAndRecipient(message);
         validateMessageLength(message);
+    }
+    public List<Message> getFilteredMessagesForUser(int currentUserId) {
+        List<Message> messages = messageDAO.readMessages();
+        return messages.stream()
+                .filter(message -> message.getFrom_user_id() == currentUserId || message.getTo_user_id() == currentUserId)
+                .collect(Collectors.toList());
     }
 
     private void validateSenderAndRecipient(Message message) {
@@ -17,12 +31,10 @@ public class MessageService {
         }
     }
 
-    private void validateMessageLength(Message message) {
-        String messageContent = message.getMessage();
-
-        if (messageContent.length() > 250) {
-            throw new IllegalArgumentException("Message length exceeds the maximum allowed limit");
+    private void validateMessageLength(Message message) throws MessageValidationException {
+        if (message.getMessage().length() > 250) {
+            throw new MessageValidationException("Message length exceeds the maximum allowed limit",
+                    "Allowed maximum length: 250 characters. Provided length: " + message.getMessage().length() + " characters.");
         }
-
     }
 }
