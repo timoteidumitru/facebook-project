@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProfileController {
     private final ProfileDAO profileDAO = new ProfileDAO();
-  //  private ProfileService profileService = new ProfileService();
+
 
     public void editProfile(int id, String name, String email, int age, String location) {
 
@@ -20,15 +20,19 @@ public class ProfileController {
         }
         profileDAO.writeProfile(id, name, email, age, location);
     }
+
     public List<Profile> getAllProfile() {
         return profileDAO.readProfile();
     }
+
 //    public void checkProfile(int currentID) {
 //        List<Profile> profileList = getAllProfile();
 //
 //        for (Profile profile : profileList) {
 //           // if (profileList.get(currentID))
-//                System.out.println("profilul curent" + profileList);
+  
+//                System.out.println("profilul curent" + profile);
+
 //        }
 //        System.out.println("toate profilele" + profileList);
 //    }
@@ -36,6 +40,7 @@ public class ProfileController {
 //    private boolean isUserUnique(List<Profile> profileList, String email) {
 //        return profileList.stream().noneMatch(profile -> profile.getEmail().equals(email));
 //    }
+
 
 //    public Profile getUserByID(int id) throws UserNotFoundException, UserIOException {
 //        return profileService.getUserByID(id);

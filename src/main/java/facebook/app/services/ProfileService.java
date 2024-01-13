@@ -4,6 +4,12 @@ import facebook.app.controller.ProfileController;
 import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
 
+import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
+
+import java.util.List;
+
+
 public class ProfileService {
     private final ProfileDAO profileDAO = new ProfileDAO();
     private final ProfileController profileController = new ProfileController();
@@ -16,6 +22,13 @@ public class ProfileService {
 //        return profile;
 //    }
 
+    public Profile getUserByID(int id) throws UserNotFoundException, UserIOException {
+        return profileDAO.getUserByID(id);
+    }
+    public List<Profile> getAllProfile() {
+        return profileDAO.readProfile();
+    }
+
 //    public Profile getUserByID(int userId) throws UserIOException {
 //        List<Profile> profileList = profileDAO.readProfile();
 //        return profileList.stream()
@@ -24,7 +37,7 @@ public class ProfileService {
 //                .orElse(null);
 //    }
     public int generateUniqueProfileId() {
-        return profileController.getAllProfile()
+        return getAllProfile()
                 .stream()
                 .mapToInt(Profile::getId) //.mapToInt(p -> p.getId())
                 .max()

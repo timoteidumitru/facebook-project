@@ -11,7 +11,6 @@ import java.util.List;
 public class ProfileDAO {
     private final List<Profile> profileList = new ArrayList<>();
     private final File file = new File(FILE_NAME);
-
     private static final String FILE_NAME = "src/main/resources/profile.txt";
 
     public List<Profile> readProfile() {
@@ -76,6 +75,7 @@ public class ProfileDAO {
 
     public Profile getUserByID(int userId) throws UserIOException {
         List<Profile> profileList = readProfile();
+
         return profileList.stream()
                 .filter(profile -> profile.getId() == userId)
                 .findFirst()
