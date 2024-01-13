@@ -3,21 +3,26 @@ package facebook.app.services;
 import facebook.app.controller.ProfileController;
 import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
-import facebook.app.exceptions.UserIOException;
-
-import java.util.InputMismatchException;
 
 public class ProfileService {
-    private  ProfileDAO profileDAO = new ProfileDAO();
-    private ProfileController profileController = new ProfileController();
+    private final ProfileDAO profileDAO = new ProfileDAO();
+    private final ProfileController profileController = new ProfileController();
 
-    public Profile getUserByID(int userID) throws UserIOException {
-        Profile profile = profileDAO.getUserByID(userID);
-        if (profile == null) {
-            throw new InputMismatchException("User not found");
-        }
-        return profile;
-    }
+//    public Profile getUserByID(int userID) throws UserIOException {
+//        Profile profile = profileDAO.getUserByID(userID);
+//        if (profile == null) {
+//            throw new InputMismatchException("User not found");
+//        }
+//        return profile;
+//    }
+
+//    public Profile getUserByID(int userId) throws UserIOException {
+//        List<Profile> profileList = profileDAO.readProfile();
+//        return profileList.stream()
+//                .filter(profile -> profile.getId() == userId)
+//                .findFirst()
+//                .orElse(null);
+//    }
     public int generateUniqueProfileId() {
         return profileController.getAllProfile()
                 .stream()
