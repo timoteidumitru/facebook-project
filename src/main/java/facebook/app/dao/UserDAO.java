@@ -1,5 +1,6 @@
 package facebook.app.dao;
 import facebook.app.entities.User;
+import facebook.app.exceptions.UserIOException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,10 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserDAO {
-
     private static final String FILE_NAME = "users.txt";
 
-    public List<User> readUsers() {
+    public List<User> readUsers() throws UserIOException {
         List<User> userList = new ArrayList<>();
 
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_NAME)) {
@@ -40,7 +40,7 @@ public class UserDAO {
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+            throw new UserIOException("Failed to read user data", e);
         }
         return userList;
     }
@@ -68,7 +68,7 @@ public class UserDAO {
         }
     }
 
-    public User getUserByID(int userId) {
+    public User getUserByID(int userId) throws UserIOException {
         List<User> userList = readUsers();
         return userList.stream()
                 .filter(user -> user.getUserId() == userId)
@@ -76,7 +76,7 @@ public class UserDAO {
                 .orElse(null);
     }
 
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws UserIOException {
         List<User> userList = readUsers();
         return userList.stream()
                 .filter(user -> user.getEmail().equals(email))

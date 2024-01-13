@@ -2,6 +2,8 @@ package facebook.app.controller;
 
 import facebook.app.entities.Friends;
 import facebook.app.entities.User;
+import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.FriendsService;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class FriendsController {
                 .collect(Collectors.toList());
     }
 
-    public void addFriend(int fromUserId, int toUserId) {
+    public void addFriend(int fromUserId, int toUserId) throws UserNotFoundException, UserIOException {
         User userToAdd = userController.getUserByID(toUserId);
         String friendNameID = userToAdd.getEmail().split("@")[0];
         Friends newFriend = new Friends(fromUserId, toUserId, friendNameID);

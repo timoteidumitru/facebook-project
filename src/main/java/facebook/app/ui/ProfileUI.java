@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProfileUI {
-    private static ProfileController profileController = new ProfileController();
-    private Profile profile = new Profile();
-    private ProfileController profileController = new ProfileController();
 
+    private ProfileController profileController = new ProfileController();
+    private Profile profile = new Profile();
 
     public void startProfile() {
         System.out.println("        Welcome to the Profile page");
@@ -107,28 +106,8 @@ public class ProfileUI {
 
     public String getUserInput() {
         Scanner keyboardScanner = new Scanner(System.in);
-        String userInput = keyboardScanner.next();
-        return userInput;
+        return keyboardScanner.next();
     }
-
- /*   private void editProfile(Scanner scanner) {
-        if (profile.getName() == null) {
-            System.out.println("Profile not created yet. Please create a profile first.");
-        } else {
-            System.out.print("Enter your new name: ");
-            profile.getName() = scanner.nextLine();
-
-            System.out.print("Enter your new age: ");
-            profile.getEmail() = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
-
-            System.out.print("Enter your new email: ");
-            profile.getAge() = scanner.nextLine();
-
-            System.out.println("Profile updated successfully!");
-        }
-
-  */
 
 }
 

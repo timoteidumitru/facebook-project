@@ -49,8 +49,16 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return email.split("@")[0];
+    public void addPost(Posts post) {
     }
+
+    public void sendMessage(User user, String message) {
+
+    }
+
+    public String getName () {
+            return email.split("@")[0];
+        }
+
 }
 

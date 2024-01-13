@@ -13,7 +13,7 @@ public class MessageDAO {
     private static final String FILE_NAME = "messages.txt";
 
     public void saveMessage(Message message) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile().getAbsolutePath(), true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile().getAbsolutePath(), true))) {
             // Append the message details to the file with a semicolon separator
             writer.write(String.format("%d`%d`%s`%s;%n",
                     message.getFrom_user_id(), message.getTo_user_id(),
@@ -26,7 +26,7 @@ public class MessageDAO {
     public List<Message> readMessages() {
         List<Message> messageList = new ArrayList<>();
 
-        try (InputStream inputStream = getResourceAsStream()) {
+        try (InputStream inputStream = readFromFile()) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
                 String line;
@@ -51,7 +51,7 @@ public class MessageDAO {
         return messageList;
     }
 
-    private InputStream getResourceAsStream() {
+    private InputStream readFromFile() {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(MessageDAO.FILE_NAME);
         if (inputStream == null) {
             throw new IllegalArgumentException("File not found: " + MessageDAO.FILE_NAME);
@@ -59,7 +59,7 @@ public class MessageDAO {
         return inputStream;
     }
 
-    private File getResourceFile() throws URISyntaxException {
+    private File writeToFile() throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
         return new File(Objects.requireNonNull(classLoader.getResource(MessageDAO.FILE_NAME)).toURI());
     }

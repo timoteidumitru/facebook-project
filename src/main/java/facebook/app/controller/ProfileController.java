@@ -7,9 +7,7 @@ import java.security.InvalidParameterException;
 import java.util.List;
 
 public class ProfileController {
-
-    // filrare date
-    private ProfileDAO profileDAO = new ProfileDAO();
+    private final ProfileDAO profileDAO = new ProfileDAO();
 
     public void editProfile(int id, String name, String email, int age, String location) {
 

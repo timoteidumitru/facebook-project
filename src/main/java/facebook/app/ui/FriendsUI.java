@@ -4,6 +4,8 @@ import facebook.app.controller.FriendsController;
 import facebook.app.controller.UserController;
 import facebook.app.entities.Friends;
 import facebook.app.entities.User;
+import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.UserService;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class FriendsUI {
         this.scanner = scanner;
     }
 
-    public void startFriendsManagement() {
+    public void startFriendsManagement() throws UserNotFoundException, UserIOException {
         int choice;
         do {
             System.out.println("    Friends management, please use one of the following options:");
@@ -51,7 +53,7 @@ public class FriendsUI {
         } while (choice != 0);
     }
 
-    private void viewFriends() {
+    private void viewFriends() throws UserIOException {
         int userId = (int) userService.getCurrentUserId();
         List<Friends> friendsList = friendsController.getFriendsOfUser(userId);
 
@@ -66,7 +68,7 @@ public class FriendsUI {
         }
     }
 
-    private void addFriend() {
+    private void addFriend() throws UserNotFoundException, UserIOException {
         int userId = (int) userService.getCurrentUserId();
         List<Friends> friendsList = friendsController.getFriendsOfUser(userId);
 
@@ -103,9 +105,7 @@ public class FriendsUI {
         System.out.println(userController.getUserByID(friendId).getName().toUpperCase() + " successfully added to your friends list!");
     }
 
-
-
-    private void removeFriend() {
+    private void removeFriend() throws UserNotFoundException, UserIOException {
         System.out.println("Enter the User ID of the friend you want to remove:");
         viewFriends();
         int userId = (int) userService.getCurrentUserId();
