@@ -1,6 +1,8 @@
 package facebook.app.services;
 import facebook.app.dao.UserDAO;
 import facebook.app.entities.User;
+import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +14,7 @@ public class UserService {
         this.userDAO = new UserDAO();
     }
 
-    public boolean login(String email, String password) {
+    public boolean login(String email, String password) throws UserIOException {
         List<User> userList = userDAO.readUsers(); // Change here
         Optional<User> userToLoginOptional = userList.stream()
                 .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
@@ -32,14 +34,14 @@ public class UserService {
         }
     }
 
-    public void logoutAllUsers() {
+    public void logoutAllUsers() throws UserIOException {
         List<User> userList = userDAO.readUsers();
         userList.forEach(user -> user.setLoggedIn(false));
         userDAO.writeUsers(userList);
     }
 
 
-    public long getCurrentUserId() {
+    public long getCurrentUserId() throws UserIOException {
         List<User> userList = userDAO.readUsers();
         for (User user : userList) {
             if (user.isLoggedIn()) {
@@ -49,7 +51,7 @@ public class UserService {
         return -1; // Return -1 if no user is currently logged in
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws UserIOException {
         // Ensure password meets minimum length requirement
         if (user.getPassword().length() < 3) {
             System.out.println("Password must be at least 4 characters long. Please try again!");
@@ -75,7 +77,7 @@ public class UserService {
     }
 
 
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws UserIOException {
         // Check if the email is not empty
         if (email == null || email.trim().isEmpty()) {
             System.out.println("Email cannot be empty. Please provide a valid email.");
@@ -85,18 +87,17 @@ public class UserService {
         // Perform additional business logic/validation before retrieving from the DAO
         return userDAO.getUserByEmail(email);
     }
-    public User getUserByID(int userID) {
-        // Check if the userID is valid
-        if (userID <= 0) {
-            System.out.println("Invalid user ID. Please provide a valid user ID.");
-            return null;
+    public User getUserByID(int userID) throws  UserIOException {
+        User user = userDAO.getUserByID(userID);
+        if (user == null) {
+//            throw new UserNotFoundException("User with ID: " + userID + " not found");
+            System.out.println("User not found");
         }
-
-        // Perform additional business logic/validation before retrieving from the DAO
-        return userDAO.getUserByID(userID);
+        return user;
     }
 
-    public List<User> getAllUsers() {
+
+    public List<User> getAllUsers() throws UserIOException {
         // Perform additional business logic if needed before reading from the DAO
         return userDAO.readUsers();
     }

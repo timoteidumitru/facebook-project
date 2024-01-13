@@ -3,6 +3,9 @@ import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
 import facebook.app.entities.Message;
 import facebook.app.entities.User;
+import facebook.app.exceptions.MessageValidationException;
+import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.UserService;
 
 import java.text.SimpleDateFormat;
@@ -19,10 +22,10 @@ public class MessageUI {
         this.scanner = scanner;
     }
 
-    public void startMessaging() {
+    public void startMessaging() throws MessageValidationException, UserNotFoundException, UserIOException {
         int choice;
         do {
-            System.out.println("    Messaging management, please chose one of the following options:");
+            System.out.println("    Message management, please chose one of the following options:");
             System.out.println("1. View Messages");
             System.out.println("2. Send a Message");
             System.out.println("0. Back to Main Menu");
@@ -32,11 +35,9 @@ public class MessageUI {
 
             switch (choice) {
                 case 1:
-                    // View messages (implement as needed)
                     viewMessages();
                     break;
                 case 2:
-                    // Send a message
                     sendMessage();
                     break;
                 case 0:
@@ -48,38 +49,35 @@ public class MessageUI {
         } while (choice != 0);
     }
 
-    private void viewMessages() {
-        List<Message> messages = messageController.getMessages();
+    private void viewMessages() throws UserNotFoundException, UserIOException {
+        int currentUserId = (int) userService.getCurrentUserId();
+        List<Message> messages = messageController.getFilteredMessagesForUser(currentUserId);
         if (messages.isEmpty()) {
             System.out.println("No messages to display.");
         } else {
             System.out.println("Messages:");
             for (Message message : messages) {
-                if (message.getFrom_user_id() == userService.getCurrentUserId() || message.getTo_user_id() == userService.getCurrentUserId()){
-                    String formattedDate = "Date: " + message.getDate();
-                    List<String> splitMessage = splitIntoLines(message.getMessage());
-                    if (message.getFrom_user_id() == (int) userService.getCurrentUserId()){
-                        System.out.println("#                                                                           #");
-                        // Message from the current user - align right
-                        System.out.printf("%74s\n", "(Me -> "+ userController.getUserByID(message.getTo_user_id()).getEmail().split("@")[0] + ") " + formattedDate);
-                        for (String line : splitMessage) {
+                String formattedDate = "Date: " + message.getDate();
+                List<String> splitMessage = splitIntoLines(message.getMessage());
+                if (message.getFrom_user_id() == (int) userService.getCurrentUserId()){
+                    System.out.println("#                                                                           #");
+                    // Message from the current user - align right
+                    System.out.printf("%74s\n", "(Me -> "+ userController.getUserByID(message.getTo_user_id()).getEmail().split("@")[0] + ") " + formattedDate);
+                    for (String line : splitMessage) {
 
-                            System.out.printf("%74s\n", line);
-                        }
-                        System.out.println("#                                                                           #");
-                    } else {
-                        System.out.println("#                                                                           #");
-                        // Message from other users - align left
-                        System.out.printf("   %-20s\n", formattedDate + " (" + userController.getUserByID(message.getFrom_user_id()).getEmail().split("@")[0] + ")");
-                        for (String line : splitMessage) {
-
-                            System.out.printf("   %-20s\n", line);
-                        }
-                        System.out.println("#                                                                           #");
+                        System.out.printf("%74s\n", line);
                     }
+                    System.out.println("#                                                                           #");
+                } else {
+                    System.out.println("#                                                                           #");
+                    // Message from other users - align left
+                    System.out.printf("   %-20s\n", formattedDate + " (" + userController.getUserByID(message.getFrom_user_id()).getEmail().split("@")[0] + ")");
+                    for (String line : splitMessage) {
+
+                        System.out.printf("   %-20s\n", line);
+                    }
+                    System.out.println("#                                                                           #");
                 }
-
-
             }
         }
     }
@@ -96,9 +94,8 @@ public class MessageUI {
         return lines;
     }
 
-    private void sendMessage() {
+    private void sendMessage() throws MessageValidationException, UserIOException {
         UserController userController = new UserController();
-
         int fromUserId = (int) userService.getCurrentUserId();
 
         // Display a list of users for the recipient selection

@@ -3,7 +3,10 @@ package facebook.app;
 import facebook.app.controller.FriendsController;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
-import facebook.app.entities.Profile;
+import facebook.app.exceptions.InvalidEmailFormatException;
+import facebook.app.exceptions.MessageValidationException;
+import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.FriendsService;
 import facebook.app.services.MessageService;
 import facebook.app.dao.MessageDAO;
@@ -12,14 +15,14 @@ import facebook.app.ui.*;
 import java.util.Scanner;
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MessageValidationException, UserNotFoundException, InvalidEmailFormatException, UserIOException {
         UserController userController = new UserController();
         MessageController messageCtr = new MessageController(new MessageService(), new MessageDAO());
         MessageUI messageUI = new MessageUI(messageCtr, new Scanner(System.in));
         messageCtr.setMessageUI(messageUI);
         FriendsController friendsController = new FriendsController(new FriendsService());
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
-        HomeFeedUI homeFeedUI = new HomeFeedUI();
+        PostsUI homeFeedUI = new PostsUI();
         ProfileUI profileUI = new ProfileUI();
         Scanner scanner = new Scanner(System.in);
 
