@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProfileUI {
-    private static ProfileController profileController = new ProfileController();
-    private Profile profile = new Profile();
     private ProfileController profileController = new ProfileController();
+    private Profile profile = new Profile();
+  //  private ProfileController profileController = new ProfileController();
 
 
     public void startProfile() {
@@ -71,7 +71,7 @@ public class ProfileUI {
         System.out.println("\nProfile to be Displayed!");
         System.out.println("Profile Details:");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your name: ");
+        System.out.print("Enter your profile ID: "); //!!!!!
         String name = scanner.nextLine();
         List<String> list = new ArrayList<>();
         for (Profile p : profileController.getAllProfile()) {
