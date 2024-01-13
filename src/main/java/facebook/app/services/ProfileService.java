@@ -3,6 +3,7 @@ package facebook.app.services;
 import facebook.app.controller.ProfileController;
 import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
+
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 
@@ -20,12 +21,21 @@ public class ProfileService {
 //        }
 //        return profile;
 //    }
+
     public Profile getUserByID(int id) throws UserNotFoundException, UserIOException {
         return profileDAO.getUserByID(id);
     }
     public List<Profile> getAllProfile() {
         return profileDAO.readProfile();
     }
+
+//    public Profile getUserByID(int userId) throws UserIOException {
+//        List<Profile> profileList = profileDAO.readProfile();
+//        return profileList.stream()
+//                .filter(profile -> profile.getId() == userId)
+//                .findFirst()
+//                .orElse(null);
+//    }
     public int generateUniqueProfileId() {
         return getAllProfile()
                 .stream()
