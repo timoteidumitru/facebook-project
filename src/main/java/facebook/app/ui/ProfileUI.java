@@ -3,6 +3,7 @@ package facebook.app.ui;
 import facebook.app.controller.ProfileController;
 import facebook.app.entities.Profile;
 import facebook.app.exceptions.UserIOException;
+import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.ProfileService;
 import facebook.app.services.UserService;
 
@@ -85,7 +86,7 @@ public class ProfileUI {
   
     public void editProfile() {
         System.out.println("Edit your Profile!");
-        for (Profile p : profileController.getAllProfile()) {
+        for (Profile p : profileService.getAllProfile()) {
             if (p.getId() == userId) {
                 profile = p;
             }
@@ -116,10 +117,18 @@ public class ProfileUI {
     }
 
     public void displayProfile() {
-        for (Profile p : profileController.getAllProfile()) {
+        for (Profile p : profileService.getAllProfile()) {
             if (p.getId() == userId) {
                 profile = p;
             }
+        }
+
+        try {
+            profile = profileService.getUserByID(userId);
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (UserIOException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("\n===== Your Profile =====");
         System.out.println("ID: " + profile.getId());
