@@ -1,6 +1,7 @@
 package facebook.app;
 
 import facebook.app.controller.FriendsController;
+import facebook.app.controller.GroupController;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
 import facebook.app.exceptions.InvalidEmailFormatException;
