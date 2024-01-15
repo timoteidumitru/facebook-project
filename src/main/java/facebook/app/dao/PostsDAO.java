@@ -6,6 +6,8 @@ import facebook.app.entities.User;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -103,5 +105,30 @@ public class PostsDAO implements PostServiceInterface {
     private File writeToFile() throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
         return new File(Objects.requireNonNull(classLoader.getResource(DATABASE_FILE_PATH)).toURI());
+    }
+
+    public List<Posts> getPostsFromAnotherUser(int userId) {
+        List<Posts> userPosts = new ArrayList<>();
+
+        try {
+            List<String> allLines = Files.readAllLines(Paths.get(DATABASE_FILE_PATH));
+            for (String line : allLines) {
+                String[] postData = line.split(";");
+                if (Integer.parseInt(postData[0].trim()) == userId) {
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        Date postDate = sdf.parse(postData[1].trim());
+                        Posts appPost = new Posts(userId, postData[1], postData[2]);
+                        userPosts.add(appPost);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return userPosts;
     }
 }

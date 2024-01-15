@@ -1,7 +1,9 @@
 package facebook.app.ui;
 
 import facebook.app.controller.PostsController;
+import facebook.app.controller.UserController;
 import facebook.app.entities.Posts;
+import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.UserService;
@@ -43,6 +45,8 @@ public class PostsUI {
                 case 4:
                     createNewPost();
                     break;
+                case 5:
+                    displayPostsFromAnotherUser();
                 case 0:
                     keepRunning = false;
                     break;
@@ -99,4 +103,30 @@ public class PostsUI {
         postsController.createPost(content);
         System.out.println("Post created successfully");
     }
+
+    private void displayPostsFromAnotherUser() throws UserIOException {
+        UserController userController = new UserController();
+        List<User> users = userController.getAllUsers();
+        int fromUserId = (int) userService.getCurrentUserId();
+        for (User user : users) {
+            if (user.getUserId() == fromUserId){
+                //skip current logged user!
+                //System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+            }else {
+                System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
+            }
+        }
+        keyboard.nextLine();
+        System.out.print("Enter the user ID to retrieve posts: ");
+        int userId = keyboard.nextInt();
+        keyboard.nextLine();
+        try {
+            List<Posts> userPosts = postsController.getPostsFromAnotherUser(userId);
+            System.out.println("Posts from user with ID " + userId + ":");
+            userPosts.forEach(post -> System.out.println(post.getContent()));
+        } catch (UserIOException e) {
+            System.out.println("Error: Unable to retrieve posts for the specified user.");
+        }
+    }
+
 }

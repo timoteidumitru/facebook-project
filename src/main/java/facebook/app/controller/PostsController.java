@@ -38,4 +38,8 @@ public class PostsController {
     public void createPost(String content) throws UserIOException {
         postsService.createPost(content);
     }
+
+    public List<Posts> getPostsFromAnotherUser(int userId) throws UserIOException {
+        return postsService.getPostsFromAnotherUser(userId);
+    }
 }
