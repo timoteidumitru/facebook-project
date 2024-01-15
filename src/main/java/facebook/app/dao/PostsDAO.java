@@ -109,16 +109,15 @@ public class PostsDAO implements PostServiceInterface {
 
     public List<Posts> getPostsFromAnotherUser(int userId) {
         List<Posts> userPosts = new ArrayList<>();
-
-        try {
-            List<String> allLines = Files.readAllLines(Paths.get(DATABASE_FILE_PATH));
-            for (String line : allLines) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFromFile()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
                 String[] postData = line.split(";");
                 if (Integer.parseInt(postData[0].trim()) == userId) {
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                        Date postDate = sdf.parse(postData[1].trim());
-                        Posts appPost = new Posts(userId, postData[1], postData[2]);
+                        String postDate = String.valueOf(sdf.parse(postData[1].trim()));
+                        Posts appPost = new Posts(userId, postDate, postData[2]);
                         userPosts.add(appPost);
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -128,7 +127,6 @@ public class PostsDAO implements PostServiceInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return userPosts;
     }
 }

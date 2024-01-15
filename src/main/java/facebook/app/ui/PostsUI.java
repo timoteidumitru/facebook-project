@@ -27,6 +27,7 @@ public class PostsUI {
             System.out.println("2. See latest post");
             System.out.println("3. See recent posts");
             System.out.println("4. Create new post");
+            System.out.println("5. See posts from another user:");
             System.out.println("0. Return to previous menu");
             System.out.print("Please choose an option: ");
 
@@ -105,6 +106,7 @@ public class PostsUI {
     }
 
     private void displayPostsFromAnotherUser() throws UserIOException {
+        System.out.println("Choose user by userID");
         UserController userController = new UserController();
         List<User> users = userController.getAllUsers();
         int fromUserId = (int) userService.getCurrentUserId();
