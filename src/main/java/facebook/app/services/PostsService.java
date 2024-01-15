@@ -14,8 +14,7 @@ import java.util.List;
 public class PostsService {
     private PostsDAO userPostsDAO = new PostsDAO();
     private UserDAO userDAO = new UserDAO();
-
-    private User user;
+    private User user = new User();
     private final UserService userService = new UserService();
     public PostsService(PostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
@@ -29,8 +28,8 @@ public class PostsService {
         return userPostsDAO.getAllPosts(currentUser);
     }
 
-    public List<Posts> getRecentPosts(User user, int limit) throws UserIOException {
-        user = userDAO.getUserByID((int) user.getUserId());
+    public List<Posts> getRecentPosts(int limit) throws UserIOException {
+        user = userService.getUserByID((int) userService.getCurrentUserId());
         if (user != null) {
             user = userDAO.getUserByID((int) user.getUserId());
             if (user != null) {
@@ -43,8 +42,8 @@ public class PostsService {
         }
         return Collections.emptyList();
     }
-    public Posts getLatestPost(User user) throws UserIOException {
-        user = userDAO.getUserByID((int) user.getUserId());
+    public Posts getLatestPost() throws UserIOException {
+        user = userService.getUserByID((int) userService.getCurrentUserId());
         return userPostsDAO.getLatestPost(user);
     }
     public void createPost(String content) throws UserIOException {

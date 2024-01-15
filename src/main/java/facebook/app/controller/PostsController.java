@@ -28,11 +28,11 @@ public class PostsController {
     }
 
     public List<Posts> getRecentPosts(int limit) throws UserIOException {
-        return postsService.getRecentPosts(user, limit);
+        return postsService.getRecentPosts(limit);
     }
 
     public Posts getLatestPost() throws UserIOException {
-        return postsService.getLatestPost(user);
+        return postsService.getLatestPost();
     }
 
     public void createPost(String content) throws UserIOException {
