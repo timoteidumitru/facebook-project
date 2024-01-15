@@ -25,6 +25,7 @@ public class Application {
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
         PostsUI homeFeedUI = new PostsUI();
         ProfileUI profileUI = new ProfileUI();
+        GroupsUI groupsUI = new GroupsUI();
         Scanner scanner = new Scanner(System.in);
 
         int choice;
@@ -64,6 +65,7 @@ public class Application {
                         System.out.println("Option 3: Welcome to Posts section!");
                         break;
                     case 4:
+                        groupsUI.startGroup();
                         System.out.println("Option 4: Welcome to Groups section!");
                         break;
                     case 5:

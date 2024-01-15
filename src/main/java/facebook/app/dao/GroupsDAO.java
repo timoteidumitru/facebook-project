@@ -55,7 +55,7 @@ public class GroupsDAO {
     public void leaveGroup(int groupId, int userId) {
         List<Groups> groupsList = getAllGroups();
         List<Groups> updateGroupMembers = groupsList.stream()
-                .filter(groups -> (!(groups.getGroupId()) == groupId) && (groups.getUserId() == userId))
+                .filter(groups -> (!((groups.getGroupId()) == groupId)) && (groups.getUserId() == userId))
                 .collect(Collectors.toList());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), false))){
             for (Groups groups : updateGroupMembers) {

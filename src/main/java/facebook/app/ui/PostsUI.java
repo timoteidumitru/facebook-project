@@ -71,7 +71,7 @@ public class PostsUI {
             });
             System.out.println("-------------------------------------------------------");
         } catch (UserNotFoundException e) {
-            System.out.println("Error: User not found.");
+            System.out.println("Error: User not found >Posts<.");
         } catch (UserIOException e) {
             System.out.println("Error: Unable to retrieve posts.");
         }

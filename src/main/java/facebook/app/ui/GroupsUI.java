@@ -2,24 +2,20 @@ package facebook.app.ui;
 
 import facebook.app.controller.GroupController;
 import facebook.app.controller.PostsController;
-import facebook.app.entities.Groups;
-import facebook.app.entities.Posts;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.services.UserService;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class GroupsUI {
     private final GroupController groupController = new GroupController();
     private final PostsController postsController = new PostsController();
-    private final UserService userService = new UserService();
     private final Scanner keyboard = new Scanner(System.in);
 
-    public GroupsUI() {
+    public GroupsUI() throws UserIOException {
     }
 
-    public void groupsSection() throws UserIOException {
+    public void startGroup() throws UserIOException {
         boolean keepRunning = true;
         while (keepRunning) {
             System.out.println("\n--- Groups Management ---");
@@ -90,7 +86,7 @@ public class GroupsUI {
         keyboard.nextLine(); // Consume the leftover newline
         System.out.print("Enter the content of the post: ");
         String content = keyboard.nextLine();
-        postsController.createGroupPost(content, groupId);
+        postsController.createGroupPost(groupId);
         System.out.println("Post created within the group successfully!");
     }
 }

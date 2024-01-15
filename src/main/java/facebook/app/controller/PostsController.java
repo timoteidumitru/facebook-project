@@ -42,4 +42,7 @@ public class PostsController {
     public List<Posts> getPostsFromAnotherUser(int userId) throws UserIOException {
         return postsService.getPostsFromAnotherUser(userId);
     }
+
+    public void createGroupPost(int groupId) {
+    }
 }

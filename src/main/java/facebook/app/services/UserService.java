@@ -78,12 +78,7 @@ public class UserService {
         return userDAO.getUserByEmail(email);
     }
     public User getUserByID(int userID) throws  UserIOException {
-        User user = userDAO.getUserByID(userID);
-        if (user == null) {
-//            throw new UserNotFoundException("User with ID: " + userID + " not found");
-            System.out.println("User not found");
-        }
-        return user;
+        return userDAO.getUserByID(userID);
     }
 
     public long getCurrentUserId() throws UserIOException {

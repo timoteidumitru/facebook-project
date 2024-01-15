@@ -14,5 +14,4 @@ public class GroupsService {
 
     public void leaveGroup (int groupId, int friendId) { groupsDAO.leaveGroup(groupId, friendId);}
 
-    //Additional business logic methods can be added here
 }
