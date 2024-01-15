@@ -6,6 +6,8 @@ import facebook.app.entities.User;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -49,8 +51,14 @@ public class PostsDAO implements PostServiceInterface {
 
 
     public Posts getLatestPost(User user) {
-        return null;
+        List<Posts> latestPosts = getAllPosts(user);
+        if (latestPosts.isEmpty()) {
+            return null;
+        } else {
+            return latestPosts.get(latestPosts.size() - 1);
+        }
     }
+
 
     public List<Posts> getRecentPosts(User user, int posts) {
         List<Posts> latestPostsFromUser = new ArrayList<>();
@@ -97,5 +105,28 @@ public class PostsDAO implements PostServiceInterface {
     private File writeToFile() throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
         return new File(Objects.requireNonNull(classLoader.getResource(DATABASE_FILE_PATH)).toURI());
+    }
+
+    public List<Posts> getPostsFromAnotherUser(int userId) {
+        List<Posts> userPosts = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFromFile()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] postData = line.split(";");
+                if (Integer.parseInt(postData[0].trim()) == userId) {
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        String postDate = String.valueOf(sdf.parse(postData[1].trim()));
+                        Posts appPost = new Posts(userId, postDate, postData[2]);
+                        userPosts.add(appPost);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return userPosts;
     }
 }

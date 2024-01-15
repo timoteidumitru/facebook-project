@@ -41,16 +41,6 @@ public class UserService {
     }
 
 
-    public long getCurrentUserId() throws UserIOException {
-        List<User> userList = userDAO.readUsers();
-        for (User user : userList) {
-            if (user.isLoggedIn()) {
-                return user.getUserId();
-            }
-        }
-        return -1; // Return -1 if no user is currently logged in
-    }
-
     public void addUser(User user) throws UserIOException {
         // Ensure password meets minimum length requirement
         if (user.getPassword().length() < 3) {
@@ -94,6 +84,16 @@ public class UserService {
             System.out.println("User not found");
         }
         return user;
+    }
+
+    public long getCurrentUserId() throws UserIOException {
+        List<User> userList = userDAO.readUsers();
+        for (User user : userList) {
+            if (user.isLoggedIn()) {
+                return user.getUserId();
+            }
+        }
+        return -1; // Return -1 if no user is currently logged in
     }
 
 
