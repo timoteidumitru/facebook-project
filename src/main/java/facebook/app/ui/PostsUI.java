@@ -14,7 +14,7 @@ public class PostsUI {
     private final UserService userService = new UserService();
     private final Scanner keyboard = new Scanner(System.in);
 
-    public PostsUI()  {
+    public PostsUI() throws UserIOException {
     }
 
     public void postsSection() throws UserIOException {

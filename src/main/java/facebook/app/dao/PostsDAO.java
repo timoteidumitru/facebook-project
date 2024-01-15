@@ -49,7 +49,12 @@ public class PostsDAO implements PostServiceInterface {
 
 
     public Posts getLatestPost(User user) {
-        return null;
+        List<Posts> latestPosts = getRecentPosts(user, 1);
+        if (latestPosts.isEmpty()) {
+            return null;
+        } else {
+            return latestPosts.get(0);
+        }
     }
 
     public List<Posts> getRecentPosts(User user, int posts) {

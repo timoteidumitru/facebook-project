@@ -5,19 +5,22 @@ import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.PostsService;
+import facebook.app.services.UserService;
 
 import java.util.List;
 
 public class PostsController {
     private PostsService postsService = new PostsService();
-    private User user;
 
-    public PostsController(PostsService postsService, User user) {
+    UserService userservice = new UserService();
+    private final long userId = userservice.getCurrentUserId();
+    User user = userservice.getUserByID((int) userId);
+
+    public PostsController(PostsService postsService, User user) throws UserIOException {
         this.postsService =  postsService;
         this.user = user;
     }
-    public PostsController() {
-
+    public PostsController() throws UserIOException {
     }
 
     public List<Posts> getAllPosts() throws UserNotFoundException, UserIOException {

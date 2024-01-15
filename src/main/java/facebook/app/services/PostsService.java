@@ -14,6 +14,8 @@ import java.util.List;
 public class PostsService {
     private PostsDAO userPostsDAO = new PostsDAO();
     private UserDAO userDAO = new UserDAO();
+
+    private User user;
     private final UserService userService = new UserService();
     public PostsService(PostsDAO userPostsDAO, UserDAO userDAO) {
         this.userPostsDAO = userPostsDAO;
