@@ -58,4 +58,9 @@ public class PostsService {
         // Call DAO to write the post to the database
         userPostsDAO.createPost(post);
     }
+
+    public List<Posts> getPostsFromAnotherUser(int userId) {
+        // Delegate to DAO to retrieve posts
+        return userPostsDAO.getPostsFromAnotherUser(userId);
+    }
 }
