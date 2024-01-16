@@ -14,8 +14,7 @@ public class MessageDAO {
 
     public void saveMessage(Message message) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile().getAbsolutePath(), true))) {
-            // Append the message details to the file with a semicolon separator
-            writer.write(String.format("%d`%d`%s`%s;%n",
+            writer.write(String.format("%d`%d`%s`%s`%n",
                     message.getFrom_user_id(), message.getTo_user_id(),
                     message.getDate(), message.getMessage()));
         } catch (IOException | URISyntaxException e) {

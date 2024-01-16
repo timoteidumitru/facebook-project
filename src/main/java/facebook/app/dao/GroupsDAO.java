@@ -1,7 +1,5 @@
 package facebook.app.dao;
 
-import facebook.app.controller.GroupController;
-import facebook.app.entities.Friends;
 import facebook.app.entities.Groups;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -9,8 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.imageio.IIOException;
-import javax.swing.*;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GroupsDAO {
@@ -44,7 +41,7 @@ public class GroupsDAO {
         }
 
     public void addGroup (Groups groups) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), true))){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile(), true))){
             writer.write(groups.getGroupId() + ";" + groups.getUserId() + ";" +groups.getGroupName() + ";" + groups.getGroupDescription());
             writer.newLine();
         } catch (IOException | URISyntaxException e) {
@@ -52,24 +49,23 @@ public class GroupsDAO {
         }
     }
 
-    public void leaveGroup(int groupId, int userId) {
+    public Optional<Groups> getGroupById(int groupId) {
         List<Groups> groupsList = getAllGroups();
-        List<Groups> updateGroupMembers = groupsList.stream()
-                .filter(groups -> (!((groups.getGroupId()) == groupId)) && (groups.getUserId() == userId))
-                .collect(Collectors.toList());
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getResourceFile(), false))){
-            for (Groups groups : updateGroupMembers) {
-                writer.write(groups.getGroupId() + ";" + groups.getUserId() + ";" + groups.getGroupName() + ";" + groups.getGroupDescription());
-                writer.newLine();
-            }
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-
+        return groupsList.stream()
+                .filter(group -> group.getGroupId() == groupId)
+                .findFirst();
     }
 
-    private File getResourceFile() throws URISyntaxException {
+    private InputStream readFromFile() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(GroupsDAO.FILE_NAME);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("File not found: " + GroupsDAO.FILE_NAME);
+        }
+        return inputStream;
+    }
+
+    private File writeToFile() throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
-        return new File(Objects.requireNonNull(classLoader.getResource(FILE_NAME)).toURI());
+        return new File(Objects.requireNonNull(classLoader.getResource(GroupsDAO.FILE_NAME)).toURI());
     }
 }

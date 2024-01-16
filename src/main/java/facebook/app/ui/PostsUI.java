@@ -22,14 +22,11 @@ public class PostsUI {
     public void postsSection() throws UserIOException {
         boolean keepRunning = true;
         while (keepRunning) {
-            System.out.println("\n--- Posts Management ---");
-            System.out.println("1. See all posts");
-            System.out.println("2. See latest post");
-            System.out.println("3. See recent posts");
-            System.out.println("4. Create new post");
-            System.out.println("5. See posts from another user:");
-            System.out.println("0. Return to previous menu");
-            System.out.print("Please choose an option: ");
+            System.out.println("\n             --- Posts Management ---");
+            System.out.println("1. See all posts                   2. See latest post");
+            System.out.println("3. See recent posts                4. Create new post");
+            System.out.println("5. See posts from another user     0. Return to Main Menu");
+            System.out.println("                Please choose an option: ");
 
             int choice = keyboard.nextInt();
 
@@ -71,7 +68,7 @@ public class PostsUI {
             });
             System.out.println("-------------------------------------------------------");
         } catch (UserNotFoundException e) {
-            System.out.println("Error: User not found >Posts<.");
+            System.out.println("Error: User not found.");
         } catch (UserIOException e) {
             System.out.println("Error: Unable to retrieve posts.");
         }

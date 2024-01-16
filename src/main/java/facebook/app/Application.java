@@ -1,7 +1,6 @@
 package facebook.app;
 
 import facebook.app.controller.FriendsController;
-import facebook.app.controller.GroupController;
 import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
 import facebook.app.exceptions.InvalidEmailFormatException;
@@ -29,17 +28,16 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
 
         int choice;
-        long loggedInUserId = -1; // Initialize as an invalid user ID
+        long loggedInUserId = -1;
 
         do {
-            System.out.println("        Welcome to the Facebook App");
-
+            System.out.println("     ----- Welcome to the Facebook App -----");
             if (loggedInUserId != -1) {
                 // Display options for a logged-in user
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Messages           2. Friends");
                 System.out.println("      3. Posts              4. Groups");
-                System.out.println("      5. Profile");
+                System.out.println("                5. Profile");
             } else {
                 // Display options for a user not logged in
                 System.out.println("Please choose one of the following options: ");
@@ -49,7 +47,7 @@ public class Application {
             System.out.println("                   0. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             if (loggedInUserId != -1) {
                 // When User is logged in

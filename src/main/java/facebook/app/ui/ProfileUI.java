@@ -10,10 +10,10 @@ import facebook.app.services.UserService;
 import java.util.Scanner;
 
 public class ProfileUI {
-    private ProfileController profileController = new ProfileController();
+    private final ProfileController profileController = new ProfileController();
     private Profile profile = new Profile();
-    private UserService userService = new UserService();
-    private ProfileService profileService = new ProfileService();
+    private final UserService userService = new UserService();
+    private final ProfileService profileService = new ProfileService();
     int userId;
     {   try {
             userId = (int) userService.getCurrentUserId();
@@ -26,10 +26,10 @@ public class ProfileUI {
         int choice;
         do {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("        Welcome to the Profile page");
-            System.out.println("Please choose one of the following options: ");
-            System.out.println("      1. Create Profile           3. Display Profile ");
-            System.out.println("      2. Edit Profile             0. Back");
+            System.out.println("\n        --- Profile Management ---");
+            System.out.println("1. Create Profile           3. Display Profile ");
+            System.out.println("2. Edit Profile             0. Return to Main Menu");
+            System.out.println("           Please choose an option: ");
 
             choice = scanner.nextInt();
             scanner.nextLine();
