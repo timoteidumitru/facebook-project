@@ -37,32 +37,8 @@ public class ProfileDAO {
         }
         return profileList;
     }
- /*   public List<Profile> readProfile(String name) {
-        if (!file.exists()) {
-            System.err.println("File not found: " + FILE_NAME);
 
-        }
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] userData = line.split(";");
-                int id = Integer.parseInt(userData[0].trim());
-                name = userData[1].trim();
-                String email = userData[2].trim();
-                int age = Integer.parseInt(userData[3].trim());
-                String location = userData[4].trim();
-                //    boolean isLoggedIn = Boolean.parseBoolean(userData[5].trim());
-                Profile profile = new Profile(id, name, email, age, location);
-                profileList.add(profile);
-            }
-            reader.close();
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return profileList;
-    }*/
-  public void writeProfile(int id, String name, String email, int age, String location) {
+    public void writeProfile(int id, String name, String email, int age, String location) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(id + ";" + name + ";" + email + ";" + age + ";" + location);
@@ -81,13 +57,4 @@ public class ProfileDAO {
                 .findFirst()
                 .orElse(null);
     }
-//    public void writeProfile(List<Profile> profileList) {
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-//            writer.write(String.valueOf(profileList));
-//            writer.newLine();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
-
