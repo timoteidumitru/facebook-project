@@ -15,6 +15,7 @@ public class PostsUI {
     private final PostsController postsController = new PostsController();
     private final UserService userService = new UserService();
     private final Scanner keyboard = new Scanner(System.in);
+
     public PostsUI() throws UserIOException {
     }
 
@@ -44,6 +45,7 @@ public class PostsUI {
                     break;
                 case 5:
                     displayPostsFromAnotherUser();
+                    break;
                 case 0:
                     keepRunning = false;
                     break;
@@ -60,7 +62,7 @@ public class PostsUI {
             System.out.println("-------------------------------------------------------");
             allPosts.forEach(post -> {
                 try {
-                    System.out.println("User: " + userService.getUserByID((int)post.getUser()).getEmail().split("@")[0] + " | Date: " + post.getTimePosted() + "\nContent: " + post.getContent() +"\n");
+                    System.out.println("User: " + userService.getUserByID((int) post.getUser()).getEmail().split("@")[0] + " | Date: " + post.getTimePosted() + "\nContent: " + post.getContent() + "\n");
                 } catch (UserIOException e) {
                     throw new RuntimeException(e);
                 }
@@ -107,10 +109,10 @@ public class PostsUI {
         List<User> users = userController.getAllUsers();
         int fromUserId = (int) userService.getCurrentUserId();
         for (User user : users) {
-            if (user.getUserId() == fromUserId){
+            if (user.getUserId() == fromUserId) {
                 //skip current logged user!
                 //System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
-            }else {
+            } else {
                 System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
             }
         }
@@ -121,7 +123,12 @@ public class PostsUI {
         try {
             List<Posts> userPosts = postsController.getPostsFromAnotherUser(userId);
             System.out.println("Posts from user with ID " + userId + ":");
-            userPosts.forEach(post -> System.out.println(post.getContent()));
+            if (userPosts.isEmpty()) {
+                System.out.println("User has not posted yet");
+            } else {
+                userPosts.forEach(post -> System.out.println(post.getContent()));
+            }
+
         } catch (UserIOException e) {
             System.out.println("Error: Unable to retrieve posts for the specified user.");
         }
