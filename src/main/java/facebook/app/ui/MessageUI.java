@@ -25,10 +25,10 @@ public class MessageUI {
     public void startMessaging() throws MessageValidationException, UserNotFoundException, UserIOException {
         int choice;
         do {
-            System.out.println("    Message management, please chose one of the following options:");
-            System.out.println("1. View Messages");
-            System.out.println("2. Send a Message");
-            System.out.println("0. Back to Main Menu");
+            System.out.println("\n     --- Message management ---");
+            System.out.println("1. View Messages      2. Send a Message");
+            System.out.println("         0. Back to Main Menu");
+            System.out.println("       Please choose an option: ");
 
             choice = scanner.nextInt();
             scanner.nextLine();

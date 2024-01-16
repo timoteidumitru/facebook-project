@@ -24,30 +24,30 @@ public class Application {
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
         PostsUI homeFeedUI = new PostsUI();
         ProfileUI profileUI = new ProfileUI();
+        GroupsUI groupsUI = new GroupsUI();
         Scanner scanner = new Scanner(System.in);
 
         int choice;
-        long loggedInUserId = -1; // Initialize as an invalid user ID
+        long loggedInUserId = -1;
 
         do {
-            System.out.println("        Welcome to the Facebook App");
-
+            System.out.println("  ----- Welcome to the Facebook App -----");
             if (loggedInUserId != -1) {
                 // Display options for a logged-in user
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Messages           2. Friends");
                 System.out.println("      3. Posts              4. Groups");
-                System.out.println("      5. Profile");
+                System.out.println("                5. Profile");
             } else {
                 // Display options for a user not logged in
                 System.out.println("Please choose one of the following options: ");
-                System.out.println("      1. Register           2. Login");
+                System.out.println("    1. Register           2. Login");
             }
 
-            System.out.println("                   0. Exit");
+            System.out.println("                0. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             if (loggedInUserId != -1) {
                 // When User is logged in
@@ -60,10 +60,9 @@ public class Application {
                         break;
                     case 3:
                         homeFeedUI.postsSection();
-                        System.out.println("Option 3: Welcome to Posts section!");
                         break;
                     case 4:
-                        System.out.println("Option 4: Welcome to Groups section!");
+                        groupsUI.startGroup();
                         break;
                     case 5:
                         profileUI.startProfile();

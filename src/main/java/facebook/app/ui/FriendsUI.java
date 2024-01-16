@@ -25,11 +25,10 @@ public class FriendsUI {
     public void startFriendsManagement() throws UserNotFoundException, UserIOException {
         int choice;
         do {
-            System.out.println("    Friends management, please use one of the following options:");
-            System.out.println("1. View Friends");
-            System.out.println("2. Add a Friend");
-            System.out.println("3. Remove a Friend");
-            System.out.println("0. Back to Main Menu");
+            System.out.println("\n      --- Friends Management ---");
+            System.out.println("1. View Friends       2. Add a Friend");
+            System.out.println("3. Remove a Friend    0. Back to Main Menu");
+            System.out.println("        Please choose an option: ");
 
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -106,8 +105,9 @@ public class FriendsUI {
     }
 
     private void removeFriend() throws UserNotFoundException, UserIOException {
-        System.out.println("Enter the User ID of the friend you want to remove:");
         viewFriends();
+        System.out.println("Enter the User ID of the friend you want to remove:");
+
         int userId = (int) userService.getCurrentUserId();
         int friendId = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character

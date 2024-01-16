@@ -1,16 +1,4 @@
-1;namee;aadre;22;loc
-3;dnd;qw;7;fds
-4;qwer;asdf;5;adsf
-5;asd;asd;5;sdf
-6;ana;ad@re.ss;55;loc
-7;simi@ya.com;parola;55;loooc
-8;ade;am@an;77;alba
-9;asd;qw@qw.qw;3;yxcv
-10;ana;bana@na;99;sibiu
-11;ana;sa@asa;7;mamaia
-12;ande;dea@;4;daef
-13;alfa;bet@a;33;alfabet
-7;Simida;simi@ya.com;20;Negresti
-7;Casiana;simi@ya.com;11;Oas
+1;Timotei Dumitru;tim@eu.com;33;Cluj-Napoca
+5;Cristina;criss@eu.com;33;Cluj
+6;Flavy;flavi@eu.com;23;Cluj
 7;Rodila;simi@ya.com;33;NgOas
-6;ana;ad@re.ss;55;loc7;Timotei Dumitru;tim@eu.com;33;Cluj-Napoca

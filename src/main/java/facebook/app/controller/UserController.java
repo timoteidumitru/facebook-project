@@ -36,7 +36,7 @@ public class UserController {
 
     public boolean login(String email, String password) throws UserIOException {
         if (userService.login(email, password)) {
-            System.out.println("Login successfully! Welcome, " + email.split("@")[0].toUpperCase() + "!");
+            System.out.println(" ### Login successfully! Welcome, " + email.split("@")[0].toUpperCase() + "! ###");
             return true;
         } else {
             System.out.println("Login failed. Incorrect email or password.");
