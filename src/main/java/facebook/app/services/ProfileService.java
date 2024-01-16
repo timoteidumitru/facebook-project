@@ -3,9 +3,9 @@ package facebook.app.services;
 import facebook.app.controller.ProfileController;
 import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
+import facebook.app.exceptions.InvalidEmailFormatException;
 
 import java.util.List;
-
 
 public class ProfileService {
     private final ProfileDAO profileDAO = new ProfileDAO();
@@ -23,16 +23,41 @@ public class ProfileService {
                 .orElse(0) + 1;
     }
 
-    public Profile getCurrentUserId(int userId) {
+    public Profile getCurrentProfileId(int userId) {
         List<Profile> profileList = profileDAO.readProfile();
         return profileList.stream()
                 .filter(profile -> profile.getId() == userId)
                 .findFirst()
                 .orElse(null);
     }
-    public Profile getLastUserId() {
+
+    public Profile getLastProfileId() {
         List<Profile> profileList = profileDAO.readProfile();
-        Profile newProfile = profileList.get(profileList.size() - 1);
-        return  newProfile;
+        return  profileList.get(profileList.size() - 1);
+    }
+
+    public Profile displayCurrentProfile(int userId, Profile profile) {
+        for (Profile p : getAllProfile()) {
+            if (p.getId() == userId) {
+                profile = p;
+            }
+        }
+        return profile;
+    }
+
+    public void createProfile(int id, String name, String email, int age, String location) throws InvalidEmailFormatException {
+        profileController.createProfile(id, name, email, age, location);
+    }
+
+    public void editProfile(int id, String name, String email, int age, String location) {
+        profileController.editProfile(id, name, email, age, location);
+    }
+    public Profile getProfileByID(int userId) {
+        List<Profile> profileList = getAllProfile();
+
+        return profileList.stream()
+                .filter(profile -> profile.getId() == userId)
+                .findFirst()
+                .orElse(null);
     }
 }
