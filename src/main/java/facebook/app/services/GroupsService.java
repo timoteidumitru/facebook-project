@@ -3,6 +3,8 @@ package facebook.app.services;
 import facebook.app.dao.GroupsDAO;
 import facebook.app.entities.Groups;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,18 +28,8 @@ public class GroupsService {
         }
     }
 
-    public Optional<Groups> getGroupById(int groupId) {
-        return groupsDAO.getGroupById(groupId);
-    }
-
     public void createGroup(Groups groups) {
         groupsDAO.addGroup(groups);
-    }
-
-    public void deleteGroup(int groupId) {
-    }
-
-    public void getGroupDetails(int groupId) {
     }
 
     public void addMemberToGroup(int groupId, int friendId) {
@@ -52,7 +44,25 @@ public class GroupsService {
         }
     }
 
+    public void removeMemberFromGroup(int groupId, int friendId) {
+        Optional<Groups> groupOpt = groupsDAO.getGroupById(groupId);
+        if (groupOpt.isPresent()) {
+            Groups group = groupOpt.get();
+            List<String> userIdsList = new ArrayList<>(Arrays.asList(group.getUserId().split(",")));
 
-    public void removeMemberFromGroup(int groupId, String friendName) {
+            // Remove the specified friend ID and rejoin the list
+            userIdsList.remove(String.valueOf(friendId));
+            String updatedUserIds = String.join(",", userIdsList);
+
+            Groups updatedGroup = new Groups(group.getGroupId(), updatedUserIds, group.getGroupName(), group.getGroupDescription());
+            groupsDAO.addGroup(updatedGroup);
+        } else {
+            throw new IllegalArgumentException("Group not found with ID: " + groupId);
+        }
     }
+
+    public Optional<Groups> getGroupById(int groupId) {
+        return groupsDAO.getGroupById(groupId);
+    }
+
 }

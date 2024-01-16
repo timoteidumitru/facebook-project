@@ -1,10 +1,15 @@
 package facebook.app.ui;
 
 import facebook.app.controller.GroupController;
+import facebook.app.entities.Groups;
+import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.services.GroupsService;
 import facebook.app.services.UserService;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class GroupsUI {
@@ -47,8 +52,6 @@ public class GroupsUI {
 
     private void seeGroupDetails() {
         System.out.print("Enter the group ID to see details: ");
-        int groupId = keyboard.nextInt();
-        groupServices.getGroupDetails(groupId);
     }
     private void createGroup() throws UserIOException {
         keyboard.nextLine();
@@ -80,13 +83,46 @@ public class GroupsUI {
         groupServices.addMemberToGroup(groupId, friendId);
         System.out.println("Friend added to the group successfully!");
     }
-    private void removeMembersFromGroup() {
+    private void removeMembersFromGroup() throws UserIOException {
+        // Display all available groups
+        System.out.println("Available groups:");
+        groupServices.getAllGroups().forEach(group -> System.out.println("ID: " + group.getGroupId() + ", Name: " + group.getGroupName()));
+
+        // Ask the user to enter the group ID
         System.out.print("Enter the group ID to remove members: ");
         int groupId = keyboard.nextInt();
-        keyboard.nextLine();
-        System.out.print("Enter the friend's name to remove from the group: ");
-        String friendName = keyboard.nextLine();
-        groupServices.removeMemberFromGroup(groupId, friendName);
-        System.out.println("Friend removed from the group successfully!");
+
+        // Fetch the selected group
+        Optional<Groups> groupOpt = groupServices.getGroupById(groupId);
+        if (groupOpt.isPresent()) {
+            Groups group = groupOpt.get();
+            List<String> memberIds = Arrays.asList(group.getUserId().split(","));
+
+            // Display all members of the chosen group
+            System.out.println("Members of the group:");
+            for (String userId : memberIds) {
+                try {
+                    User user = userService.getUserByID(Integer.parseInt(userId));
+                    if (user != null) {
+                        System.out.println("ID: " + user.getUserId() + ", Name: " + user.getName());
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid format for user ID: " + userId);
+                }
+            }
+
+            // Ask the user to enter the member's user ID to remove
+            System.out.print("Enter the user ID of the member to remove from the group: ");
+            int memberId = keyboard.nextInt();
+
+            if (memberIds.contains(String.valueOf(memberId))) {
+                groupServices.removeMemberFromGroup(groupId, memberId);
+                System.out.println("Member removed from the group successfully!");
+            } else {
+                System.out.println("Member ID not found in the group.");
+            }
+        } else {
+            System.out.println("Group not found with ID: " + groupId);
+        }
     }
 }
