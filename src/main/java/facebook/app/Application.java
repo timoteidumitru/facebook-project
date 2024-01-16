@@ -23,7 +23,7 @@ public class Application {
         FriendsController friendsController = new FriendsController(new FriendsService());
         FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
         PostsUI homeFeedUI = new PostsUI();
-        ProfileUI profileUI = new ProfileUI();
+        ProfileUI profileUI = new ProfileUI(new Scanner(System.in));
         GroupsUI groupsUI = new GroupsUI();
         Scanner scanner = new Scanner(System.in);
 
