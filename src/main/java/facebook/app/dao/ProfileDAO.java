@@ -1,7 +1,6 @@
 package facebook.app.dao;
 
 import facebook.app.entities.Profile;
-import facebook.app.exceptions.UserIOException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -47,14 +46,5 @@ public class ProfileDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Profile getUserByID(int userId) throws UserIOException {
-        List<Profile> profileList = readProfile();
-
-        return profileList.stream()
-                .filter(profile -> profile.getId() == userId)
-                .findFirst()
-                .orElse(null);
     }
 }
