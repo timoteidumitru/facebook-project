@@ -25,7 +25,7 @@ public class FriendsUI {
     public void startFriendsManagement() throws UserNotFoundException, UserIOException {
         int choice;
         do {
-            System.out.println("\n    --- Friends Management ---");
+            System.out.println("\n      --- Friends Management ---");
             System.out.println("1. View Friends       2. Add a Friend");
             System.out.println("3. Remove a Friend    0. Back to Main Menu");
             System.out.println("        Please choose an option: ");

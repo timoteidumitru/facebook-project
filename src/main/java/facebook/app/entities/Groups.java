@@ -1,21 +1,18 @@
 package facebook.app.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Groups {
 
     private final int groupId;
 
-    private int userId;
+    private String userId;
 
     private String groupName;
 
     private String groupDescription;
 
-    public Groups(int groupId, int userId, String groupName, String groupDescription) {
+    public Groups(int groupId, String userId, String groupName, String groupDescription) {
         this.groupId = groupId;
-        this.userId = userId;
+        this.userId = String.valueOf(userId);
         this.groupName = groupName;
         this.groupDescription = groupDescription;
     }
@@ -26,12 +23,12 @@ public class Groups {
         return groupId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+        this.userId = String.valueOf(userId);
     }
 
     public String getGroupName() {

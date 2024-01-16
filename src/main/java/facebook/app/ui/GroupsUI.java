@@ -1,6 +1,7 @@
 package facebook.app.ui;
 
 import facebook.app.controller.GroupController;
+import facebook.app.exceptions.UserIOException;
 import facebook.app.services.GroupsService;
 
 import java.util.Scanner;
@@ -10,7 +11,7 @@ public class GroupsUI {
     private final GroupsService groupServices = new GroupsService();
     private final Scanner keyboard = new Scanner(System.in);
 
-    public void startGroup() {
+    public void startGroup() throws UserIOException {
         boolean keepRunning = true;
         while (keepRunning) {
             System.out.println("\n         --- Groups Management ---");
@@ -18,7 +19,6 @@ public class GroupsUI {
             System.out.println("3. Add Members to Group   4. Remove Members from Group");
             System.out.println("             0. Return to Main Menu");
             System.out.println("            Please choose an option: ");
-
             int choice = keyboard.nextInt();
 
             switch (choice) {
@@ -48,7 +48,7 @@ public class GroupsUI {
         int groupId = keyboard.nextInt();
         groupServices.getGroupDetails(groupId);
     }
-    private void createGroup() {
+    private void createGroup() throws UserIOException {
         keyboard.nextLine();
         System.out.print("Enter the group name: ");
         String groupName = keyboard.nextLine();

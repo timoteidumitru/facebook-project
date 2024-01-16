@@ -31,7 +31,7 @@ public class Application {
         long loggedInUserId = -1;
 
         do {
-            System.out.println("     ----- Welcome to the Facebook App -----");
+            System.out.println("  ----- Welcome to the Facebook App -----");
             if (loggedInUserId != -1) {
                 // Display options for a logged-in user
                 System.out.println("Please choose one of the following options: ");
@@ -60,11 +60,9 @@ public class Application {
                         break;
                     case 3:
                         homeFeedUI.postsSection();
-                        System.out.println("Option 3: Welcome to Posts section!");
                         break;
                     case 4:
                         groupsUI.startGroup();
-                        System.out.println("Option 4: Welcome to Groups section!");
                         break;
                     case 5:
                         profileUI.startProfile();

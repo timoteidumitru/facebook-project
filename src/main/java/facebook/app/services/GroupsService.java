@@ -13,6 +13,19 @@ public class GroupsService {
         return groupsDAO.getAllGroups();
     }
 
+    public int generateUniqueGroupId() {
+        List<Groups> groupsList = groupsDAO.getAllGroups();
+        if (groupsList.isEmpty()) {
+            return 1; // Start from 1 if no groups are present
+        } else {
+            // Find the maximum group ID and increment it
+            return groupsList.stream()
+                    .mapToInt(Groups::getGroupId)
+                    .max()
+                    .getAsInt() + 1;
+        }
+    }
+
     public Optional<Groups> getGroupById(int groupId) {
         return groupsDAO.getGroupById(groupId);
     }

@@ -4,10 +4,7 @@ import facebook.app.entities.Groups;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GroupsDAO {
@@ -17,32 +14,38 @@ public class GroupsDAO {
     public List<Groups> getAllGroups() {
         List<Groups> groupsList = new ArrayList<>();
 
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream(FILE_NAME)) {
-            if (is == null) {
-                throw new FileNotFoundException("Resource not found: " + FILE_NAME);
-            }
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-                String line;
-                reader.readLine();
-                while ((line = reader.readLine()) != null) {
+        try (InputStream is = readFromFile()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
                     String[] parts = line.split(";");
-                    Groups groups = new Groups(
-                            Integer.parseInt(parts[0].trim()),
-                            Integer.parseInt(parts[1].trim()),
-                            parts[2].trim(),
-                            parts[3].trim());
-                    groupsList.add(groups);
+                    if (parts.length < 4) {
+                        continue; // Skip lines that do not have enough parts
+                    }
+
+                    int groupId = Integer.parseInt(parts[0].trim());
+                    String userIds = parts[1].trim(); // User IDs as a single string
+                    String groupName = parts[2].trim();
+                    String groupDescription = parts[3].trim();
+
+                    Groups group = new Groups(groupId, userIds, groupName, groupDescription);
+                    groupsList.add(group);
+                } catch (NumberFormatException e) {
+                    System.err.println("Skipping malformed line: " + line);
                 }
             }
-            } catch (IOException e) {
-            e.printStackTrace();;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return groupsList;
-        }
+    }
 
-    public void addGroup (Groups groups) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile(), true))){
-            writer.write(groups.getGroupId() + ";" + groups.getUserId() + ";" +groups.getGroupName() + ";" + groups.getGroupDescription());
+
+
+    public void addGroup(Groups group) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile(), true))) {
+            writer.write(group.getGroupId() + ";" + group.getUserId() + ";" + group.getGroupName() + ";" + group.getGroupDescription());
             writer.newLine();
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
