@@ -4,60 +4,63 @@ This Java application simulates a social networking service, allowing users to m
 
 ## Features in Development
 
-- **Login and Registration**: (Complete) Enables users to register for an account and log in.
+- **Login and Registration**: (Complete) Enables users to register for an account and login.
 - **Friends**: (Complete) Allows users to add and manage friends.
 - **Messages**: (Complete) Users can manage messages.
 - **Profile**: (In Progress) Allows users to create and manage their profiles.
-- **Posts**: (In Progress) Allows users to create posts.
-- **Groups**: (In Progress) Allows users to manage groups.
+- **Posts**: (Complete) Allows users to create posts.
+- **Groups**: (Complete) Allows users to manage groups.
 
 ## Project Structure
 
-- **facebook_app**: The main project directory.
 - **controller**: Houses controllers for handling user interactions.
   - `UserController`: Manages user-related actions. (Complete)
   - `FriendsController`: Manages friend-related interactions. (Complete)
   - `MessagesController`: Handles message-related operations. (Complete)
-  - `ProfileController`: Handles profile-related operations. (To be added)
-  - `PostsController`: Handles posts-related operations. (To be added)
-  - `GroupsController`: Handles groups-related operations. (To be added)
+  - `ProfileController`: Handles profile-related operations. (In Progress)
+  - `PostsController`: Handles posts-related operations. (Complete)
+  - `GroupsController`: Handles groups-related operations. (Complete)
 - **dao**: Contains Data Access Objects for database interactions.
   - `UserDAO`: Manages user data transactions. (Complete)
   - `FriendsDAO`: Handles friend data transactions. (Complete)
   - `MessagesDAO`: Manages message data transactions. (Complete)
-  - `ProfileDAO`: Manages profile data transactions. (To be added)
-  - `PostsDAO`: Manages posts data transactions. (To be added)
-  - `GroupsDAO`: Manages groups data transactions. (To be added)
+  - `ProfileDAO`: Manages profile data transactions. (In Progress)
+  - `PostsDAO`: Manages posts data transactions. (Complete)
+  - `GroupsDAO`: Manages groups data transactions. (Complete)
 - **ui**: For user interface components.
   - `FriendsUI`: Main application page. (Complete)
   - `MessagesUI`: Handles messages UI components. (Complete)
   - `LoginUI`: Handles login UI components. (Complete)
   - `RegisterUI`: Handles register UI components. (Complete)
-  - `ProfileUI`: Handles profile UI components. (To be added)
-  - `PostsUI`: Handles posts UI components. (To be added)
-  - `GroupsUI`: Handles groups UI components. (To be added)
-- **exceptions**: Custom exception classes. (To be added)
+  - `ProfileUI`: Handles profile UI components. (In Progress)
+  - `PostsUI`: Handles posts UI components. (Complete)
+  - `GroupsUI`: Handles groups UI components. (Complete)
+- **exceptions**: Custom exception classes.
+  - `InvalidEmailFromat`: Handles format of email standard. (Complete)
+  - `MessagesValidation`: Handles messages validation. (Complete)
+  - `UserIO`: Handles user inputs. (Complete)
+  - `UserNotFound`: Handles missing of the user seeking. (Complete)
 - **model**: Model classes representing the data structure.
   - `User`: User model. (Complete)
   - `Friends`: Friends model. (Complete)
   - `Messages`: Messages model. (Complete)
-  - `Profile`: Profile model. (To be added)
-  - `Posts`: Posts model. (To be added)
-  - `Groups`: Groups model. (To be added)
+  - `Profile`: Profile model. (In Progress)
+  - `Posts`: Posts model. (Complete)
+  - `Groups`: Groups model. (Complete)
 - **services**: Service classes for business logic.
-  - `UserService`: Business logic for user operations(Complete).
-  - `FriendService`: Manages friend-related business logic(Complete).
-  - `MessageService`: Handles message-related business logic(Complete).
-  - `Profile`: Handles profile-related business logic. (To be added)
-  - `Posts`: Handles posts-related business logic. (To be added)
-  - `Groups`: Handles groups-related business logic. (To be added)
+  - `UserService`: Business logic for user operations. (Complete)
+  - `FriendService`: Manages friend-related business logic. (Complete)
+  - `MessageService`: Handles message-related business logic. (Complete)
+  - `Profile`: Handles profile-related business logic. (In Progress)
+  - `Posts`: Handles posts-related business logic. (Complete)
+  - `Groups`: Handles groups-related business logic. (Complete)
 - **resources**: Resources like message and user data files.
-  - `friends.txt`: Contains application friends. (Complete)
-  - `messages.txt`: Contains application messages. (Complete)
-  - `users.txt`: Stores user data. (Complete)
-  - `profile.txt`: Stores user data. (To be added)
-  - `posts.txt`: Stores posts data. (To be added)
-  - `groups.txt`: Stores groups data. (To be added)
+  - `friends.txt`: Contains application friends. (Added)
+  - `messages.txt`: Contains application messages. (Added)
+  - `users.txt`: Stores user data. (Added)
+  - `profile.txt`: Stores user data. (Added)
+  - `posts.txt`: Stores posts data. (Added)
+  - `groups.txt`: Stores groups data. (Added)
 
 ## Prerequisites
 
@@ -66,18 +69,15 @@ This Java application simulates a social networking service, allowing users to m
 
 ## Installation
 
-1. Clone the repository: git clone https://github.com/flavicoman/facebook-project
+1. Clone the repository: git clone https://github.com/timoteidumitru/facebook-project
 2. Open the project in your Java IDE.
-3. Configure the project build path to include all necessary libraries.
+3. Configure the project by setting resources folder as resources root.
 
-## Contributing
-
-We warmly welcome contributions to the Facebook App project. To contribute:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes and push them to your fork.
-4. Submit a pull request detailing the changes made.
+## Contributions to project: 
+#### Simida Rodila
+#### Cristina Lerint
+#### Flavi Coman
+#### Timotei Dumitru
 
 ## Module Status
 
@@ -85,9 +85,5 @@ We warmly welcome contributions to the Facebook App project. To contribute:
 - **Messages**: Complete
 - **Friends**: Complete
 - **Profile**: In Progress
-- **Posts**: In Progress
-
-## Note to Contributors
-
-I've cleared the entry point of the application (`Application.java`) to enable team members to work on their preferred features independently. Please ensure that your contributions are well-documented and tested before submitting a pull request.
-
+- **Posts**: Complete
+- **Groups**: Complete
