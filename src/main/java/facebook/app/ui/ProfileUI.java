@@ -1,7 +1,5 @@
 package facebook.app.ui;
 
-import facebook.app.controller.ProfileController;
-import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
 import facebook.app.exceptions.InvalidEmailFormatException;
 import facebook.app.exceptions.UserIOException;
@@ -12,16 +10,12 @@ import java.util.Scanner;
 
 public class ProfileUI {
     private final ProfileService profileService = new ProfileService();
-    private final ProfileController profileController = new ProfileController();
-    private final ProfileDAO profileDAO = new ProfileDAO();
     private Profile profile = new Profile();
     private final UserService userService = new UserService();
     private final Scanner scanner;
     int choice;
     int userId;
-
-    {
-        try {
+    {   try {
             userId = (int) userService.getCurrentUserId();
         } catch (UserIOException e) {
             throw new RuntimeException(e);
@@ -34,7 +28,7 @@ public class ProfileUI {
 
     public void startProfile() throws InvalidEmailFormatException {
         do {
-            System.out.println("        Welcome to the Profile page");
+            System.out.println("\n         --- Welcome to Profile --- ");
             System.out.println("Please choose one of the following options: ");
             System.out.println("      1. Create Profile           3. Display Profile ");
             System.out.println("      2. Edit Profile             0. Back");
@@ -62,7 +56,7 @@ public class ProfileUI {
     }
 
     public void createProfile() throws InvalidEmailFormatException {
-        System.out.println("Welcome to the Profile Creator!");
+        System.out.println("\n         --- Create New Profile --- ");
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
         System.out.print("Enter your email address: ");
@@ -83,18 +77,15 @@ public class ProfileUI {
                 "\nEmail: " + email +
                 "\nAge: " + age +
                 "\nLocation: " + location);
-        profileController.createProfile(id, name, email, age, location);
-        profileService.getCurrentUserId(id);
+        profileService.createProfile(id, name, email, age, location);
+        profileService.getCurrentProfileId(id);
         startProfile();
     }
 
     public void editProfile() throws InvalidEmailFormatException {
-        System.out.println("Edit your Profile!");
-        for (Profile p : profileService.getAllProfile()) {
-            if (p.getId() == userId) {
-                profile = p;
-            }
-        }
+        System.out.println("\n         --- Edit Your Profile --- ");
+        profile = profileService.displayCurrentProfile(userId, profile);
+
         System.out.println("Your profile ID is: " + profile.getId());
         System.out.println("Your profile Email is: " + profile.getEmail());
         System.out.print("Enter your name: ");
@@ -112,7 +103,7 @@ public class ProfileUI {
                 "\nEmail: " + profile.getEmail() +
                 "\nAge: " + profile.getAge() +
                 "\nLocation: " + profile.getLocation());
-        profileController.editProfile(profile.getId(), profile.getName(), profile.getEmail(), profile.getAge(), profile.getLocation());
+        profileService.editProfile(profile.getId(), profile.getName(), profile.getEmail(), profile.getAge(), profile.getLocation());
 
         startProfile();
     }
@@ -142,8 +133,8 @@ public class ProfileUI {
     }
 
     private void newProfile() throws InvalidEmailFormatException {
-        profile = profileService.getLastUserId();
-        System.out.println("\n===== Your Profile =====");
+        profile = profileService.getLastProfileId();
+        System.out.println("\n         --- New Profile --- ");
         System.out.println("ID: " + profile.getId());
         System.out.println("Name: " + profile.getName());
         System.out.println("Email: " + profile.getEmail());
@@ -153,22 +144,14 @@ public class ProfileUI {
     }
 
     private void currentProfile() throws InvalidEmailFormatException {
-        for (Profile p : profileService.getAllProfile()) {
-            if (p.getId() == userId) {
-                profile = p;
-            }
-        }
-        try {
-            profile = profileDAO.getUserByID(userId);
-            System.out.println("\n===== Your Profile =====");
-            System.out.println("ID: " + profile.getId());
-            System.out.println("Name: " + profile.getName());
-            System.out.println("Email: " + profile.getEmail());
-            System.out.println("Age: " + profile.getAge());
-            System.out.println("Location: " + profile.getLocation());
-        } catch (UserIOException e) {
-            throw new RuntimeException(e);
-        }
+        //profile = profileService.displayCurrentProfile(userId, profile);
+        profile = profileService.getCurrentProfileId(userId);
+        System.out.println("\n         --- Current Profile --- ");
+        System.out.println("ID: " + profile.getId());
+        System.out.println("Name: " + profile.getName());
+        System.out.println("Email: " + profile.getEmail());
+        System.out.println("Age: " + profile.getAge());
+        System.out.println("Location: " + profile.getLocation());
         startProfile();
     }
 }
