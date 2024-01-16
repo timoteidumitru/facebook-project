@@ -51,8 +51,38 @@ public class GroupsUI {
     }
 
     private void seeGroupDetails() {
+        // Display all available groups
+        System.out.println("Available groups:");
+        groupServices.getAllGroups().forEach(group -> System.out.println("ID: " + group.getGroupId() + ", Name: " + group.getGroupName()));
+
+        // Ask the user to enter the group ID
         System.out.print("Enter the group ID to see details: ");
+        int groupId = keyboard.nextInt();
+
+        // Fetch the selected group
+        Optional<Groups> groupOpt = groupServices.getGroupById(groupId);
+        if (groupOpt.isPresent()) {
+            Groups group = groupOpt.get();
+            System.out.println("Group Name: " + group.getGroupName());
+            System.out.println("Group Description: " + group.getGroupDescription());
+
+            // Display all members of the chosen group
+            System.out.println("Members of the group:");
+            Arrays.asList(group.getUserId().split(",")).forEach(userId -> {
+                try {
+                    User user = userService.getUserByID(Integer.parseInt(userId));
+                    if (user != null) {
+                        System.out.println("ID: " + user.getUserId() + ", Name: " + user.getName());
+                    }
+                } catch (NumberFormatException | UserIOException e) {
+                    System.err.println("Invalid format for user ID: " + userId);
+                }
+            });
+        } else {
+            System.out.println("Group not found with ID: " + groupId);
+        }
     }
+
     private void createGroup() throws UserIOException {
         keyboard.nextLine();
         System.out.print("Enter the group name: ");
@@ -71,18 +101,36 @@ public class GroupsUI {
         System.out.print("Enter the group ID to add members: ");
         int groupId = keyboard.nextInt();
 
-        // Display all available users
-        System.out.println("Available users:");
-        userService.getAllUsers().forEach(user -> System.out.println("ID: " + user.getUserId() + ", Name: " + user.getName()));
+        Optional<Groups> groupOpt = groupServices.getGroupById(groupId);
+        if (groupOpt.isPresent()) {
+            Groups group = groupOpt.get();
+            List<String> currentMemberIds = Arrays.asList(group.getUserId().split(","));
 
-        // Ask the user to enter the friend's user ID
-        System.out.print("Enter the user ID of the friend to add to the group: ");
-        int friendId = keyboard.nextInt();
+            // Display users who are not already members of the group
+            System.out.println("Available users to add:");
+            userService.getAllUsers().forEach(user -> {
+                if (!currentMemberIds.contains(String.valueOf(user.getUserId()))) {
+                    System.out.println("ID: " + user.getUserId() + ", Name: " + user.getName());
+                }
+            });
 
-        // Call the service to add the member to the group
-        groupServices.addMemberToGroup(groupId, friendId);
-        System.out.println("Friend added to the group successfully!");
+            // Ask the user to enter the friend's user ID
+            System.out.print("Enter the user ID of the friend to add to the group: ");
+            int friendId = keyboard.nextInt();
+
+            // Check if the selected user is not already in the group
+            if (!currentMemberIds.contains(String.valueOf(friendId))) {
+                // Call the service to add the member to the group
+                groupServices.addMemberToGroup(groupId, friendId);
+                System.out.println("Friend added to the group successfully!");
+            } else {
+                System.out.println("This user is already a member of the group.");
+            }
+        } else {
+            System.out.println("Group not found with ID: " + groupId);
+        }
     }
+
     private void removeMembersFromGroup() throws UserIOException {
         // Display all available groups
         System.out.println("Available groups:");

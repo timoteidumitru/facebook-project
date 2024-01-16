@@ -105,8 +105,9 @@ public class FriendsUI {
     }
 
     private void removeFriend() throws UserNotFoundException, UserIOException {
-        System.out.println("Enter the User ID of the friend you want to remove:");
         viewFriends();
+        System.out.println("Enter the User ID of the friend you want to remove:");
+
         int userId = (int) userService.getCurrentUserId();
         int friendId = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character

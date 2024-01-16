@@ -41,10 +41,10 @@ public class Application {
             } else {
                 // Display options for a user not logged in
                 System.out.println("Please choose one of the following options: ");
-                System.out.println("      1. Register           2. Login");
+                System.out.println("    1. Register           2. Login");
             }
 
-            System.out.println("                   0. Exit");
+            System.out.println("                0. Exit");
 
             choice = scanner.nextInt();
             scanner.nextLine();
