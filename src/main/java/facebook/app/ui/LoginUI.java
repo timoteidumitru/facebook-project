@@ -9,7 +9,6 @@ public class LoginUI {
     private final UserController userController;
     private final Scanner scanner;
     private String userEmail;
-
     public LoginUI(UserController userController) {
         this.userController = userController;
         this.scanner = new Scanner(System.in);

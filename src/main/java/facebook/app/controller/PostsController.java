@@ -11,7 +11,6 @@ import java.util.List;
 
 public class PostsController {
     private PostsService postsService = new PostsService();
-
     UserService userservice = new UserService();
     private final long userId = userservice.getCurrentUserId();
     User user = userservice.getUserByID((int) userId);
@@ -41,8 +40,5 @@ public class PostsController {
 
     public List<Posts> getPostsFromAnotherUser(int userId) throws UserIOException {
         return postsService.getPostsFromAnotherUser(userId);
-    }
-
-    public void createGroupPost(int groupId) {
     }
 }

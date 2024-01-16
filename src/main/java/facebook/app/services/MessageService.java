@@ -7,7 +7,6 @@ import facebook.app.exceptions.MessageValidationException;
 
 public class MessageService {
     private final MessageDAO messageDAO = new MessageDAO();
-
     public MessageService() {
     }
 

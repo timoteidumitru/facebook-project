@@ -105,7 +105,6 @@ public class GroupsUI {
         if (groupOpt.isPresent()) {
             Groups group = groupOpt.get();
             List<String> currentMemberIds = Arrays.asList(group.getUserId().split(","));
-
             // Display users who are not already members of the group
             System.out.println("Available users to add:");
             userService.getAllUsers().forEach(user -> {

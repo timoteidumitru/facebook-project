@@ -6,13 +6,8 @@ import facebook.app.entities.User;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,7 +44,6 @@ public class PostsDAO implements PostServiceInterface {
         return posts;
     }
 
-
     public Posts getLatestPost(User user) {
         List<Posts> latestPosts = getAllPosts(user);
         if (latestPosts.isEmpty()) {
@@ -58,7 +52,6 @@ public class PostsDAO implements PostServiceInterface {
             return latestPosts.get(latestPosts.size() - 1);
         }
     }
-
 
     public List<Posts> getRecentPosts(User user, int posts) {
         List<Posts> latestPostsFromUser = new ArrayList<>();
@@ -94,19 +87,6 @@ public class PostsDAO implements PostServiceInterface {
         }
     }
 
-    private InputStream readFromFile() {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DATABASE_FILE_PATH);
-        if (inputStream == null) {
-            throw new IllegalArgumentException("File not found: " + DATABASE_FILE_PATH);
-        }
-        return inputStream;
-    }
-
-    private File writeToFile() throws URISyntaxException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(Objects.requireNonNull(classLoader.getResource(DATABASE_FILE_PATH)).toURI());
-    }
-
     public List<Posts> getPostsFromAnotherUser(int userId) {
         List<Posts> userPosts = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(readFromFile()))) {
@@ -128,5 +108,18 @@ public class PostsDAO implements PostServiceInterface {
             e.printStackTrace();
         }
         return userPosts;
+    }
+
+    private InputStream readFromFile() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DATABASE_FILE_PATH);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("File not found: " + DATABASE_FILE_PATH);
+        }
+        return inputStream;
+    }
+
+    private File writeToFile() throws URISyntaxException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        return new File(Objects.requireNonNull(classLoader.getResource(DATABASE_FILE_PATH)).toURI());
     }
 }

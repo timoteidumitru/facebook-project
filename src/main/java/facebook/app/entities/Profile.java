@@ -6,7 +6,6 @@ public class Profile {
     private int age;
     private String location;
     private String email;
-
     public Profile(int id, String name, String email, int age, String location) {
         this.id = id;
         this.name = name;
@@ -27,7 +26,6 @@ public class Profile {
     public void setLocation(String location) {
         this.location = location;
     }
-
     public int getId() { return id; }
     public String getName() {
         return name;

@@ -5,8 +5,6 @@ public class User {
     private String email;
     private String password;
     private boolean isLoggedIn;
-
-    // Constructors
     public User(long user_id, String email, String password) {
         this.user_id = user_id;
         this.email = email;
@@ -20,7 +18,6 @@ public class User {
     public boolean isLoggedIn() {
         return isLoggedIn;
     }
-
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
@@ -40,25 +37,16 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public void addPost(Posts post) {
-    }
-
-    public void sendMessage(User user, String message) {
-
-    }
-
+    public void addPost(Posts post) {}
+    public void sendMessage(User user, String message) {}
     public String getName () {
             return email.split("@")[0];
         }
-
 }
 

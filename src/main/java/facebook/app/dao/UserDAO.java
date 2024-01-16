@@ -59,15 +59,6 @@ public class UserDAO {
         }
     }
 
-    private String getFilePath() {
-        try {
-            return Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(FILE_NAME)).toURI()).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public User getUserByID(int userId) throws UserIOException {
         List<User> userList = readUsers();
         return userList.stream()
@@ -82,6 +73,15 @@ public class UserDAO {
                 .filter(user -> user.getEmail().equals(email))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private String getFilePath() {
+        try {
+            return Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(FILE_NAME)).toURI()).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

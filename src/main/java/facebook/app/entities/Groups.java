@@ -1,13 +1,9 @@
 package facebook.app.entities;
 
 public class Groups {
-
     private final int groupId;
-
     private String userId;
-
     private String groupName;
-
     private String groupDescription;
 
     public Groups(int groupId, String userId, String groupName, String groupDescription) {
@@ -16,9 +12,8 @@ public class Groups {
         this.groupName = groupName;
         this.groupDescription = groupDescription;
     }
+
     //Getters and Setters
-
-
     public int getGroupId() {
         return groupId;
     }

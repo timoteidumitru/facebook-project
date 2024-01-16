@@ -56,7 +56,7 @@ public class Application {
                         messageCtr.startMessaging();
                         break;
                     case 2:
-                        friendsUI.startFriendsManagement();
+                        friendsUI.friendsManagement();
                         break;
                     case 3:
                         homeFeedUI.postsSection();
@@ -97,7 +97,6 @@ public class Application {
                 }
             }
         } while (choice != 0);
-
         scanner.close();
     }
 }

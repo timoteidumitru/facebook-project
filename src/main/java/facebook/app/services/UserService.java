@@ -2,7 +2,6 @@ package facebook.app.services;
 import facebook.app.dao.UserDAO;
 import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
-import facebook.app.exceptions.UserNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,11 +60,9 @@ public class UserService {
             System.out.println("User with email " + user.getEmail() + " already exists. Please try a different one!");
             return;
         }
-
         userList.add(user);
         userDAO.writeUsers(userList);
     }
-
 
     public User getUserByEmail(String email) throws UserIOException {
         // Check if the email is not empty
@@ -90,7 +87,6 @@ public class UserService {
         }
         return -1; // Return -1 if no user is currently logged in
     }
-
 
     public List<User> getAllUsers() throws UserIOException {
         // Perform additional business logic if needed before reading from the DAO

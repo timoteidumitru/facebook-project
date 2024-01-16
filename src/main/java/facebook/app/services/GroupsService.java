@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public class GroupsService {
     private final GroupsDAO groupsDAO = new GroupsDAO();
-
     public List<Groups> getAllGroups() {
         return groupsDAO.getAllGroups();
     }
@@ -64,5 +63,4 @@ public class GroupsService {
     public Optional<Groups> getGroupById(int groupId) {
         return groupsDAO.getGroupById(groupId);
     }
-
 }

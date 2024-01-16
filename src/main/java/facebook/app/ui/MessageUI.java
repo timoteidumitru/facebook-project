@@ -16,7 +16,6 @@ public class MessageUI {
     private final UserController userController = new UserController();
     private final UserService userService = new UserService();
     private final Scanner scanner;
-
     public MessageUI(MessageController messageController, Scanner scanner) {
         this.messageController = messageController;
         this.scanner = scanner;

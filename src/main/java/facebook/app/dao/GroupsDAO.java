@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class GroupsDAO {
-    
     private static final String FILE_NAME = "groups.txt";
 
     public List<Groups> getAllGroups() {

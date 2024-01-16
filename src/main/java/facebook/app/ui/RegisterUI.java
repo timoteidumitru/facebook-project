@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class RegisterUI {
     private final UserController userController;
     private final Scanner scanner;
-
     public RegisterUI(UserController userController) {
         this.userController = userController;
         this.scanner = new Scanner(System.in);
@@ -42,7 +41,6 @@ public class RegisterUI {
 
     // Method to generate a unique user ID
     private long generateUniqueUserId() throws UserIOException {
-        // For simplicity, here's a basic implementation using the current time in milliseconds.
         return userController.getAllUsers().size() + 1;
     }
 }

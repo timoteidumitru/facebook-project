@@ -9,7 +9,6 @@ import facebook.app.exceptions.UserNotFoundException;
 
 import java.util.List;
 
-
 public class ProfileService {
     private final ProfileDAO profileDAO = new ProfileDAO();
     private final ProfileController profileController = new ProfileController();
