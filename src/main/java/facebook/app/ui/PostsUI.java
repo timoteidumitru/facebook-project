@@ -58,7 +58,7 @@ public class PostsUI {
     private void displayAllPosts() {
         try {
             List<Posts> allPosts = postsController.getAllPosts();
-            System.out.println("         All posts so far: ");
+            System.out.println("                 All posts so far: ");
             System.out.println("-------------------------------------------------------");
             allPosts.forEach(post -> {
                 try {
@@ -96,7 +96,7 @@ public class PostsUI {
     }
 
     private void createNewPost() throws UserIOException {
-        keyboard.nextLine(); // Consume the leftover newline
+        keyboard.nextLine();
         System.out.print("Enter the content of the post: ");
         String content = keyboard.nextLine();
         postsController.createPost(content);
@@ -109,10 +109,7 @@ public class PostsUI {
         List<User> users = userController.getAllUsers();
         int fromUserId = (int) userService.getCurrentUserId();
         for (User user : users) {
-            if (user.getUserId() == fromUserId) {
-                //skip current logged user!
-                //System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
-            } else {
+            if (user.getUserId() != fromUserId) {
                 System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
             }
         }

@@ -11,13 +11,11 @@ import facebook.app.ui.MessageUI;
 import java.util.List;
 
 public class MessageController {
-    private final MessageService messageService;
-    private final MessageDAO messageDAO;
+    private final MessageService messageService = new MessageService();
+    private final MessageDAO messageDAO = new MessageDAO();
     private MessageUI messageUI;
 
-    public MessageController(MessageService messageService, MessageDAO messageDAO) {
-        this.messageService = messageService;
-        this.messageDAO = messageDAO;
+    public MessageController() {
     }
 
     public List<Message> getFilteredMessagesForUser(int userId) {

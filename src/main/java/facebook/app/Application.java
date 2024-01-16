@@ -1,15 +1,10 @@
 package facebook.app;
 
-import facebook.app.controller.FriendsController;
-import facebook.app.controller.MessageController;
 import facebook.app.controller.UserController;
 import facebook.app.exceptions.InvalidEmailFormatException;
 import facebook.app.exceptions.MessageValidationException;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
-import facebook.app.services.FriendsService;
-import facebook.app.services.MessageService;
-import facebook.app.dao.MessageDAO;
 import facebook.app.ui.*;
 
 import java.util.Scanner;
@@ -17,13 +12,10 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) throws MessageValidationException, UserNotFoundException, InvalidEmailFormatException, UserIOException {
         UserController userController = new UserController();
-        MessageController messageCtr = new MessageController(new MessageService(), new MessageDAO());
-        MessageUI messageUI = new MessageUI(messageCtr, new Scanner(System.in));
-        messageCtr.setMessageUI(messageUI);
-        FriendsController friendsController = new FriendsController(new FriendsService());
-        FriendsUI friendsUI = new FriendsUI(friendsController, new Scanner(System.in));
-        PostsUI homeFeedUI = new PostsUI();
-        ProfileUI profileUI = new ProfileUI(new Scanner(System.in));
+        MessageUI messageUI = new MessageUI();
+        FriendsUI friendsUI = new FriendsUI();
+        PostsUI postsUI = new PostsUI();
+        ProfileUI profileUI = new ProfileUI();
         GroupsUI groupsUI = new GroupsUI();
         Scanner scanner = new Scanner(System.in);
 
@@ -37,14 +29,13 @@ public class Application {
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("      1. Messages           2. Friends");
                 System.out.println("      3. Posts              4. Groups");
-                System.out.println("                5. Profile");
+                System.out.println("      5. Profile            0. Logout ");
             } else {
                 // Display options for a user not logged in
                 System.out.println("Please choose one of the following options: ");
                 System.out.println("    1. Register           2. Login");
+                System.out.println("                 0. Exit");
             }
-
-            System.out.println("                0. Exit");
 
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -53,13 +44,13 @@ public class Application {
                 // When User is logged in
                 switch (choice) {
                     case 1:
-                        messageCtr.startMessaging();
+                        messageUI.startMessaging();
                         break;
                     case 2:
-                        friendsUI.friendsManagement();
+                        friendsUI.startFriendsManager();
                         break;
                     case 3:
-                        homeFeedUI.postsSection();
+                        postsUI.postsSection();
                         break;
                     case 4:
                         groupsUI.startGroup();

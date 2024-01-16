@@ -12,14 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class MessageUI {
-    private final MessageController messageController;
+    private final MessageController messageController = new MessageController();
     private final UserController userController = new UserController();
     private final UserService userService = new UserService();
-    private final Scanner scanner;
-    public MessageUI(MessageController messageController, Scanner scanner) {
-        this.messageController = messageController;
-        this.scanner = scanner;
-    }
+    private final Scanner scanner = new Scanner(System.in);
+
+    public MessageUI(){}
 
     public void startMessaging() throws MessageValidationException, UserNotFoundException, UserIOException {
         int choice;
@@ -102,10 +100,7 @@ public class MessageUI {
         System.out.println("Select a recipient you wanna send a message by User ID:");
 
         for (User user : users) {
-            if (user.getUserId() == fromUserId){
-                //skip current logged user!
-                //System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
-            }else {
+            if (user.getUserId() != fromUserId){
                 System.out.println("User ID: " + user.getUserId() + ", Name: " + user.getEmail().split("@")[0]);
             }
         }

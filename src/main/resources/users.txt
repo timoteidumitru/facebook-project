@@ -8,3 +8,4 @@
 8;florin@eu.com;florin;false
 9;joseph@eu.com;joseph;false
 10;iov@eu.com;iovb;false
+11;david@eu.com;passw;true

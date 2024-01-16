@@ -12,7 +12,7 @@ public class ProfileUI {
     private final ProfileService profileService = new ProfileService();
     private Profile profile = new Profile();
     private final UserService userService = new UserService();
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
     int choice;
     int userId;
     {   try {
@@ -22,8 +22,7 @@ public class ProfileUI {
     }
     }
 
-    public ProfileUI(Scanner scanner) {
-        this.scanner = scanner;
+    public ProfileUI() {
     }
 
     public void startProfile() throws InvalidEmailFormatException {
@@ -32,8 +31,8 @@ public class ProfileUI {
 
             System.out.println("\n         --- Welcome to Profile --- ");
             System.out.println("Please choose one of the following options: ");
-            System.out.println("      1. Create Profile           3. Display Profile ");
-            System.out.println("      2. Edit Profile             0. Back");
+            System.out.println("     1. Create Profile          2. Edit Profile");
+            System.out.println("     3. Display Profile         0. Back");
 
             choice = scanner.nextInt();
             scanner.nextLine();

@@ -12,16 +12,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FriendsUI {
-    private final FriendsController friendsController;
+    private final FriendsController friendsController = new FriendsController();
     UserController userController = new UserController();
     private final UserService userService = new UserService();
-    private final Scanner scanner;
-    public FriendsUI(FriendsController friendsController, Scanner scanner) {
-        this.friendsController = friendsController;
-        this.scanner = scanner;
+    private final Scanner scanner = new Scanner(System.in);
+    public FriendsUI() {
     }
 
-    public void friendsManagement() throws UserNotFoundException, UserIOException {
+    public void startFriendsManager() throws UserNotFoundException, UserIOException {
         int choice;
         do {
             System.out.println("\n      --- Friends Management ---");

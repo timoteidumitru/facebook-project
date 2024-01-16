@@ -10,11 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FriendsController {
-    private final FriendsService friendService;
+    private final FriendsService friendService = new FriendsService();
     private final UserController userController = new UserController();
 
-    public FriendsController(FriendsService friendService) {
-        this.friendService = friendService;
+    public FriendsController() {
     }
 
     public List<Friends> getFriendsOfUser(int userId) {
