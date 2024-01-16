@@ -16,10 +16,10 @@ public class ProfileUI {
     int choice;
     int userId;
     {   try {
-            userId = (int) userService.getCurrentUserId();
-        } catch (UserIOException e) {
-            throw new RuntimeException(e);
-        }
+        userId = (int) userService.getCurrentUserId();
+    } catch (UserIOException e) {
+        throw new RuntimeException(e);
+    }
     }
 
     public ProfileUI(Scanner scanner) {
@@ -28,6 +28,8 @@ public class ProfileUI {
 
     public void startProfile() throws InvalidEmailFormatException {
         do {
+            profile.setId(userId);
+
             System.out.println("\n         --- Welcome to Profile --- ");
             System.out.println("Please choose one of the following options: ");
             System.out.println("      1. Create Profile           3. Display Profile ");
@@ -38,13 +40,13 @@ public class ProfileUI {
 
             switch (choice) {
                 case 1:
-                    createProfile();
+                    createProfile(profile);
                     break;
                 case 2:
-                    editProfile();
+                    editProfile(profile);
                     break;
                 case 3:
-                    displayProfile();
+                    displayProfile(profile);
                     break;
                 case 0:
                     System.out.println("Returning to Main Menu.");
@@ -55,7 +57,7 @@ public class ProfileUI {
         } while (choice != 0);
     }
 
-    public void createProfile() throws InvalidEmailFormatException {
+    public void createProfile(Profile profile) throws InvalidEmailFormatException {
         System.out.println("\n         --- Create New Profile --- ");
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
@@ -82,33 +84,33 @@ public class ProfileUI {
         startProfile();
     }
 
-    public void editProfile() throws InvalidEmailFormatException {
+    public void editProfile(Profile profile) throws InvalidEmailFormatException {
         System.out.println("\n         --- Edit Your Profile --- ");
-        profile = profileService.displayCurrentProfile(userId, profile);
+        this.profile = profileService.displayCurrentProfile(userId, this.profile);
 
-        System.out.println("Your profile ID is: " + profile.getId());
-        System.out.println("Your profile Email is: " + profile.getEmail());
+        System.out.println("Your profile ID is: " + this.profile.getId());
+        System.out.println("Your profile Email is: " + this.profile.getEmail());
         System.out.print("Enter your name: ");
-        profile.setName(scanner.nextLine());
+        this.profile.setName(scanner.nextLine());
         System.out.print("Enter your age: ");
-        profile.setAge(scanner.nextInt());
+        this.profile.setAge(scanner.nextInt());
         scanner.nextLine();
         System.out.print("Enter your location: ");
-        profile.setLocation(scanner.nextLine());
+        this.profile.setLocation(scanner.nextLine());
 
         System.out.println("\nProfile Edited Successfully!");
         System.out.println("Profile Details:");
-        System.out.println("ProfileID: " + profile.getId() +
-                "\nName: " + profile.getName() +
-                "\nEmail: " + profile.getEmail() +
-                "\nAge: " + profile.getAge() +
-                "\nLocation: " + profile.getLocation());
-        profileService.editProfile(profile.getId(), profile.getName(), profile.getEmail(), profile.getAge(), profile.getLocation());
+        System.out.println("ProfileID: " + this.profile.getId() +
+                "\nName: " + this.profile.getName() +
+                "\nEmail: " + this.profile.getEmail() +
+                "\nAge: " + this.profile.getAge() +
+                "\nLocation: " + this.profile.getLocation());
+        profileService.editProfile(this.profile.getId(), this.profile.getName(), this.profile.getEmail(), this.profile.getAge(), this.profile.getLocation());
 
         startProfile();
     }
 
-    public void displayProfile() throws InvalidEmailFormatException {
+    public void displayProfile(Profile profile) throws InvalidEmailFormatException {
         System.out.println("Do you want to see your login profile or the created profile");
         System.out.println("      1. Current Profile           2. New Profile ");
         System.out.println("      0. Back ");
@@ -117,10 +119,10 @@ public class ProfileUI {
             scanner.nextLine();
             switch (choice) {
                 case 1:
-                    currentProfile();
+                    currentProfile(profile);
                     break;
                 case 2:
-                    newProfile();
+                    newProfile(profile);
                     break;
                 case 0:
                     System.out.println("Returning to Main Menu.");
@@ -132,26 +134,26 @@ public class ProfileUI {
         startProfile();
     }
 
-    private void newProfile() throws InvalidEmailFormatException {
-        profile = profileService.getLastProfileId();
+    private void newProfile(Profile profile) throws InvalidEmailFormatException {
+        this.profile = profileService.getLastProfileId();
         System.out.println("\n         --- New Profile --- ");
-        System.out.println("ID: " + profile.getId());
-        System.out.println("Name: " + profile.getName());
-        System.out.println("Email: " + profile.getEmail());
-        System.out.println("Age: " + profile.getAge());
-        System.out.println("Location: " + profile.getLocation());
+        System.out.println("ID: " + this.profile.getId());
+        System.out.println("Name: " + this.profile.getName());
+        System.out.println("Email: " + this.profile.getEmail());
+        System.out.println("Age: " + this.profile.getAge());
+        System.out.println("Location: " + this.profile.getLocation());
         startProfile();
     }
 
-    private void currentProfile() throws InvalidEmailFormatException {
-        //profile = profileService.displayCurrentProfile(userId, profile);
-        profile = profileService.getCurrentProfileId(userId);
-        System.out.println("\n         --- Current Profile --- ");
-        System.out.println("ID: " + profile.getId());
-        System.out.println("Name: " + profile.getName());
-        System.out.println("Email: " + profile.getEmail());
-        System.out.println("Age: " + profile.getAge());
-        System.out.println("Location: " + profile.getLocation());
-        startProfile();
+    private void currentProfile(Profile profile)  {
+        this.profile = profileService.displayCurrentProfile(userId, this.profile);
+
+            System.out.println("\n===== Your Profile =====");
+            System.out.println("ID: " + this.profile.getId());
+            System.out.println("Name: " + this.profile.getName());
+            System.out.println("Email: " + this.profile.getEmail());
+            System.out.println("Age: " + this.profile.getAge());
+            System.out.println("Location: " + this.profile.getLocation());
+
     }
 }
