@@ -3,7 +3,9 @@ package facebook.app.services;
 import facebook.app.controller.ProfileController;
 import facebook.app.dao.ProfileDAO;
 import facebook.app.entities.Profile;
+import facebook.app.entities.User;
 import facebook.app.exceptions.InvalidEmailFormatException;
+import facebook.app.exceptions.UserIOException;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class ProfileService {
     }
 
     public Profile getCurrentProfileId(int userId) {
-        List<Profile> profileList = profileDAO.readProfile();
+        List<Profile> profileList = getAllProfile();
         return profileList.stream()
                 .filter(profile -> profile.getId() == userId)
                 .findFirst()
@@ -32,12 +34,12 @@ public class ProfileService {
     }
 
     public Profile getLastProfileId() {
-        List<Profile> profileList = profileDAO.readProfile();
+        List<Profile> profileList = getAllProfile();
         return  profileList.get(profileList.size() - 1);
     }
 
     public Profile displayCurrentProfile(int userId, Profile profile) {
-        for (Profile p : getAllProfile()) {
+        for (Profile p : profileDAO.readProfile()) {
             if (p.getId() == userId) {
                 profile = p;
             }
@@ -52,12 +54,5 @@ public class ProfileService {
     public void editProfile(int id, String name, String email, int age, String location) {
         profileController.editProfile(id, name, email, age, location);
     }
-    public Profile getProfileByID(int userId) {
-        List<Profile> profileList = getAllProfile();
 
-        return profileList.stream()
-                .filter(profile -> profile.getId() == userId)
-                .findFirst()
-                .orElse(null);
-    }
 }
