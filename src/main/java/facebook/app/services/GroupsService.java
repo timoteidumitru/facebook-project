@@ -40,8 +40,18 @@ public class GroupsService {
     public void getGroupDetails(int groupId) {
     }
 
-    public void addMemberToGroup(int groupId, String friendName) {
+    public void addMemberToGroup(int groupId, int friendId) {
+        Optional<Groups> groupOpt = groupsDAO.getGroupById(groupId);
+        if (groupOpt.isPresent()) {
+            Groups group = groupOpt.get();
+            String updatedUserIds = group.getUserId() + "," + friendId;
+            Groups updatedGroup = new Groups(group.getGroupId(), updatedUserIds, group.getGroupName(), group.getGroupDescription());
+            groupsDAO.addGroup(updatedGroup); // This method needs to be able to handle updates
+        } else {
+            throw new IllegalArgumentException("Group not found with ID: " + groupId);
+        }
     }
+
 
     public void removeMemberFromGroup(int groupId, String friendName) {
     }

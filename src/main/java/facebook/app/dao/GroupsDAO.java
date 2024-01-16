@@ -41,12 +41,27 @@ public class GroupsDAO {
         return groupsList;
     }
 
-
-
     public void addGroup(Groups group) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile(), true))) {
-            writer.write(group.getGroupId() + ";" + group.getUserId() + ";" + group.getGroupName() + ";" + group.getGroupDescription());
-            writer.newLine();
+        List<Groups> groupsList = getAllGroups();
+
+        // Find and update the group if it exists, otherwise add as a new group
+        boolean groupExists = false;
+        for (int i = 0; i < groupsList.size(); i++) {
+            if (groupsList.get(i).getGroupId() == group.getGroupId()) {
+                groupsList.set(i, group); // Update the existing group
+                groupExists = true;
+                break;
+            }
+        }
+        if (!groupExists) {
+            groupsList.add(group); // Add as a new group
+        }
+        // Rewrite the file with updated groups list
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(writeToFile()))) {
+            for (Groups g : groupsList) {
+                writer.write(g.getGroupId() + ";" + g.getUserId() + ";" + g.getGroupName() + ";" + g.getGroupDescription());
+                writer.newLine();
+            }
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }

@@ -3,12 +3,14 @@ package facebook.app.ui;
 import facebook.app.controller.GroupController;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.services.GroupsService;
+import facebook.app.services.UserService;
 
 import java.util.Scanner;
 
 public class GroupsUI {
     private final GroupController groupController = new GroupController();
     private final GroupsService groupServices = new GroupsService();
+    private final UserService userService = new UserService();
     private final Scanner keyboard = new Scanner(System.in);
 
     public void startGroup() throws UserIOException {
@@ -57,13 +59,25 @@ public class GroupsUI {
         groupController.createGroup(groupName, groupDescription);
         System.out.println("Group created successfully!");
     }
-    private void addMembersToGroup() {
+    private void addMembersToGroup() throws UserIOException {
+        // Display all available groups
+        System.out.println("Available groups:");
+        groupServices.getAllGroups().forEach(group -> System.out.println("ID: " + group.getGroupId() + ", Name: " + group.getGroupName()));
+
+        // Ask the user to enter the group ID
         System.out.print("Enter the group ID to add members: ");
         int groupId = keyboard.nextInt();
-        keyboard.nextLine();
-        System.out.print("Enter the friend's name to add to the group: ");
-        String friendName = keyboard.nextLine();
-        groupServices.addMemberToGroup(groupId, friendName);
+
+        // Display all available users
+        System.out.println("Available users:");
+        userService.getAllUsers().forEach(user -> System.out.println("ID: " + user.getUserId() + ", Name: " + user.getName()));
+
+        // Ask the user to enter the friend's user ID
+        System.out.print("Enter the user ID of the friend to add to the group: ");
+        int friendId = keyboard.nextInt();
+
+        // Call the service to add the member to the group
+        groupServices.addMemberToGroup(groupId, friendId);
         System.out.println("Friend added to the group successfully!");
     }
     private void removeMembersFromGroup() {
