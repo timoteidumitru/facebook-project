@@ -50,6 +50,38 @@ public class ProfileDAO {
         }
     }
 
+    public void editProfile(Profile updatedProfile) {
+        List<Profile> profiles = readProfile();
+        boolean profileUpdated = false;
+        try {
+            File file = getFileFromResources();
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.toURI()), StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING)) {
+                for (Profile profile : profiles) {
+                    if (profile.getId() == updatedProfile.getId()) {
+                        // Write the updated profile details
+                        writer.write(formatProfileForWriting(updatedProfile));
+                        profileUpdated = true;
+                    } else {
+                        // Write the original profile details
+                        writer.write(formatProfileForWriting(profile));
+                    }
+                    writer.newLine();
+                }
+                if (!profileUpdated) {
+                    // If the profile with the given ID was not found, add it to the file
+                    writer.write(formatProfileForWriting(updatedProfile));
+                    writer.newLine();
+                }
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String formatProfileForWriting(Profile profile) {
+        return profile.getId() + ";" + profile.getName() + ";" + profile.getEmail() + ";" + profile.getAge() + ";" + profile.getLocation();
+    }
+
     private File getFileFromResources() throws URISyntaxException {
         ClassLoader classLoader = getClass().getClassLoader();
         return new File(Objects.requireNonNull(classLoader.getResource(FILE_NAME)).toURI());

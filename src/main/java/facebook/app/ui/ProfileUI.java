@@ -12,44 +12,48 @@ import java.util.Scanner;
 public class ProfileUI {
     private final ProfileController profileController = new ProfileController();
     private final ProfileService profileService = new ProfileService();
-    private Profile profile = new Profile();
     private final UserService userService = new UserService();
     private final Scanner scanner = new Scanner(System.in);
-    private final int id = userService.getCurrentUserId();
-    public ProfileUI() throws UserIOException {
+    public ProfileUI() {
     }
 
     public void startProfile() throws InvalidEmailFormatException, UserIOException {
         int choice;
-        do {
-            System.out.println("\n         --- Welcome to Profile --- ");
-            System.out.println("Please choose one of the following options: ");
-            System.out.println("     1. Create Profile          2. Edit Profile");
-            System.out.println("     3. Display Profile         0. Back");
+        while (true) {
+                System.out.println("\n         --- Welcome to Profile --- ");
+                System.out.println("Please choose one of the following options: ");
+                System.out.println("     1. Create Profile          2. Edit Profile");
+                System.out.println("     3. Display Profile         0. Back to Main Menu");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // consume the newline
 
-            choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1:
-                    createProfile();
-                    break;
-                case 2:
-                    editProfile();
-                    break;
-                case 3:
-                    displayProfile();
-                    break;
-                case 0:
-                    System.out.println("Returning to Main Menu.");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+                switch (choice) {
+                    case 1:
+                        createProfile();
+                        break;
+                    case 2:
+                            editProfile();
+                        break;
+                    case 3:
+                        displayProfile();
+                        break;
+                    case 0:
+                        System.out.println("Returning to Main Menu.");
+                        return; // Exit the while loop and the method
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // consume the invalid input
             }
-        } while (choice != 0);
+        }
     }
 
-    public void createProfile() throws InvalidEmailFormatException {
+
+    public void createProfile() throws InvalidEmailFormatException, UserIOException {
+        int id = userService.getCurrentUserId();
         System.out.println("\n         --- Create New Profile --- ");
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
@@ -73,66 +77,88 @@ public class ProfileUI {
     }
 
     public void editProfile() throws UserIOException {
-        System.out.println("\n         --- Edit Your Profile --- ");
-        this.profile = profileService.displayCurrentProfile(userService.getCurrentUserId(), this.profile);
-
-        System.out.println("Your profile ID is: " + this.profile.getId());
-        System.out.println("Your profile Email is: " + this.profile.getEmail());
-        System.out.print("Enter your name: ");
-        this.profile.setName(scanner.nextLine());
-        System.out.print("Enter your age: ");
-        this.profile.setAge(scanner.nextInt());
-        scanner.nextLine();
-        System.out.print("Enter your location: ");
-        this.profile.setLocation(scanner.nextLine());
-
-        System.out.println("\nProfile Edited Successfully!");
-        System.out.println("Profile Details:");
-        System.out.println("ProfileID: " + this.profile.getId() +
-                "\nName: " + this.profile.getName() +
-                "\nEmail: " + this.profile.getEmail() +
-                "\nAge: " + this.profile.getAge() +
-                "\nLocation: " + this.profile.getLocation());
-        profileController.editProfile(this.profile.getId(), this.profile.getName(), this.profile.getEmail(), this.profile.getAge(), this.profile.getLocation());
-    }
-
-    public void displayProfile() throws UserIOException, InvalidEmailFormatException {
-        System.out.println("\n--- Display Profile ---");
-        System.out.println("1. Current Profile\n2. New Profile\n0. Back");
         int choice;
-        do {
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Clear the newline
-
-            switch (choice) {
-                case 1:
-                    currentProfile();
-                    break;
-                case 2:
-                    newProfile();
-                    break;
-                case 0:
-                    System.out.println("Returning to Main Menu.");
-                    return; // Use return to exit the method
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
-        } while (true);
-    }
-
-    private void newProfile() throws UserIOException, InvalidEmailFormatException {
-        Profile lastProfile = profileService.getLastProfileId();
-        if (lastProfile != null) {
-            displayProfileDetails(lastProfile);
+        Profile profile = profileService.displayCurrentProfileDetails();
+        if (profile.getName() == null) {
+            System.out.println("You don't have a profile yet, please register one.");
         } else {
-            System.out.println("No new profiles available.");
+           do {
+                System.out.println("\n       --- Edit Your Profile --- ");
+                System.out.println("Please choose the detail you want to edit:");
+                System.out.println("   1. Edit Name      2. Edit Email");
+                System.out.println("   3. Edit Age       4. Edit Location");
+                System.out.println("         0. Back to Main Menu");
+
+                // Make sure the scanner is ready for integer input
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.next(); // consume the invalid input
+                }
+                choice = scanner.nextInt();
+                scanner.nextLine(); // consume the newline
+
+                if (choice == 0) {
+                    return; // Exit the method if the user chooses to cancel
+                }
+
+                Profile currentDetails = profileService.displayCurrentProfileDetails();
+                int id = currentDetails.getId();
+                String name = currentDetails.getName();
+                String email = currentDetails.getEmail();
+                int age = currentDetails.getAge();
+                String location = currentDetails.getLocation();
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Edit your name: ");
+                        name = scanner.nextLine();
+                        break;
+                    case 2:
+                        System.out.print("Edit your email address: ");
+                        email = scanner.nextLine();
+                        break;
+                    case 3:
+                        System.out.print("Edit your age: ");
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Please enter a valid number for age.");
+                            scanner.next(); // consume invalid input
+                        }
+                        age = scanner.nextInt();
+                        scanner.nextLine(); // consume the newline
+                        break;
+                    case 4:
+                        System.out.print("Edit your location: ");
+                        location = scanner.nextLine();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        continue;
+                }
+
+                try {
+                    profileController.editProfile(id, name, email, age, location);
+                    System.out.println("Profile updated successfully.");
+                } catch (Exception e) {
+                    System.out.println("An error occurred: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                System.out.println("\nDo you want to edit another detail? (Yes/Y or No/N)");
+                String continueEditing = scanner.nextLine().trim().toLowerCase();
+                if (!continueEditing.equals("yes") && !continueEditing.equals("y")) {
+                    break; // Break the loop if the user does not want to continue editing
+                }
+            } while (true);
         }
     }
 
-    private void currentProfile() throws UserIOException, InvalidEmailFormatException {
-        Profile currentProfile = profileService.displayCurrentProfile(userService.getCurrentUserId(), this.profile);
+    public void displayProfile() throws UserIOException{
+        System.out.println("\n--- Your Profile Details ---");
+        currentProfile();
+    }
+
+    private void currentProfile() throws UserIOException {
+        Profile currentProfile = profileService.displayCurrentProfileDetails();
         if (currentProfile != null) {
             displayProfileDetails(currentProfile);
         } else {
@@ -140,13 +166,15 @@ public class ProfileUI {
         }
     }
 
-    private void displayProfileDetails(Profile profile) throws UserIOException, InvalidEmailFormatException {
-        System.out.println("\n--- Profile Details ---");
-        System.out.println("ID: " + profile.getId());
-        System.out.println("Name: " + profile.getName());
-        System.out.println("Email: " + profile.getEmail());
-        System.out.println("Age: " + profile.getAge());
-        System.out.println("Location: " + profile.getLocation());
-        startProfile();
+    private void displayProfileDetails(Profile profile) {
+        if (profile.getName() == null) {
+            System.out.println("You don't have a profile yet, please register one.");
+        } else {
+            System.out.println("ID: " + profile.getId());
+            System.out.println("Name: " + profile.getName());
+            System.out.println("Email: " + profile.getEmail());
+            System.out.println("Age: " + profile.getAge());
+            System.out.println("Location: " + profile.getLocation());
+        }
     }
 }
