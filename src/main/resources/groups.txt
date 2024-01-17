@@ -1,4 +1,0 @@
-1;2,3;ING;Best banking group ever!
-2;1,2,3,4;Wilderness;Place where people find inner peace.
-3;1,5,6,7;JoksSeekers;Best job seeker group out there. Try your self to convince.
-4;1,7,5,6,10;Personal Development;Place for those who seek to improve themself.
