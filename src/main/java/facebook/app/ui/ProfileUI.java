@@ -96,14 +96,15 @@ public class ProfileUI {
         profileController.editProfile(this.profile.getId(), this.profile.getName(), this.profile.getEmail(), this.profile.getAge(), this.profile.getLocation());
     }
 
-    public void displayProfile() throws UserIOException {
-        System.out.println("Do you want to see your login profile or the created profile");
-        System.out.println("      1. Current Profile           2. New Profile ");
-        System.out.println("                         0. Back ");
+    public void displayProfile() throws UserIOException, InvalidEmailFormatException {
+        System.out.println("\n--- Display Profile ---");
+        System.out.println("1. Current Profile\n2. New Profile\n0. Back");
         int choice;
         do {
+            System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Clear the newline
+
             switch (choice) {
                 case 1:
                     currentProfile();
@@ -113,30 +114,39 @@ public class ProfileUI {
                     break;
                 case 0:
                     System.out.println("Returning to Main Menu.");
-                    break;
+                    return; // Use return to exit the method
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                    break;
             }
-        } while (choice != 0);
+        } while (true);
     }
 
-    private void newProfile() {
-        this.profile = profileService.getLastProfileId();
-        System.out.println("\n         --- New Profile --- ");
-        System.out.println("ID: " + this.profile.getId());
-        System.out.println("Name: " + this.profile.getName());
-        System.out.println("Email: " + this.profile.getEmail());
-        System.out.println("Age: " + this.profile.getAge());
-        System.out.println("Location: " + this.profile.getLocation());
+    private void newProfile() throws UserIOException, InvalidEmailFormatException {
+        Profile lastProfile = profileService.getLastProfileId();
+        if (lastProfile != null) {
+            displayProfileDetails(lastProfile);
+        } else {
+            System.out.println("No new profiles available.");
+        }
     }
 
-    private void currentProfile() throws UserIOException {
-        this.profile = profileService.displayCurrentProfile(userService.getCurrentUserId(), this.profile);
-        System.out.println("\n===== Your Profile =====");
-        System.out.println("ID: " + this.profile.getId());
-        System.out.println("Name: " + this.profile.getName());
-        System.out.println("Email: " + this.profile.getEmail());
-        System.out.println("Age: " + this.profile.getAge());
-        System.out.println("Location: " + this.profile.getLocation());
+    private void currentProfile() throws UserIOException, InvalidEmailFormatException {
+        Profile currentProfile = profileService.displayCurrentProfile(userService.getCurrentUserId(), this.profile);
+        if (currentProfile != null) {
+            displayProfileDetails(currentProfile);
+        } else {
+            System.out.println("Current profile not found.");
+        }
+    }
+
+    private void displayProfileDetails(Profile profile) throws UserIOException, InvalidEmailFormatException {
+        System.out.println("\n--- Profile Details ---");
+        System.out.println("ID: " + profile.getId());
+        System.out.println("Name: " + profile.getName());
+        System.out.println("Email: " + profile.getEmail());
+        System.out.println("Age: " + profile.getAge());
+        System.out.println("Location: " + profile.getLocation());
+        startProfile();
     }
 }
