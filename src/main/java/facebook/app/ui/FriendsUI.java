@@ -16,7 +16,8 @@ public class FriendsUI {
     UserController userController = new UserController();
     private final UserService userService = new UserService();
     private final Scanner scanner = new Scanner(System.in);
-    public FriendsUI() {
+    private final int userId = userService.getCurrentUserId();
+    public FriendsUI() throws UserIOException {
     }
 
     public void startFriendsManager() throws UserNotFoundException, UserIOException {
@@ -49,8 +50,7 @@ public class FriendsUI {
         } while (choice != 0);
     }
 
-    private void viewFriends() throws UserIOException {
-        int userId = (int) userService.getCurrentUserId();
+    private void viewFriends() {
         List<Friends> friendsList = friendsController.getFriendsOfUser(userId);
 
         if (friendsList.isEmpty()) {
@@ -65,10 +65,7 @@ public class FriendsUI {
     }
 
     private void addFriend() throws UserNotFoundException, UserIOException {
-        int userId = (int) userService.getCurrentUserId();
         List<Friends> friendsList = friendsController.getFriendsOfUser(userId);
-
-        // Fetch all users
         List<User> users = userController.getAllUsers();
 
         boolean availableUsersToAdd = false;
@@ -79,7 +76,6 @@ public class FriendsUI {
             if (user.getUserId() == userId) {
                 continue; // Skip current logged-in user
             }
-
             boolean isAlreadyFriend = friendsList.stream()
                     .anyMatch(friend -> friend.getFriendId() == user.getUserId() || friend.getUserId() == user.getUserId());
 
@@ -88,12 +84,10 @@ public class FriendsUI {
                 availableUsersToAdd = true;
             }
         }
-
         if (!availableUsersToAdd) {
             System.out.println("There are no new users to add as friends.");
             return; // Return to the previous menu
         }
-
         int friendId = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
 
@@ -104,11 +98,8 @@ public class FriendsUI {
     private void removeFriend() throws UserNotFoundException, UserIOException {
         viewFriends();
         System.out.println("Enter the User ID of the friend you want to remove:");
-
-        int userId = (int) userService.getCurrentUserId();
         int friendId = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
-
         friendsController.removeFriend(userId, friendId);
         System.out.println(userController.getUserByID(friendId).getName().toUpperCase() + " successfully removed from your friends list!");
     }

@@ -1,23 +1,24 @@
 package facebook.app.dao;
 
 import facebook.app.entities.Profile;
-
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProfileDAO {
     private final List<Profile> profileList = new ArrayList<>();
-    private final File file = new File(FILE_NAME);
-    private static final String FILE_NAME = "src/main/resources/profile.txt";
+    private static final String FILE_NAME = "profiles.txt";
 
     public List<Profile> readProfile() {
-        if (!file.exists()) {
-            System.err.println("File not found: " + FILE_NAME);
-        }
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8));
+        try (InputStream inputStream = readFromFile();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userData = line.split(";");
@@ -30,21 +31,35 @@ public class ProfileDAO {
                 Profile profile = new Profile(id, name, email, age, location);
                 profileList.add(profile);
             }
-            reader.close();
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
         return profileList;
     }
 
-    public void writeProfile(int id, String name, String email, int age, String location) {
+    public void writeProfile(Profile profile) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(id + ";" + name + ";" + email + ";" + age + ";" + location);
-            writer.newLine();
-            writer.close();
-        } catch (IOException e) {
+            File file = getFileFromResources();
+            // Use Files.newBufferedWriter for appending text to an existing file
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.toURI()), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+                writer.write(profile.getId() + ";" + profile.getName() + ";" + profile.getEmail() + ";" + profile.getAge() + ";" + profile.getLocation());
+                writer.newLine();
+            }
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    private File getFileFromResources() throws URISyntaxException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        return new File(Objects.requireNonNull(classLoader.getResource(FILE_NAME)).toURI());
+    }
+
+    private InputStream readFromFile() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(ProfileDAO.FILE_NAME);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("File not found: " + ProfileDAO.FILE_NAME);
+        }
+        return inputStream;
     }
 }
