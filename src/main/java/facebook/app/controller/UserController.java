@@ -5,21 +5,26 @@ import facebook.app.exceptions.InvalidEmailFormatException;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.UserService;
-
 import java.util.List;
 
 public class UserController {
-    private final UserService userService;
-
-    public UserController() {
-        this.userService = new UserService();
-    }
+    private final UserService userService = new UserService();
 
     public void addUser(User user) throws InvalidEmailFormatException, UserIOException {
-        userService.addUser(user);
         if (isValidEmailFormat(user.getEmail())) {
             throw new InvalidEmailFormatException("Invalid email format for: " + user.getEmail());
         }
+        // Ensure password meets minimum length requirement
+        if (user.getPassword().length() <= 3) {
+            System.out.println("Password must be at least 3 characters long. Please try again!");
+            return;
+        }
+        userService.addUser(user);
+    }
+
+    public boolean getCurrentUserStatus() throws UserIOException {
+        User userStatus = userService.getCurrentUser();
+        return userStatus.isLoggedIn();
     }
 
     public User getUserByEmail(String email) throws UserIOException {
@@ -35,6 +40,14 @@ public class UserController {
     }
 
     public boolean login(String email, String password) throws UserIOException {
+        // Check if the email contains an '@' symbol
+        if (!email.contains("@")) {
+            throw new UserIOException("Invalid email. Email should contain '@'.");
+        }
+        // Check if the password is at least 3 characters long
+        if (password.length() < 3) {
+            throw new UserIOException("Invalid password. Password should be at least 3 characters long.");
+        }
         if (userService.login(email, password)) {
             System.out.println(" ### Login successfully! Welcome, " + email.split("@")[0].toUpperCase() + "! ###");
             return true;
@@ -45,7 +58,6 @@ public class UserController {
     }
 
     public boolean isValidEmailFormat(String email) {
-        // This is a simple check; you might want to use a regular expression for a more thorough check
         return email == null || !email.contains("@");
     }
 

@@ -12,7 +12,7 @@ public class ProfileUI {
     private final ProfileService profileService = new ProfileService();
     private Profile profile = new Profile();
     private final UserService userService = new UserService();
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
     int choice;
     int userId;
     {   try {
@@ -22,18 +22,17 @@ public class ProfileUI {
     }
     }
 
-    public ProfileUI(Scanner scanner) {
-        this.scanner = scanner;
+    public ProfileUI() {
     }
 
-    public void startProfile() throws InvalidEmailFormatException {
+    public void startProfileSection() throws InvalidEmailFormatException {
         do {
             profile.setId(userId);
 
             System.out.println("\n         --- Welcome to Profile --- ");
             System.out.println("Please choose one of the following options: ");
-            System.out.println("      1. Create Profile           3. Display Profile ");
-            System.out.println("      2. Edit Profile             0. Back");
+            System.out.println("     1. Create Profile          2. Edit Profile");
+            System.out.println("     3. Display Profile         0. Back");
 
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -81,7 +80,7 @@ public class ProfileUI {
                 "\nLocation: " + location);
         profileService.createProfile(id, name, email, age, location);
         profileService.getCurrentProfileId(id);
-        startProfile();
+        startProfileSection();
     }
 
     public void editProfile(Profile profile) throws InvalidEmailFormatException {
@@ -107,7 +106,7 @@ public class ProfileUI {
                 "\nLocation: " + this.profile.getLocation());
         profileService.editProfile(this.profile.getId(), this.profile.getName(), this.profile.getEmail(), this.profile.getAge(), this.profile.getLocation());
 
-        startProfile();
+        startProfileSection();
     }
 
     public void displayProfile(Profile profile) throws InvalidEmailFormatException {
@@ -131,7 +130,7 @@ public class ProfileUI {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 0);
-        startProfile();
+        startProfileSection();
     }
 
     private void newProfile(Profile profile) throws InvalidEmailFormatException {
@@ -142,7 +141,7 @@ public class ProfileUI {
         System.out.println("Email: " + this.profile.getEmail());
         System.out.println("Age: " + this.profile.getAge());
         System.out.println("Location: " + this.profile.getLocation());
-        startProfile();
+        startProfileSection();
     }
 
     private void currentProfile(Profile profile)  {
