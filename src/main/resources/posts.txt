@@ -8,3 +8,5 @@
 11;17/01/2024 00:41;Test posts module with new user created.
 11;17/01/2024 00:42;Seems to work just fine.
 11;17/01/2024 00:42;Lets create some more to test all other functionalities as well.
+1;18/01/2024 23:03;refactor on UI after Andrei's code review
+12;18/01/2024 23:32;Test Posts module with new user created after refactoring.

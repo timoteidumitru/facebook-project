@@ -19,7 +19,7 @@ public class PostsUI {
     public PostsUI() throws UserIOException {
     }
 
-    public void postsSection() throws UserIOException {
+    public void startPostsSection() throws UserIOException {
         boolean keepRunning = true;
         while (keepRunning) {
             System.out.println("\n             --- Posts Management ---");

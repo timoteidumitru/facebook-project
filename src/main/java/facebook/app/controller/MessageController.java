@@ -39,7 +39,7 @@ public class MessageController {
     }
 
     public void startMessaging() throws MessageValidationException, UserNotFoundException, UserIOException {
-        messageUI.startMessaging();
+        messageUI.startMessagesSection();
     }
 
 }

@@ -19,7 +19,7 @@ public class MessageUI {
 
     public MessageUI(){}
 
-    public void startMessaging() throws MessageValidationException, UserNotFoundException, UserIOException {
+    public void startMessagesSection() throws MessageValidationException, UserNotFoundException, UserIOException {
         int choice;
         do {
             System.out.println("\n     --- Message management ---");

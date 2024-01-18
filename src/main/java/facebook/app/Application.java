@@ -1,93 +1,14 @@
 package facebook.app;
 
-import facebook.app.controller.UserController;
 import facebook.app.exceptions.InvalidEmailFormatException;
 import facebook.app.exceptions.MessageValidationException;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
-import facebook.app.ui.*;
-
-import java.util.Scanner;
+import facebook.app.ui.IntroUI;
 
 public class Application {
-    public static void main(String[] args) throws MessageValidationException, UserNotFoundException, InvalidEmailFormatException, UserIOException {
-        UserController userController = new UserController();
-        MessageUI messageUI = new MessageUI();
-        FriendsUI friendsUI = new FriendsUI();
-        PostsUI postsUI = new PostsUI();
-        ProfileUI profileUI = new ProfileUI();
-        GroupsUI groupsUI = new GroupsUI();
-        Scanner scanner = new Scanner(System.in);
-
-        int choice;
-        long loggedInUserId = -1;
-
-        do {
-            System.out.println("  ----- Welcome to the Facebook App -----");
-            if (loggedInUserId != -1) {
-                // Display options for a logged-in user
-                System.out.println("Please choose one of the following options: ");
-                System.out.println("      1. Messages           2. Friends");
-                System.out.println("      3. Posts              4. Groups");
-                System.out.println("      5. Profile            0. Logout ");
-            } else {
-                // Display options for a user not logged in
-                System.out.println("Please choose one of the following options: ");
-                System.out.println("    1. Register           2. Login");
-                System.out.println("                 0. Exit");
-            }
-
-            choice = scanner.nextInt();
-            scanner.nextLine();
-
-            if (loggedInUserId != -1) {
-                // When User is logged in
-                switch (choice) {
-                    case 1:
-                        messageUI.startMessaging();
-                        break;
-                    case 2:
-                        friendsUI.startFriendsManager();
-                        break;
-                    case 3:
-                        postsUI.postsSection();
-                        break;
-                    case 4:
-                        groupsUI.startGroup();
-                        break;
-                    case 5:
-                        profileUI.startProfile();
-                        break;
-                    case 0:
-                        userController.logoutAllUsers();
-                        System.out.println("Exiting Facebook App. Goodbye!");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                }
-            } else {
-                // When User is not logged in
-                switch (choice) {
-                    case 1:
-                        // Register new user
-                        RegisterUI registerUI = new RegisterUI(userController);
-                        registerUI.startRegistration();
-                        break;
-                    case 2:
-                        // Login
-                        LoginUI loginUI = new LoginUI(userController);
-                        if (loginUI.startLogin()) {
-                            loggedInUserId = userController.getUserByEmail(loginUI.getEmail()).getUserId();
-                        }
-                        break;
-                    case 0:
-                        System.out.println("Exiting Facebook App. Goodbye!");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                }
-            }
-        } while (choice != 0);
-        scanner.close();
+    public static void main(String[] args) throws UserNotFoundException, MessageValidationException, UserIOException, InvalidEmailFormatException {
+        IntroUI introUI = new IntroUI();
+        introUI.startUI();
     }
 }

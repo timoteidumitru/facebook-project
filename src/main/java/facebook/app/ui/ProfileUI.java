@@ -25,7 +25,7 @@ public class ProfileUI {
     public ProfileUI() {
     }
 
-    public void startProfile() throws InvalidEmailFormatException {
+    public void startProfileSection() throws InvalidEmailFormatException {
         do {
             profile.setId(userId);
 
@@ -80,7 +80,7 @@ public class ProfileUI {
                 "\nLocation: " + location);
         profileService.createProfile(id, name, email, age, location);
         profileService.getCurrentProfileId(id);
-        startProfile();
+        startProfileSection();
     }
 
     public void editProfile(Profile profile) throws InvalidEmailFormatException {
@@ -106,7 +106,7 @@ public class ProfileUI {
                 "\nLocation: " + this.profile.getLocation());
         profileService.editProfile(this.profile.getId(), this.profile.getName(), this.profile.getEmail(), this.profile.getAge(), this.profile.getLocation());
 
-        startProfile();
+        startProfileSection();
     }
 
     public void displayProfile(Profile profile) throws InvalidEmailFormatException {
@@ -130,7 +130,7 @@ public class ProfileUI {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 0);
-        startProfile();
+        startProfileSection();
     }
 
     private void newProfile(Profile profile) throws InvalidEmailFormatException {
@@ -141,7 +141,7 @@ public class ProfileUI {
         System.out.println("Email: " + this.profile.getEmail());
         System.out.println("Age: " + this.profile.getAge());
         System.out.println("Location: " + this.profile.getLocation());
-        startProfile();
+        startProfileSection();
     }
 
     private void currentProfile(Profile profile)  {

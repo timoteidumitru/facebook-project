@@ -19,7 +19,7 @@ public class FriendsUI {
     public FriendsUI() {
     }
 
-    public void startFriendsManager() throws UserNotFoundException, UserIOException {
+    public void startFriendsSection() throws UserNotFoundException, UserIOException {
         int choice;
         do {
             System.out.println("\n      --- Friends Management ---");

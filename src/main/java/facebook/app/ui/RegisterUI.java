@@ -7,12 +7,8 @@ import facebook.app.exceptions.UserIOException;
 import java.util.Scanner;
 
 public class RegisterUI {
-    private final UserController userController;
-    private final Scanner scanner;
-    public RegisterUI(UserController userController) {
-        this.userController = userController;
-        this.scanner = new Scanner(System.in);
-    }
+    private final UserController userController = new UserController();
+    private final Scanner scanner = new Scanner(System.in);
 
     public void startRegistration() throws InvalidEmailFormatException, UserIOException {
         System.out.println("Register");
@@ -26,9 +22,8 @@ public class RegisterUI {
             System.out.println("Password must be at least 3 characters long. Registration failed.");
             return;
         }
-
         // Generate a unique ID
-        long userId = generateUniqueUserId();
+        int userId = generateUniqueUserId();
         User newUser = new User(userId, email, password);
 
         if (userController.getUserByEmail(email) == null) {
@@ -38,9 +33,8 @@ public class RegisterUI {
             System.out.println("User with email " + email + " already exists. Registration failed.");
         }
     }
-
-    // Method to generate a unique user ID
-    private long generateUniqueUserId() throws UserIOException {
+    private int generateUniqueUserId() throws UserIOException {
+        // Method to generate a unique user ID
         return userController.getAllUsers().size() + 1;
     }
 }

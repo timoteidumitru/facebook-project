@@ -1,19 +1,16 @@
 package facebook.app.entities;
 
 public class User {
-    private long user_id;
+    private int user_id;
     private String email;
     private String password;
     private boolean isLoggedIn;
-    public User(long user_id, String email, String password) {
+    public User(int user_id, String email, String password) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
     }
-
-    public User() {
-
-    }
+    public User(){}
 
     public boolean isLoggedIn() {
         return isLoggedIn;
@@ -21,8 +18,7 @@ public class User {
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
-
-    public long getUserId() {
+    public int getUserId() {
         return user_id;
     }
 
@@ -40,13 +36,7 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public void addPost(Posts post) {}
-    public void sendMessage(User user, String message) {}
     public String getName () {
             return email.split("@")[0];
         }
 }
-
