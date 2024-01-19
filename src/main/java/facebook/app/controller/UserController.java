@@ -1,5 +1,4 @@
 package facebook.app.controller;
-
 import facebook.app.entities.User;
 import facebook.app.exceptions.InvalidEmailFormatException;
 import facebook.app.exceptions.UserIOException;
@@ -21,24 +20,19 @@ public class UserController {
         }
         userService.addUser(user);
     }
-
     public boolean getCurrentUserStatus() throws UserIOException {
         User userStatus = userService.getCurrentUser();
         return userStatus.isLoggedIn();
     }
-
     public User getUserByEmail(String email) throws UserIOException {
         return userService.getUserByEmail(email);
     }
-
     public User getUserByID(int id) throws UserNotFoundException, UserIOException {
         return userService.getUserByID(id);
     }
-
     public List<User> getAllUsers() throws UserIOException {
         return userService.getAllUsers();
     }
-
     public boolean login(String email, String password) throws UserIOException {
         // Check if the email contains an '@' symbol
         if (!email.contains("@")) {
@@ -56,11 +50,9 @@ public class UserController {
             return false;
         }
     }
-
     public boolean isValidEmailFormat(String email) {
         return email == null || !email.contains("@");
     }
-
     public void logoutAllUsers() throws UserIOException {
         userService.logoutAllUsers();
     }

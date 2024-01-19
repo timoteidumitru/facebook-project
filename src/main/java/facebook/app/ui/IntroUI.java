@@ -1,5 +1,4 @@
 package facebook.app.ui;
-
 import facebook.app.controller.UserController;
 import facebook.app.exceptions.InvalidEmailFormatException;
 import facebook.app.exceptions.MessageValidationException;

@@ -1,5 +1,4 @@
 package facebook.app.ui;
-
 import facebook.app.controller.FriendsController;
 import facebook.app.controller.UserController;
 import facebook.app.entities.Friends;
@@ -7,13 +6,12 @@ import facebook.app.entities.User;
 import facebook.app.exceptions.UserIOException;
 import facebook.app.exceptions.UserNotFoundException;
 import facebook.app.services.UserService;
-
 import java.util.List;
 import java.util.Scanner;
 
 public class FriendsUI {
     private final FriendsController friendsController = new FriendsController();
-    UserController userController = new UserController();
+    private final UserController userController = new UserController();
     private final UserService userService = new UserService();
     private final Scanner scanner = new Scanner(System.in);
     public FriendsUI() {

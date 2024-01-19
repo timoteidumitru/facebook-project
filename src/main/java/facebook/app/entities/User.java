@@ -21,15 +21,12 @@ public class User {
     public int getUserId() {
         return user_id;
     }
-
     public void setUserId(long user_id) {
         this.user_id = (int) user_id;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
