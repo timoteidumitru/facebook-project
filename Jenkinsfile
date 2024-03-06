@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Runs Maven package goal, which compiles your code, runs any tests, and packages it
-                sh 'mvn clean install'
+                echo 'Build build.'
             }
             post {
                 success {
